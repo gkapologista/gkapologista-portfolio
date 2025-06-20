@@ -35,7 +35,7 @@
         size="lg"
         label="Explore My Work"
         class="q-mt-lg explore-btn animate-fade-up-delayed"
-        @click="navigateToAbout"
+        @click="navigateToProjects"
       />
     </div>
   </div>
@@ -45,7 +45,7 @@
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
-const navigateToAbout = () => router.push('/about');
+const navigateToProjects = () => router.push('/projects');
 
 const codeSnippets = [
   'const app = createApp({})',
