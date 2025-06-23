@@ -11,101 +11,43 @@
       <h1 class="text-h2 text-white q-mb-xl">My Projects</h1>
 
       <div class="projects-grid">
-        <div v-for="project in projects" :key="project.id" class="project-card">
-          <div class="project-image">
-            <img :src="project.image" :alt="project.title" />
-            <div class="project-title-overlay">
-              <h3 class="project-title">{{ project.title }}</h3>
+        <router-link
+          v-for="project in projects"
+          :key="project.id"
+          :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
+          class="project-card-link"
+        >
+          <div class="project-card">
+            <div class="project-image">
+              <img :src="project.images[0]" :alt="project.title" />
+              <div class="project-title-overlay">
+                <h3 class="project-title">{{ project.title }}</h3>
+              </div>
+            </div>
+            <div class="project-info">
+              <p class="project-description">{{ project.description }}</p>
+              <div class="project-tags">
+                <q-chip
+                  v-for="tag in project.tags"
+                  :key="tag"
+                  color="white"
+                  text-color="secondary"
+                  size="sm"
+                  class="tech-chip"
+                >
+                  {{ tag }}
+                </q-chip>
+              </div>
             </div>
           </div>
-          <div class="project-info">
-            <p class="project-description">{{ project.description }}</p>
-            <div class="project-tags">
-              <q-chip
-                v-for="tag in project.tags"
-                :key="tag"
-                color="white"
-                text-color="secondary"
-                size="sm"
-                class="tech-chip"
-              >
-                {{ tag }}
-              </q-chip>
-            </div>
-          </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-interface Project {
-  id: number;
-  title: string;
-  description: string;
-  image: string;
-  tags: string[];
-}
-
-const projects: Project[] = [
-  {
-    id: 1,
-    title: 'PersonaWeb',
-    description:
-      'An e-commerce website featuring a Decision Tree Algorithm for Personalized Recommendations, providing tailored shopping experiences for users.',
-    image: 'src/assets/images/project1.png',
-    tags: ['HTML', 'CSS', 'JavaScript', 'Node.js', 'MySQL'],
-  },
-  {
-    id: 2,
-    title: 'Website Portfolio',
-    description:
-      'A modern portfolio website built with Vue.js and Quasar Framework, showcasing my work and skills.',
-    image: 'src/assets/images/project1.png',
-    tags: ['Vue.js', 'Quasar'],
-  },
-  {
-    id: 3,
-    title: 'Health Record Management System',
-    description:
-      'A comprehensive system for managing health records, built with Laravel framework.',
-    image: 'src/assets/images/project1.png',
-    tags: ['HTML', 'CSS', 'Laravel'],
-  },
-  {
-    id: 4,
-    title: 'Certification Platform',
-    description:
-      'A platform developed during my internship that connects students with programming experts for certification, facilitating learning and professional development.',
-    image: 'src/assets/images/project1.png',
-    tags: ['Vue.js', 'Strapi', 'PostgreSQL'],
-  },
-  {
-    id: 5,
-    title: 'Sausage Party',
-    description:
-      'A 3D obstacle-type game created during college, featuring immersive gameplay and challenging levels.',
-    image: 'src/assets/images/project1.png',
-    tags: ['Unity', 'Blender', 'C++'],
-  },
-  {
-    id: 6,
-    title: 'Student Management System',
-    description:
-      'A CRUD application for managing student information, developed as a college project.',
-    image: 'src/assets/images/project1.png',
-    tags: ['Java'],
-  },
-  {
-    id: 7,
-    title: 'Defense Quest',
-    description:
-      'A 2D side-scrolling game created during college, featuring engaging gameplay and dynamic challenges.',
-    image: 'src/assets/images/project1.png',
-    tags: ['HTML', 'CSS', 'JavaScript'],
-  },
-];
+import { projects } from '../data/projects';
 </script>
 
 <style scoped>
@@ -293,6 +235,12 @@ const projects: Project[] = [
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background: white !important;
+}
+
+.project-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
 }
 
 @media (max-width: 768px) {

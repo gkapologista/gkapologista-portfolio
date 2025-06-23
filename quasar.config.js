@@ -94,6 +94,7 @@ module.exports = configure(function (/* ctx */) {
           third: '#6A1E55',
           fourth: '#A64D79',
         },
+        dark: true,
       },
 
       // iconSet: 'material-icons', // Quasar icon set

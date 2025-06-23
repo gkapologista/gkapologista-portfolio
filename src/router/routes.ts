@@ -10,6 +10,13 @@ const routes: RouteRecordRaw[] = [
     ]
   },
 
+  {
+    path: '/project/:slug',
+    name: 'ProjectDetail',
+    component: () => import('pages/ProjectDetailPage.vue'),
+    props: true
+  },
+
   // Always leave this as last one,
   // but you can also remove it
   {
