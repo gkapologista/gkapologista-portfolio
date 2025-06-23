@@ -28,11 +28,11 @@
               <p class="project-description">{{ project.description }}</p>
               <div class="project-tags">
                 <q-chip
-                  v-for="tag in project.tags"
+                  v-for="tag in project.tags.slice(0, 3)"
                   :key="tag"
                   color="white"
                   text-color="secondary"
-                  size="sm"
+                  size="md"
                   class="tech-chip"
                 >
                   {{ tag }}
@@ -160,6 +160,11 @@ import { projects } from '../data/projects';
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  height: 420px;
+  min-height: 420px;
+  max-height: 420px;
 }
 
 .project-card:hover {
@@ -172,6 +177,7 @@ import { projects } from '../data/projects';
   height: 200px;
   overflow: hidden;
   position: relative;
+  flex-shrink: 0;
 }
 
 .project-image img {
@@ -206,6 +212,10 @@ import { projects } from '../data/projects';
 
 .project-info {
   padding: 1.5rem;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .project-description {
@@ -219,16 +229,21 @@ import { projects } from '../data/projects';
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
-  margin-top: 1rem;
+  margin-top: auto;
+  justify-content: flex-start;
+  align-items: flex-end;
 }
 
 .tech-chip {
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 0.5rem 0.75rem;
+  padding: 0.6rem 1.1rem;
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.9) !important;
+  height: 2.1rem;
+  line-height: 1.5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .tech-chip:hover {
@@ -254,6 +269,16 @@ import { projects } from '../data/projects';
 
   .projects-grid {
     grid-template-columns: 1fr;
+  }
+
+  .project-card {
+    height: 340px;
+    min-height: 340px;
+    max-height: 340px;
+  }
+
+  .project-image {
+    height: 140px;
   }
 }
 </style>
