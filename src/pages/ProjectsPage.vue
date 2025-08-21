@@ -9,7 +9,7 @@
 
     <div class="content">
       <div class="header-section">
-        <h1 class="text-h2 text-white q-mb-xl">My Projects</h1>
+        <h1 class="text-h2 text-white q-mb-sm">My Projects</h1>
         <q-btn
           flat
           icon="home"
@@ -19,9 +19,40 @@
         />
       </div>
 
-      <div class="projects-grid">
+      <div class="filters">
+        <div class="filters-left">
+          <span class="filters-label">Filter by category:</span>
+          <div class="checkboxes">
+            <q-option-group
+              v-model="selectedCategories"
+              :options="categoryOptions"
+              color="white"
+              keep-color
+              type="checkbox"
+              inline
+              dense
+            />
+          </div>
+        </div>
+        <div class="filters-right">
+          <q-btn
+            flat
+            dense
+            icon="clear_all"
+            label="Clear"
+            @click="clearFilters"
+            :disable="!selectedCategories.length"
+            :class="[
+              'clear-btn',
+              { 'clear-btn--hidden': !selectedCategories.length },
+            ]"
+          />
+        </div>
+      </div>
+
+      <transition-group name="projects" tag="div" class="projects-grid">
         <router-link
-          v-for="project in projects"
+          v-for="project in filteredProjects"
           :key="project.id"
           :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
           class="project-card-link"
@@ -50,12 +81,13 @@
             </div>
           </div>
         </router-link>
-      </div>
+      </transition-group>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { projects } from '../data/projects';
 import { useRouter } from 'vue-router';
 
@@ -63,6 +95,23 @@ const router = useRouter();
 
 const goHome = () => {
   router.push('/');
+};
+
+const categories = ['Web Application', 'Game', 'System'] as const;
+type Category = (typeof categories)[number];
+const selectedCategories = ref<Category[]>([]);
+
+const categoryOptions = categories.map((c) => ({ label: c, value: c }));
+
+const filteredProjects = computed(() => {
+  if (selectedCategories.value.length === 0) return projects;
+  return projects.filter((p) =>
+    selectedCategories.value.includes(p.category as Category)
+  );
+});
+
+const clearFilters = () => {
+  selectedCategories.value = [];
 };
 </script>
 
@@ -188,9 +237,68 @@ const goHome = () => {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, 360px);
   gap: 2rem;
   margin-top: 2rem;
+  align-items: stretch;
+  justify-content: center;
+}
+
+/* Transition-group animations */
+.projects-enter-active,
+.projects-leave-active {
+  transition: all 250ms ease;
+}
+
+.projects-enter-from,
+.projects-leave-to {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+}
+
+.projects-move {
+  transition: transform 250ms ease;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+}
+
+.filters-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.filters-label {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 600;
+}
+
+.checkboxes {
+  display: flex;
+  align-items: center;
+}
+
+.clear-btn {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.filters-right {
+  min-width: 108px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.clear-btn--hidden {
+  visibility: hidden;
 }
 
 .project-card {
@@ -205,6 +313,8 @@ const goHome = () => {
   height: 450px;
   min-height: 450px;
   max-height: 450px;
+  width: 360px;
+  box-sizing: border-box;
 }
 
 .project-card:hover {
@@ -263,6 +373,11 @@ const goHome = () => {
   font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 1rem;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .project-tags {
@@ -309,17 +424,24 @@ const goHome = () => {
   }
 
   .projects-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    justify-content: stretch;
   }
 
   .project-card {
-    height: 370px;
-    min-height: 370px;
-    max-height: 370px;
+    width: 100%;
+    height: 380px;
+    min-height: 380px;
+    max-height: 380px;
   }
 
   .project-image {
     height: 140px;
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
 </style>

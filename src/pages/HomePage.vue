@@ -260,6 +260,7 @@ const getRandomCode = () => {
   margin: 0 auto;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   background: linear-gradient(to right, #ffffff, #e0e0e0);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }

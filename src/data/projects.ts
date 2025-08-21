@@ -9,6 +9,7 @@ export interface Project {
   challenges: string[];
   images: string[];
   tags: string[];
+  category: 'Web Application' | 'Game' | 'System';
 }
 
 export const projects: Project[] = [
@@ -40,6 +41,7 @@ export const projects: Project[] = [
       'src/assets/images/unifiedCommunicationApp3.png',
     ],
     tags: ['Vue.js 3', 'Node.js', 'PostgreSQL', 'Express.js', 'Socket.io', 'Gmail API', 'Twilio', 'WebRTC'],
+    category: 'Web Application',
   },
   {
     id: 2,
@@ -69,6 +71,7 @@ export const projects: Project[] = [
       'src/assets/images/personaWeb3.JPG',
     ],
     tags: ['Node.js', 'Python', 'MySQL', 'Express.js', 'scikit-learn', 'Machine Learning', 'Decision Tree'],
+    category: 'Web Application',
   },
   {
     id: 3,
@@ -92,6 +95,7 @@ export const projects: Project[] = [
       'src/assets/images/certificationPlatform3.png',
     ],
     tags: ['Vue.js', 'Strapi', 'PostgreSQL'],
+    category: 'Web Application',
   },
   {
     id: 4,
@@ -116,6 +120,7 @@ export const projects: Project[] = [
       'src/assets/images/healthRecordManagementSystem4.png',
     ],
     tags: ['HTML', 'CSS', 'Laravel'],
+    category: 'Web Application',
   },
   {
     id: 5,
@@ -140,6 +145,7 @@ export const projects: Project[] = [
       'src/assets/images/sausageRoyale4.png',
     ],
     tags: ['Unity', 'Blender', 'C++'],
+    category: 'Game',
   },
   {
     id: 6,
@@ -162,6 +168,7 @@ export const projects: Project[] = [
       'src/assets/images/websitePortfolio2.png',
     ],
     tags: ['Vue.js', 'Quasar'],
+    category: 'Web Application',
   },
   {
     id: 7,
@@ -185,6 +192,7 @@ export const projects: Project[] = [
       'src/assets/images/defenseQuest3.JPG',
     ],
     tags: ['HTML', 'CSS', 'JavaScript'],
+    category: 'Game',
   },
   {
     id: 8,
@@ -206,5 +214,6 @@ export const projects: Project[] = [
       'src/assets/images/studentManagementSystem2.JPG',
     ],
     tags: ['Java'],
+    category: 'System',
   },
 ];
