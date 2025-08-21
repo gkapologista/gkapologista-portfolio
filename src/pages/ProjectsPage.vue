@@ -8,7 +8,16 @@
     </div>
 
     <div class="content">
-      <h1 class="text-h2 text-white q-mb-xl">My Projects</h1>
+      <div class="header-section">
+        <h1 class="text-h2 text-white q-mb-xl">My Projects</h1>
+        <q-btn
+          flat
+          icon="home"
+          label="Home"
+          @click="goHome"
+          class="home-btn q-mb-xl"
+        />
+      </div>
 
       <div class="projects-grid">
         <router-link
@@ -32,7 +41,7 @@
                   :key="tag"
                   color="white"
                   text-color="secondary"
-                  size="md"
+                  size="sm"
                   class="tech-chip"
                 >
                   {{ tag }}
@@ -48,6 +57,13 @@
 
 <script setup lang="ts">
 import { projects } from '../data/projects';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
+
+const goHome = () => {
+  router.push('/');
+};
 </script>
 
 <style scoped>
@@ -65,6 +81,29 @@ import { projects } from '../data/projects';
   z-index: 3;
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.header-section {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.home-btn {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
+.home-btn:hover {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-1px);
 }
 
 .background-effects {
@@ -143,6 +182,7 @@ import { projects } from '../data/projects';
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   background: linear-gradient(to right, #ffffff, #e0e0e0);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 
@@ -162,9 +202,9 @@ import { projects } from '../data/projects';
   border: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   flex-direction: column;
-  height: 420px;
-  min-height: 420px;
-  max-height: 420px;
+  height: 450px;
+  min-height: 450px;
+  max-height: 450px;
 }
 
 .project-card:hover {
@@ -228,21 +268,22 @@ import { projects } from '../data/projects';
 .project-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
+  gap: 0.5rem;
   margin-top: auto;
   justify-content: flex-start;
   align-items: flex-end;
+  min-height: 2rem;
 }
 
 .tech-chip {
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  padding: 0.6rem 1.1rem;
+  padding: 0.4rem 0.8rem;
   transition: all 0.3s ease;
   background: rgba(255, 255, 255, 0.9) !important;
-  height: 2.1rem;
-  line-height: 1.5;
+  height: 1.8rem;
+  line-height: 1.2;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
@@ -272,9 +313,9 @@ import { projects } from '../data/projects';
   }
 
   .project-card {
-    height: 340px;
-    min-height: 340px;
-    max-height: 340px;
+    height: 370px;
+    min-height: 370px;
+    max-height: 370px;
   }
 
   .project-image {

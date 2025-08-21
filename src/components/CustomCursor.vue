@@ -4,7 +4,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
         <path
           d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-          stroke="white"
+          stroke="#A64D79"
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -15,7 +15,7 @@
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
         <path
           d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-          stroke="#A64D79"
+          stroke="white"
           stroke-width="1.5"
           stroke-linecap="round"
           stroke-linejoin="round"
@@ -49,8 +49,8 @@ const updateCursor = () => {
   // Smooth movement for main cursor
   const dx = mouseX - cursorX;
   const dy = mouseY - cursorY;
-  cursorX += dx * 0.1;
-  cursorY += dy * 0.1;
+  cursorX += dx * 0.25;
+  cursorY += dy * 0.25;
   cursor.value.style.transform = `translate(${cursorX - 12}px, ${
     cursorY - 12
   }px)`;
@@ -58,8 +58,8 @@ const updateCursor = () => {
   // Faster movement for dot cursor
   const dotDx = mouseX - cursorDotX;
   const dotDy = mouseY - cursorDotY;
-  cursorDotX += dotDx * 0.3;
-  cursorDotY += dotDy * 0.3;
+  cursorDotX += dotDx * 1.0;
+  cursorDotY += dotDy * 1.0;
   cursorDot.value.style.transform = `translate(${cursorDotX - 12}px, ${
     cursorDotY - 12
   }px)`;
