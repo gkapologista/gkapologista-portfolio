@@ -125,9 +125,9 @@ function onSwipe({ direction }: { direction?: string }) {
   else if (direction === 'right') prevImage();
 }
 function handleKeydown(event: KeyboardEvent) {
+  // Escape is handled by q-dialog itself; only arrows are ours to wire up.
   if (event.key === 'ArrowLeft') prevImage();
   else if (event.key === 'ArrowRight') nextImage();
-  else if (event.key === 'Escape') isOpen.value = false;
 }
 </script>
 
@@ -250,8 +250,8 @@ function handleKeydown(event: KeyboardEvent) {
 
 .lb-thumb {
   flex: 0 0 auto;
-  width: 64px;
-  height: 40px;
+  width: 72px;
+  height: 48px;
   padding: 0;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.12);
