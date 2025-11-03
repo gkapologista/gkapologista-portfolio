@@ -37,6 +37,7 @@
       </button>
       <div
         v-if="images.length > 1"
+        ref="stripEl"
         class="lb-strip"
         role="group"
         aria-label="Screenshots"
@@ -65,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed, watch, nextTick } from 'vue';
 import { webpFrom } from '../utils/images';
 
 interface Props {
@@ -97,6 +98,21 @@ watch(
     if (open) index.value = props.startIndex;
   },
 );
+
+// Keep the active thumbnail visible as the slide changes so it never scrolls
+// out of the horizontally-scrolling strip during arrow/swipe navigation.
+const stripEl = ref<HTMLElement | null>(null);
+watch(index, async () => {
+  await nextTick();
+  const active = stripEl.value?.querySelector<HTMLElement>('.lb-thumb.is-active');
+  if (!active) return;
+  const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  active.scrollIntoView({
+    inline: 'nearest',
+    block: 'nearest',
+    behavior: smooth ? 'smooth' : 'auto',
+  });
+});
 
 function prevImage() {
   if (index.value > 0) index.value--;
@@ -185,6 +201,7 @@ function handleKeydown(event: KeyboardEvent) {
   color: #00adb5;
 }
 
+.lb-close:focus-visible,
 .lb-nav:focus-visible {
   outline: 2px solid #00adb5;
   outline-offset: 2px;
@@ -202,8 +219,9 @@ function handleKeydown(event: KeyboardEvent) {
 }
 
 .lb-img {
+  width: 100%;
   max-width: 100%;
-  max-height: min(65vh, 65svh);
+  height: min(65vh, 65svh);
   object-fit: contain;
   border-radius: 2px;
   background: #111;
