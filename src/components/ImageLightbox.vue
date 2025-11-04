@@ -57,7 +57,7 @@
           </picture>
         </button>
       </div>
-      <div class="lb-caption">
+      <div class="lb-caption" aria-live="polite" aria-atomic="true">
         {{ title }} — {{ index + 1 }} / {{ images.length }}
       </div>
     </div>
@@ -211,7 +211,7 @@ function handleKeydown(event: KeyboardEvent) {
 }
 
 .lb-caption {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.75);
   font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
