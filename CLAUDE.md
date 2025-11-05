@@ -52,8 +52,11 @@ The projects page filtering is fully encapsulated here. Key behaviors to preserv
 ### Golden-sample reference files
 - Pages / Quasar usage / `useMeta` SEO / route params: `src/pages/ProjectDetailPage.vue`
 - Main landmark + skip link + list `<TransitionGroup>`: `src/pages/ProjectsPage.vue`
+- Reusable `v-model` component (`q-dialog`, typed props, computed `v-model`): `src/components/ImageLightbox.vue`
 - Routing patterns: `src/router/routes.ts`
 - Layout: `src/layouts/MainLayout.vue`
+
+`ImageLightbox.vue` is the image viewer (gallery modal) used by `ProjectDetailPage`: pass `:images`/`:title` plus `v-model` for open state and a `:start-index` to seed the active slide. It owns its own slide index, prev/next, keyboard (arrows/Escape), and `v-touch-swipe` handling — the page only toggles the model and sets the start index.
 
 ### Debugging protocol
 When fixing a bug, the repo rules ask you to state expected-vs-actual, list **three** hypotheses and pick one before editing; if a fix fails, re-read the file and pivot to a fundamentally different approach rather than iterating on the failed one.
