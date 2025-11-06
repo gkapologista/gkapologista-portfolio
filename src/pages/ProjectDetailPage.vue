@@ -276,77 +276,13 @@
       </main>
 
       <!-- Lightbox -->
-      <q-dialog
+      <ImageLightbox
+        v-if="project"
         v-model="lightbox"
-        :aria-label="project ? `${project.title} screenshots` : 'Image viewer'"
-        @keydown="handleLightboxKeydown"
-      >
-        <div
-          class="lightbox"
-          v-touch-swipe.mouse.horizontal="onLightboxSwipe"
-        >
-          <button
-            class="lb-close"
-            @click="lightbox = false"
-            aria-label="Close lightbox"
-          >
-            <q-icon name="close" size="sm" />
-          </button>
-          <button
-            v-if="project && project.images.length > 1"
-            class="lb-nav lb-prev"
-            :disabled="carouselIndex === 0"
-            @click="prevImage"
-            aria-label="Previous image"
-          >
-            <q-icon name="chevron_left" />
-          </button>
-          <picture v-if="project">
-            <source :srcset="webpFrom(project.images[carouselIndex])" type="image/webp" />
-            <img
-              :src="project.images[carouselIndex]"
-              :alt="`${project.title} screenshot ${carouselIndex + 1}`"
-              class="lb-img"
-              decoding="async"
-            />
-          </picture>
-          <button
-            v-if="project && project.images.length > 1"
-            class="lb-nav lb-next"
-            :disabled="carouselIndex >= project.images.length - 1"
-            @click="nextImage"
-            aria-label="Next image"
-          >
-            <q-icon name="chevron_right" />
-          </button>
-          <div
-            v-if="project && project.images.length > 1"
-            class="lb-strip"
-            role="group"
-            aria-label="Screenshots"
-          >
-            <button
-              v-for="(img, i) in project.images"
-              :key="img"
-              type="button"
-              class="lb-thumb"
-              :class="{ 'is-active': i === carouselIndex }"
-              :aria-current="i === carouselIndex ? 'true' : undefined"
-              :aria-label="`Go to screenshot ${i + 1}`"
-              @click="carouselIndex = i"
-            >
-              <picture>
-                <source :srcset="webpFrom(img)" type="image/webp" />
-                <img :src="img" :alt="''" loading="lazy" decoding="async" />
-              </picture>
-            </button>
-          </div>
-          <div v-if="project" class="lb-caption">
-            {{ project.title }} — {{ carouselIndex + 1 }} /
-            {{ project.images.length }}
-          </div>
-        </div>
-      </q-dialog>
+        :images="project.images"
+        :title="project.title"
+        :start-index="lightboxStart"
+      />
     </div>
 
     <!-- Footer -->
@@ -389,13 +325,14 @@ import { useMeta } from 'quasar';
 import { webpFrom } from '../utils/images';
 import IconGithub from '../components/icons/IconGithub.vue';
 import IconLinkedin from '../components/icons/IconLinkedin.vue';
+import ImageLightbox from '../components/ImageLightbox.vue';
 
 const route = useRoute();
 const router = useRouter();
 const slug = computed(() => route.params.slug as string);
 const project = ref<Project | undefined>();
-const carouselIndex = ref(0);
 const lightbox = ref(false);
+const lightboxStart = ref(0);
 const heroVisible = ref(false);
 const currentYear = computed(() => new Date().getFullYear());
 
@@ -450,34 +387,8 @@ function goToProject(target?: Project) {
   }
 }
 function openLightbox(idx: number) {
-  carouselIndex.value = idx;
+  lightboxStart.value = idx;
   lightbox.value = true;
-}
-function prevImage() {
-  if (carouselIndex.value > 0) {
-    carouselIndex.value--;
-  }
-}
-function nextImage() {
-  if (project.value && carouselIndex.value < project.value.images.length - 1) {
-    carouselIndex.value++;
-  }
-}
-function onLightboxSwipe({ direction }: { direction?: string }) {
-  if (direction === 'left') {
-    nextImage();
-  } else if (direction === 'right') {
-    prevImage();
-  }
-}
-function handleLightboxKeydown(event: KeyboardEvent) {
-  if (event.key === 'ArrowLeft') {
-    prevImage();
-  } else if (event.key === 'ArrowRight') {
-    nextImage();
-  } else if (event.key === 'Escape') {
-    lightbox.value = false;
-  }
 }
 
 function revealHero() {
@@ -490,7 +401,6 @@ function revealHero() {
 }
 function loadProject() {
   project.value = projects.find((p) => p.slug === slug.value);
-  carouselIndex.value = 0;
   lightbox.value = false;
 }
 
@@ -1297,155 +1207,6 @@ useMeta(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-/* ─── LIGHTBOX ─── */
-.lightbox {
-  position: relative;
-  background: #1a1e24;
-  border: 1px solid rgba(0, 173, 181, 0.3);
-  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.65), 10px 10px 0 rgba(0, 0, 0, 0.3);
-  width: min(calc(100vw - 2rem), 1000px);
-  max-height: min(90vh, 90svh);
-  margin: 0 auto;
-  padding: clamp(0.75rem, 0.4rem + 1.5vw, 1rem);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.lb-close,
-.lb-nav {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 2px;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease,
-    color 0.2s ease, opacity 0.2s ease;
-}
-
-.lb-close {
-  position: absolute;
-  top: 0.75rem;
-  right: 0.75rem;
-  z-index: 2;
-  width: 44px;
-  height: 44px;
-}
-
-.lb-close:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: #00adb5;
-  color: #00adb5;
-}
-
-.lb-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  width: 44px;
-  height: 44px;
-}
-
-.lb-prev {
-  left: 0.75rem;
-}
-
-.lb-next {
-  right: 0.75rem;
-}
-
-.lb-nav:hover {
-  background: rgba(0, 173, 181, 0.15);
-  border-color: #00adb5;
-  color: #00adb5;
-}
-
-.lb-nav:focus-visible {
-  outline: 2px solid #00adb5;
-  outline-offset: 2px;
-}
-
-.lb-nav:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.lb-nav:disabled:hover {
-  background: rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.12);
-  color: #fff;
-}
-
-.lb-img {
-  max-width: 100%;
-  max-height: min(65vh, 65svh);
-  object-fit: contain;
-  border-radius: 2px;
-  background: #111;
-  margin-bottom: 0.75rem;
-}
-
-.lb-caption {
-  color: rgba(255, 255, 255, 0.4);
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  text-align: center;
-  overflow-wrap: anywhere;
-}
-
-/* Lightbox thumbnail strip */
-.lb-strip {
-  display: flex;
-  gap: 0.4rem;
-  max-width: 100%;
-  margin-bottom: 0.75rem;
-  padding-bottom: 0.25rem;
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.lb-thumb {
-  flex: 0 0 auto;
-  width: 64px;
-  height: 40px;
-  padding: 0;
-  cursor: pointer;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 2px;
-  background: #111;
-  opacity: 0.55;
-  transition: opacity 0.18s ease, border-color 0.18s ease;
-}
-
-.lb-thumb img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.lb-thumb:hover {
-  opacity: 0.85;
-  border-color: rgba(0, 173, 181, 0.5);
-}
-
-.lb-thumb.is-active {
-  opacity: 1;
-  border-color: #00adb5;
-}
-
-.lb-thumb:focus-visible {
-  outline: 2px solid #00adb5;
-  outline-offset: 2px;
 }
 
 /* ─── NOT FOUND ─── */
