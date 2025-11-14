@@ -25,7 +25,7 @@
           class="back-btn"
         />
         <div v-if="project" class="breadcrumb">
-          <span class="bc-seg">projects</span>
+          <router-link to="/projects" class="bc-seg">projects</router-link>
           <span class="bc-sep">/</span>
           <span class="bc-active">{{ project.title }}</span>
         </div>
@@ -423,7 +423,13 @@ const nextProject = computed<Project | undefined>(() => {
 });
 
 function goBack() {
-  if (window.history.state?.back) {
+  // Go up to the Projects list (the breadcrumb's parent). If we actually came
+  // from there, router.back() preserves its scroll position and active filters;
+  // otherwise (deep link, or a sibling reached via the pager) push to it.
+  // In hash mode `state.back` is the in-app path, e.g. '/projects?tags=vue'
+  // vs a sibling detail '/project/slug'.
+  const back = window.history.state?.back;
+  if (typeof back === 'string' && back.startsWith('/projects')) {
     router.back();
   } else {
     router.push('/projects');
@@ -683,6 +689,18 @@ useMeta(() => {
 
 .bc-seg {
   color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.bc-seg:hover {
+  color: var(--accent-teal);
+}
+
+.bc-seg:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 .bc-sep {
