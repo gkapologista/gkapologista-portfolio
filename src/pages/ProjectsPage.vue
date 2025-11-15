@@ -10,53 +10,45 @@
     <div class="content">
       <div class="header-section">
         <h1 class="text-h2 text-white q-mb-sm">My Projects</h1>
-        <q-btn
-          flat
-          icon="home"
-          label="Home"
-          @click="goHome"
-          class="home-btn q-mb-xl"
-        />
+        <q-btn flat icon="home" label="Home" @click="goHome" class="home-btn q-mb-xl" />
       </div>
 
-      <div class="filters">
-        <div class="filters-left">
-          <span class="filters-label">Filter by category:</span>
-          <div class="checkboxes">
-            <q-option-group
-              v-model="selectedCategories"
-              :options="categoryOptions"
-              color="white"
-              keep-color
-              type="checkbox"
-              inline
-              dense
-            />
+      <div
+        class="filters"
+        :class="{ 'filters--active': selectedCategories.length > 0 }"
+        role="group"
+        aria-label="Project category filters"
+        aria-live="polite"
+      >
+        <div class="filters-row">
+          <div class="category-chips-container" role="group" aria-label="Category filters">
+            <q-chip v-for="category in categories" :key="category" :class="{
+              'category-chip': true,
+              'category-chip--active': selectedCategories.includes(category),
+            }" :color="selectedCategories.includes(category) ? 'white' : undefined"
+              :text-color="selectedCategories.includes(category) ? 'secondary' : undefined"
+              :removable="selectedCategories.includes(category)" size="sm" clickable @click="toggleCategory(category)"
+              @remove="removeFilter(category)" :aria-pressed="selectedCategories.includes(category)"
+              :aria-label="`Filter by ${category}`">
+              {{ category }}
+            </q-chip>
           </div>
-        </div>
-        <div class="filters-right">
-          <q-btn
-            flat
-            dense
-            icon="clear_all"
-            label="Clear"
-            @click="clearFilters"
-            :disable="!selectedCategories.length"
-            :class="[
-              'clear-btn',
-              { 'clear-btn--hidden': !selectedCategories.length },
-            ]"
-          />
+          <transition name="fade">
+            <span v-if="selectedCategories.length > 0" class="results-count-inline" aria-live="polite">
+              <strong>{{ filteredProjects.length }}</strong>
+              {{ filteredProjects.length === 1 ? 'project' : 'projects' }}
+            </span>
+          </transition>
+          <transition name="fade">
+            <q-btn v-if="selectedCategories.length > 0" flat dense round icon="clear_all" @click="clearFilters"
+              class="clear-btn-inline" aria-label="Clear all filters" />
+          </transition>
         </div>
       </div>
 
       <transition-group name="projects" tag="div" class="projects-grid">
-        <router-link
-          v-for="project in filteredProjects"
-          :key="project.id"
-          :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
-          class="project-card-link"
-        >
+        <router-link v-for="project in filteredProjects" :key="project.id"
+          :to="{ name: 'ProjectDetail', params: { slug: project.slug } }" class="project-card-link">
           <div class="project-card">
             <div class="project-image">
               <img :src="project.images[0]" :alt="project.title" />
@@ -67,14 +59,8 @@
             <div class="project-info">
               <p class="project-description">{{ project.description }}</p>
               <div class="project-tags">
-                <q-chip
-                  v-for="tag in project.tags.slice(0, 3)"
-                  :key="tag"
-                  color="white"
-                  text-color="secondary"
-                  size="sm"
-                  class="tech-chip"
-                >
+                <q-chip v-for="tag in project.tags.slice(0, 3)" :key="tag" color="white" text-color="secondary"
+                  size="sm" class="tech-chip">
                   {{ tag }}
                 </q-chip>
               </div>
@@ -87,9 +73,10 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { ref } from 'vue';
 import { projects } from '../data/projects';
 import { useRouter } from 'vue-router';
+import { useFilters, categories } from '../composables/useFilters';
 
 const router = useRouter();
 
@@ -97,22 +84,8 @@ const goHome = () => {
   router.push('/');
 };
 
-const categories = ['Web Application', 'Game', 'System'] as const;
-type Category = (typeof categories)[number];
-const selectedCategories = ref<Category[]>([]);
-
-const categoryOptions = categories.map((c) => ({ label: c, value: c }));
-
-const filteredProjects = computed(() => {
-  if (selectedCategories.value.length === 0) return projects;
-  return projects.filter((p) =>
-    selectedCategories.value.includes(p.category as Category)
-  );
-});
-
-const clearFilters = () => {
-  selectedCategories.value = [];
-};
+const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clearFilters } =
+  useFilters(ref(projects));
 </script>
 
 <style scoped>
@@ -170,10 +143,8 @@ const clearFilters = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.1) 1px,
-      transparent 1px
-    ),
+  background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
   opacity: 0.3;
@@ -189,11 +160,9 @@ const clearFilters = () => {
 .orb-1 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.4),
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.4),
+      transparent 70%);
   top: 20%;
   left: 20%;
 }
@@ -201,11 +170,9 @@ const clearFilters = () => {
 .orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.3),
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.3),
+      transparent 70%);
   top: 50%;
   right: 20%;
 }
@@ -213,11 +180,9 @@ const clearFilters = () => {
 .orb-3 {
   width: 250px;
   height: 250px;
-  background: radial-gradient(
-    circle,
-    rgba(255, 255, 255, 0.2),
-    transparent 70%
-  );
+  background: radial-gradient(circle,
+      rgba(255, 255, 255, 0.2),
+      transparent 70%);
   bottom: 20%;
   left: 40%;
 }
@@ -260,45 +225,175 @@ const clearFilters = () => {
   transition: transform 250ms ease;
 }
 
+/* Filter Container - Compact Single Row */
 .filters {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
+  padding: 0.625rem 0.875rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.filters-left {
+.filters--active {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  animation: filterActivate 0.3s ease;
+}
+
+@keyframes filterActivate {
+  from {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  to {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.filters-row {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.625rem;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
-.filters-label {
+.category-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.category-chip {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  padding: 0.4375rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.85) !important;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  min-height: 30px;
+  backdrop-filter: blur(5px);
+  white-space: nowrap;
+}
+
+.category-chip:hover {
+  background: rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.category-chip--active {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.4);
+  color: var(--q-secondary) !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(166, 77, 121, 0.3);
+  animation: chipActivate 0.25s ease;
+}
+
+@keyframes chipActivate {
+  from {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.category-chip--active:hover {
+  background: white !important;
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 4px 12px rgba(166, 77, 121, 0.4);
+}
+
+.category-chip:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.results-count-inline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  white-space: nowrap;
+  flex-shrink: 0;
+  margin-left: auto;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0.375rem;
+  transition: all 0.3s ease;
+}
+
+.results-count-inline strong {
   color: rgba(255, 255, 255, 0.85);
   font-weight: 600;
+  margin-right: 0.25rem;
 }
 
-.checkboxes {
-  display: flex;
-  align-items: center;
+.clear-btn-inline {
+  color: rgba(255, 255, 255, 0.75) !important;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  min-width: 32px;
+  min-height: 32px;
+  background: rgba(255, 255, 255, 0.08) !important;
 }
 
-.clear-btn {
-  color: rgba(255, 255, 255, 0.9) !important;
+.clear-btn-inline:hover {
+  color: white !important;
+  background: rgba(255, 255, 255, 0.2) !important;
+  transform: scale(1.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
-.filters-right {
-  min-width: 108px;
-  display: flex;
-  justify-content: flex-end;
+.clear-btn-inline:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline-offset: 2px;
 }
 
-.clear-btn--hidden {
-  visibility: hidden;
+/* Animations */
+.fade-enter-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  animation: fadeIn 0.3s ease;
+}
+
+.fade-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: scale(0.9) translateY(-2px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-2px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .project-card {
@@ -440,8 +535,55 @@ const clearFilters = () => {
   }
 
   .filters {
-    flex-direction: column;
-    align-items: flex-start;
+    padding: 0.625rem 0.875rem;
+  }
+
+  .filters-row {
+    gap: 0.5rem;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+    padding-bottom: 0.25rem;
+  }
+
+  .filters-row::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .filters-row::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .filters-row::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+  }
+
+  .category-chips-container {
+    flex-shrink: 0;
+    gap: 0.5rem;
+  }
+
+  .category-chip {
+    flex-shrink: 0;
+    min-height: 36px;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8125rem;
+  }
+
+  .results-count-inline {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
+  }
+
+  .clear-btn-inline {
+    min-width: 36px;
+    min-height: 36px;
+    flex-shrink: 0;
   }
 }
 </style>
