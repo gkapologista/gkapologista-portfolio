@@ -760,7 +760,8 @@ useMeta(() => {
   align-items: center;
   justify-content: center;
   background: rgba(0, 0, 0, 0.5);
-  color: var(--accent-teal);
+  /* Fixed bright teal — this overlay stays dark in both themes. */
+  color: #00adb5;
   opacity: 0;
   transition: opacity 0.22s ease;
   pointer-events: none;
@@ -1200,7 +1201,8 @@ useMeta(() => {
   justify-content: center;
   opacity: 0;
   transition: opacity 0.22s ease;
-  color: var(--accent-teal);
+  /* Fixed bright teal — this overlay stays dark in both themes. */
+  color: #00adb5;
 }
 
 .g-thumb:hover .g-hover,
@@ -1321,8 +1323,8 @@ useMeta(() => {
 
 .lb-close:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: var(--accent-teal);
-  color: var(--accent-teal);
+  border-color: #00adb5;
+  color: #00adb5;
 }
 
 .lb-nav {
@@ -1344,12 +1346,12 @@ useMeta(() => {
 
 .lb-nav:hover {
   background: rgba(0, 173, 181, 0.15);
-  border-color: var(--accent-teal);
-  color: var(--accent-teal);
+  border-color: #00adb5;
+  color: #00adb5;
 }
 
 .lb-nav:focus-visible {
-  outline: 2px solid var(--accent-teal);
+  outline: 2px solid #00adb5;
   outline-offset: 2px;
 }
 
@@ -1420,11 +1422,11 @@ useMeta(() => {
 
 .lb-thumb.is-active {
   opacity: 1;
-  border-color: var(--accent-teal);
+  border-color: #00adb5;
 }
 
 .lb-thumb:focus-visible {
-  outline: 2px solid var(--accent-teal);
+  outline: 2px solid #00adb5;
   outline-offset: 2px;
 }
 
