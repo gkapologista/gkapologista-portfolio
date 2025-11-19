@@ -579,6 +579,7 @@ useMeta(() => {
   position: fixed;
   inset: 0;
   z-index: 1;
+  transform: translateZ(0); /* promote to compositor layer — prevents iOS Safari blur/scroll jank */
   pointer-events: none;
 }
 
