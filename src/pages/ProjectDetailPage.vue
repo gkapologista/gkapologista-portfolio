@@ -933,7 +933,8 @@ useMeta(() => {
   width: 100%;
   border-radius: 2px;
   text-decoration: none;
-  transition: all 0.18s ease;
+  transition: background-color 0.18s ease, transform 0.18s ease,
+    box-shadow 0.18s ease;
   cursor: pointer;
 }
 
@@ -979,7 +980,8 @@ useMeta(() => {
   background: var(--border-subtle);
   border: 1px solid var(--border-mid);
   color: var(--text-muted);
-  transition: all 0.15s ease;
+  transition: border-color 0.15s ease, color 0.15s ease,
+    background-color 0.15s ease;
   cursor: default;
   overflow-wrap: anywhere;
 }
@@ -1160,7 +1162,8 @@ useMeta(() => {
   color: inherit;
   font: inherit;
   text-align: inherit;
-  transition: all 0.22s ease;
+  transition: border-color 0.22s ease, box-shadow 0.22s ease,
+    transform 0.22s ease;
 }
 
 .g-thumb:hover {
@@ -1302,7 +1305,8 @@ useMeta(() => {
   min-width: 44px;
   min-height: 44px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, opacity 0.2s ease;
 }
 
 .lb-close {
