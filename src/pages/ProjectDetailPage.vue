@@ -38,7 +38,12 @@
         <header class="hero" :class="{ 'is-visible': heroVisible }">
           <!-- Image pane -->
           <div class="hero-img-pane">
-            <div class="img-frame">
+            <button
+              type="button"
+              class="img-frame"
+              @click="openLightbox(0)"
+              :aria-label="`View ${project.title} screenshot 1`"
+            >
               <picture>
                 <source :srcset="webpFrom(project.images[0])" type="image/webp" />
                 <img
@@ -56,7 +61,10 @@
               <span class="corner c-tr"></span>
               <span class="corner c-bl"></span>
               <span class="corner c-br"></span>
-            </div>
+              <span class="hero-zoom" aria-hidden="true">
+                <q-icon name="zoom_in" size="md" />
+              </span>
+            </button>
             <div class="img-badge">
               <q-icon name="photo_library" size="xs" />
               {{ project.images.length }} image{{ project.images.length !== 1 ? 's' : '' }}
@@ -712,10 +720,22 @@ useMeta(() => {
 
 .img-frame {
   position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
   overflow: clip;
   border: 1px solid color-mix(in srgb, var(--accent-teal) 35%, transparent);
   box-shadow: 8px 8px 0 var(--shadow-hard);
   background: var(--bg-grey);
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+}
+
+.img-frame:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
 }
 
 .hero-img {
@@ -729,6 +749,25 @@ useMeta(() => {
 
 .img-frame:hover .hero-img {
   transform: scale(1.04);
+}
+
+/* Zoom affordance — the hero opens the lightbox at the first image. */
+.hero-zoom {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: var(--accent-teal);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+  pointer-events: none;
+}
+
+.img-frame:hover .hero-zoom,
+.img-frame:focus-visible .hero-zoom {
+  opacity: 1;
 }
 
 /* Scan-line animation */
