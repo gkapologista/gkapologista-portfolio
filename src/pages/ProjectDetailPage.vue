@@ -268,7 +268,11 @@
       </main>
 
       <!-- Lightbox -->
-      <q-dialog v-model="lightbox" persistent @keydown="handleLightboxKeydown">
+      <q-dialog
+        v-model="lightbox"
+        :aria-label="project ? `${project.title} screenshots` : 'Image viewer'"
+        @keydown="handleLightboxKeydown"
+      >
         <div
           class="lightbox"
           v-touch-swipe.mouse.horizontal="onLightboxSwipe"
@@ -310,7 +314,7 @@
           <div
             v-if="project && project.images.length > 1"
             class="lb-strip"
-            role="tablist"
+            role="group"
             aria-label="Screenshots"
           >
             <button
