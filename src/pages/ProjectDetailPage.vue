@@ -254,7 +254,7 @@
       <!-- Not found -->
       <div v-else class="not-found">
         <q-icon name="warning" color="negative" size="64px" />
-        <h2>Project Not Found</h2>
+        <h1>Project Not Found</h1>
         <p>The project you are looking for does not exist or has been removed.</p>
         <q-btn
           color="primary"
@@ -1393,7 +1393,7 @@ useMeta(() => {
   padding-inline: 1rem;
 }
 
-.not-found h2 {
+.not-found h1 {
   font-size: 1.5rem;
   color: var(--text-white) !important;
   margin: 0;
