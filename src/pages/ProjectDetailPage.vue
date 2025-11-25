@@ -861,7 +861,7 @@ useMeta(() => {
 .project-desc {
   color: var(--text-secondary);
   line-height: 1.7;
-  font-size: 0.875rem;
+  font-size: 1rem;
   letter-spacing: 0.01em;
   margin: 0;
   overflow-wrap: break-word;
@@ -1026,9 +1026,11 @@ useMeta(() => {
 .sec-body p {
   color: var(--text-secondary);
   line-height: 1.75;
-  font-size: 0.875rem;
+  font-size: 1rem;
   letter-spacing: 0.01em;
   margin: 0;
+  /* Cap the measure for readability — sections span the full container. */
+  max-width: 68ch;
 }
 
 /* ─── ITEM LIST ─── */
@@ -1038,6 +1040,8 @@ useMeta(() => {
   margin: 0;
   display: flex;
   flex-direction: column;
+  /* Cap the measure for readability. */
+  max-width: 68ch;
 }
 
 .item-list li {
@@ -1046,7 +1050,7 @@ useMeta(() => {
   gap: 0.7rem;
   min-width: 0;
   color: var(--text-secondary);
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.65;
   padding: 0.6rem 0;
   border-bottom: 1px solid var(--border-subtle);
