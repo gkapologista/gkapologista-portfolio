@@ -16,6 +16,7 @@
 
   /* Accent */
   --accent-teal: #00ADB5;
+  --accent-teal-hover: #00C8D1;
 
   /* Text */
   --text-white: #EEEEEE;
@@ -43,6 +44,7 @@
 
   /* Accent: darker teal meets WCAG AA on warm white */
   --accent-teal: #006B72;
+  --accent-teal-hover: #00555B;
 
   /* Text */
   --text-white: #1A1A1D;
