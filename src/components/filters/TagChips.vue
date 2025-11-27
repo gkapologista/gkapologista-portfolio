@@ -140,7 +140,8 @@ const toggleTag = (tag: string) => {
   padding: 0.5rem 0;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  /* Theme-aware foreground token so the thumb stays visible in light theme. */
+  scrollbar-color: var(--text-dim) transparent;
 }
 
 .tag-chips-scroll::-webkit-scrollbar {
@@ -152,12 +153,12 @@ const toggleTag = (tag: string) => {
 }
 
 .tag-chips-scroll::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.3);
+  background: var(--text-dim);
   border-radius: 2px;
 }
 
 .tag-chips-scroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: var(--text-faint);
 }
 
 .tag-chip {
