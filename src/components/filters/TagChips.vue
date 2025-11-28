@@ -214,7 +214,8 @@ const toggleTag = (tag: string) => {
 }
 
 .tag-chip:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.5);
+  /* Solid, theme-aware ring — visible on both charcoal and active-teal chips. */
+  outline: 2px solid var(--text-white);
   outline-offset: 2px;
 }
 

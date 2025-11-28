@@ -97,13 +97,13 @@ const selectedCount = computed(() => props.modelValue.length);
 
 .category-dropdown:hover {
   background: var(--bg-charcoal);
-  box-shadow: 2px 2px 0px rgba(0, 173, 181, 0.4);
+  box-shadow: 0 0 8px rgba(0, 173, 181, 0.4);
 }
 
 .category-dropdown:focus-within {
   background: var(--bg-charcoal);
   border-color: var(--accent-teal);
-  box-shadow: 4px 4px 0px rgba(0, 173, 181, 0.6);
+  box-shadow: 0 0 10px rgba(0, 173, 181, 0.55);
 }
 
 .category-dropdown :deep(.q-field__control) {

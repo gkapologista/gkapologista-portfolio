@@ -175,7 +175,9 @@ onUnmounted(() => document.removeEventListener('keydown', handleSlashKey));
 }
 
 .search-input__field::placeholder {
-  color: rgba(238, 238, 238, 0.38);
+  /* Theme-aware muted — the old hardcoded light 0.38 was low-contrast and
+     invisible on the light theme's input surface. */
+  color: var(--text-muted);
   font-style: normal;
 }
 

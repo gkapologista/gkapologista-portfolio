@@ -33,8 +33,11 @@
         <CategoryDropdown v-model="selectedCategories" />
 
         <div class="filters-meta-mobile">
-          <span class="results-count-mobile">
-            {{ resultsCount }}
+          <span
+            class="results-count-mobile"
+            :aria-label="`${resultsCount} ${resultsCount === 1 ? 'project' : 'projects'}`"
+          >
+            [{{ resultsCount }}]
           </span>
           <transition name="fade">
             <q-btn v-if="hasActiveFilters" flat dense round icon="filter_alt_off" size="sm"
@@ -181,7 +184,7 @@ const handleClearAll = () => {
 }
 
 .clear-all-btn:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.5);
+  outline: 2px solid var(--text-white);
   outline-offset: 2px;
 }
 
