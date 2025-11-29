@@ -18,7 +18,7 @@
             :class="{ 'is-loaded': imageLoaded }" />
         </picture>
         <div class="project-title-overlay">
-          <h3 class="project-title" :title="project.title">{{ project.title }}</h3>
+          <h2 class="project-title" :title="project.title">{{ project.title }}</h2>
         </div>
       </div>
       <div class="project-info">
@@ -93,10 +93,6 @@ const categoryConfig = computed(
   min-width: 0; /* prevent flex overflow on long content */
   box-sizing: border-box;
   position: relative;
-}
-
-.project-card-container {
-  width: 100%;
 }
 
 .project-card:hover {
