@@ -38,6 +38,9 @@
           >
             +{{ project.tags.length - 3 }}
           </q-chip>
+          <span v-if="project.year" class="project-year" :aria-label="`Year ${project.year}`">
+            [{{ project.year }}]
+          </span>
         </div>
       </div>
       <div class="project-cta" aria-hidden="true">
@@ -246,7 +249,7 @@ const categoryConfig = computed(
 }
 
 .project-description {
-  color: var(--text-secondary, rgba(255, 255, 255, 0.8));
+  color: var(--text-secondary);
   font-size: 1rem;
   line-height: var(--lh-relaxed, 1.6);
   letter-spacing: 0.01em;
@@ -289,6 +292,17 @@ const categoryConfig = computed(
   font-style: italic;
   opacity: 0.7;
   cursor: default;
+}
+
+/* Optional release year, pushed to the far end of the tag row. */
+.project-year {
+  margin-left: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 /* CTA: persistent footer by default — the baseline for touch / no-hover pointers. */
@@ -348,7 +362,8 @@ const categoryConfig = computed(
 }
 
 .project-card-link:focus-visible {
-  outline: 3px solid rgba(255, 255, 255, 0.8);
+  /* Solid, theme-aware ring — the old translucent white was invisible in light mode. */
+  outline: 3px solid var(--text-white);
   outline-offset: 4px;
 }
 
