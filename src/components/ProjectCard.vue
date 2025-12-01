@@ -130,24 +130,23 @@ const categoryConfig = computed(
   border-radius: 2px;
   border: 1px solid currentColor;
   box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.45);
-  backdrop-filter: blur(6px);
+  /* Fixed dark backing (like the title scrim) so contrast holds over any
+     image region and in both themes; text colors are fixed-light to match. */
+  background: #222831;
   pointer-events: none;
 }
 
 .category-badge--web {
-  color: var(--accent-teal);
-  background: rgba(0, 173, 181, 0.12);
+  color: #00adb5;
 }
 
 .category-badge--game {
-  color: #A64D79;
-  background: rgba(166, 77, 121, 0.15);
+  color: #eeb4d8;
 }
 
 .category-badge--system {
-  color: var(--text-white, #EEEEEE);
+  color: #eeeeee;
   border-color: rgba(238, 238, 238, 0.45);
-  background: rgba(238, 238, 238, 0.08);
 }
 
 .category-badge__symbol {

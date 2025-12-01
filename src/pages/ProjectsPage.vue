@@ -958,12 +958,6 @@ watch(filteredProjects, async () => {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.projects-page :deep(.category-badge--game) {
-  color: #eeb4d8;
-  background: rgba(166, 77, 121, 0.22);
-  border-color: rgba(238, 180, 216, 0.75);
-}
-
 .projects-page :deep(.tech-chip--overflow) {
   opacity: 1;
 }
