@@ -229,9 +229,12 @@ const categoryConfig = computed(
   letter-spacing: -0.02em;
   line-height: var(--lh-tight, 1.1);
   text-transform: uppercase;
-  white-space: nowrap;
+  /* Allow up to two lines so longer titles aren't clipped mid-word. */
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .project-info {
