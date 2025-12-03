@@ -1,5 +1,12 @@
 <template>
   <div class="project-detail-page">
+    <a
+      href="#main-content"
+      class="skip-to-main"
+      @click.prevent="focusMainContent"
+    >
+      Skip to main content
+    </a>
     <div class="bg-fx">
       <div class="scan-lines"></div>
       <div class="grid-pattern"></div>
@@ -24,14 +31,9 @@
         </div>
       </nav>
 
-      <!-- Loading state -->
-      <div v-if="loading" class="loader-wrap">
-        <q-spinner-dots color="primary" size="64px" />
-        <p class="loader-label">Loading project details…</p>
-      </div>
-
+      <main id="main-content" tabindex="-1">
       <!-- Project content -->
-      <template v-else-if="project">
+      <template v-if="project">
         <!-- Hero: Split layout -->
         <header class="hero" :class="{ 'is-visible': heroVisible }">
           <!-- Image pane -->
@@ -113,7 +115,11 @@
 
         <!-- Detail sections -->
         <div class="detail-wrap">
-          <section class="detail-sec" style="--delay: 0">
+          <section
+            v-if="project.overview"
+            class="detail-sec"
+            style="--delay: 0"
+          >
             <div class="sec-head">
               <span class="sec-num">01</span>
               <span class="sec-divider">//</span>
@@ -124,7 +130,11 @@
             </div>
           </section>
 
-          <section class="detail-sec" style="--delay: 1">
+          <section
+            v-if="project.features?.length"
+            class="detail-sec"
+            style="--delay: 1"
+          >
             <div class="sec-head">
               <span class="sec-num">02</span>
               <span class="sec-divider">//</span>
@@ -144,7 +154,11 @@
             </div>
           </section>
 
-          <section class="detail-sec" style="--delay: 2">
+          <section
+            v-if="project.challenges?.length"
+            class="detail-sec"
+            style="--delay: 2"
+          >
             <div class="sec-head">
               <span class="sec-num">03</span>
               <span class="sec-divider">//</span>
@@ -164,7 +178,11 @@
             </div>
           </section>
 
-          <section class="detail-sec gallery-sec" style="--delay: 3">
+          <section
+            v-if="galleryImages.length"
+            class="detail-sec gallery-sec"
+            style="--delay: 3"
+          >
             <div class="sec-head">
               <span class="sec-num">04</span>
               <span class="sec-divider">//</span>
@@ -173,18 +191,18 @@
             <div class="sec-body">
               <div class="gallery-grid">
                 <button
-                  v-for="(img, idx) in project.images"
-                  :key="img"
+                  v-for="g in galleryImages"
+                  :key="g.src"
                   type="button"
                   class="g-thumb"
-                  @click="openLightbox(Number(idx))"
-                  :aria-label="`View ${project.title} screenshot ${Number(idx) + 1}`"
+                  @click="openLightbox(g.index)"
+                  :aria-label="`View ${project.title} screenshot ${g.index + 1}`"
                 >
                   <picture>
-                    <source :srcset="webpFrom(img)" type="image/webp" />
+                    <source :srcset="webpFrom(g.src)" type="image/webp" />
                     <img
-                      :src="img"
-                      :alt="`${project.title} screenshot ${Number(idx) + 1}`"
+                      :src="g.src"
+                      :alt="`${project.title} screenshot ${g.index + 1}`"
                       width="1280"
                       height="800"
                       loading="lazy"
@@ -199,6 +217,38 @@
             </div>
           </section>
         </div>
+
+        <!-- Prev / next project pager -->
+        <nav
+          v-if="prevProject || nextProject"
+          class="project-pager"
+          aria-label="Project navigation"
+        >
+          <button
+            v-if="prevProject"
+            type="button"
+            class="pager-btn pager-prev"
+            @click="goToProject(prevProject)"
+          >
+            <q-icon name="chevron_left" size="sm" class="pager-arrow" />
+            <span class="pager-meta">
+              <span class="pager-label">Prev</span>
+              <span class="pager-title">{{ prevProject.title }}</span>
+            </span>
+          </button>
+          <button
+            v-if="nextProject"
+            type="button"
+            class="pager-btn pager-next"
+            @click="goToProject(nextProject)"
+          >
+            <span class="pager-meta">
+              <span class="pager-label">Next</span>
+              <span class="pager-title">{{ nextProject.title }}</span>
+            </span>
+            <q-icon name="chevron_right" size="sm" class="pager-arrow" />
+          </button>
+        </nav>
       </template>
 
       <!-- Not found -->
@@ -215,10 +265,14 @@
           icon="arrow_back"
         />
       </div>
+      </main>
 
       <!-- Lightbox -->
       <q-dialog v-model="lightbox" persistent @keydown="handleLightboxKeydown">
-        <div class="lightbox">
+        <div
+          class="lightbox"
+          v-touch-swipe.mouse.horizontal="onLightboxSwipe"
+        >
           <button
             class="lb-close"
             @click="lightbox = false"
@@ -227,8 +281,9 @@
             <q-icon name="close" size="sm" />
           </button>
           <button
-            v-if="carouselIndex > 0"
+            v-if="project && project.images.length > 1"
             class="lb-nav lb-prev"
+            :disabled="carouselIndex === 0"
             @click="prevImage"
             aria-label="Previous image"
           >
@@ -244,13 +299,36 @@
             />
           </picture>
           <button
-            v-if="project && carouselIndex < project.images.length - 1"
+            v-if="project && project.images.length > 1"
             class="lb-nav lb-next"
+            :disabled="carouselIndex >= project.images.length - 1"
             @click="nextImage"
             aria-label="Next image"
           >
             <q-icon name="chevron_right" />
           </button>
+          <div
+            v-if="project && project.images.length > 1"
+            class="lb-strip"
+            role="tablist"
+            aria-label="Screenshots"
+          >
+            <button
+              v-for="(img, i) in project.images"
+              :key="img"
+              type="button"
+              class="lb-thumb"
+              :class="{ 'is-active': i === carouselIndex }"
+              :aria-current="i === carouselIndex ? 'true' : undefined"
+              :aria-label="`Go to screenshot ${i + 1}`"
+              @click="carouselIndex = i"
+            >
+              <picture>
+                <source :srcset="webpFrom(img)" type="image/webp" />
+                <img :src="img" :alt="''" loading="lazy" decoding="async" />
+              </picture>
+            </button>
+          </div>
           <div v-if="project" class="lb-caption">
             {{ project.title }} — {{ carouselIndex + 1 }} /
             {{ project.images.length }}
@@ -292,9 +370,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import { projects } from '../data/projects';
+import { type Project, projects } from '../data/projects';
 import { useMeta } from 'quasar';
 import { webpFrom } from '../utils/images';
 import IconGithub from '../components/icons/IconGithub.vue';
@@ -303,15 +381,55 @@ import IconLinkedin from '../components/icons/IconLinkedin.vue';
 const route = useRoute();
 const router = useRouter();
 const slug = computed(() => route.params.slug as string);
-const loading = ref(true);
-const project = ref();
+const project = ref<Project | undefined>();
 const carouselIndex = ref(0);
 const lightbox = ref(false);
 const heroVisible = ref(false);
 const currentYear = computed(() => new Date().getFullYear());
 
+// Gallery excludes the hero image (images[0]); keep each image's absolute
+// index so the lightbox still opens at the right slide and can reach the hero.
+const galleryImages = computed(() =>
+  (project.value?.images ?? [])
+    .map((src, index) => ({ src, index }))
+    .slice(1),
+);
+
+// Wrap-around neighbours for the prev/next project pager.
+const currentIndex = computed(() =>
+  projects.findIndex((p) => p.slug === slug.value),
+);
+const prevProject = computed<Project | undefined>(() => {
+  const i = currentIndex.value;
+  if (i < 0 || projects.length <= 1) return undefined;
+  return projects[(i - 1 + projects.length) % projects.length];
+});
+const nextProject = computed<Project | undefined>(() => {
+  const i = currentIndex.value;
+  if (i < 0 || projects.length <= 1) return undefined;
+  return projects[(i + 1) % projects.length];
+});
+
 function goBack() {
-  router.back();
+  if (window.history.state?.back) {
+    router.back();
+  } else {
+    router.push('/projects');
+  }
+}
+
+/** Hash-router safe: avoid replacing `#/route` with `#main-content`. */
+function focusMainContent() {
+  const el = document.getElementById('main-content');
+  if (!el || !(el instanceof HTMLElement)) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.focus({ preventScroll: true });
+  el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+}
+function goToProject(target?: Project) {
+  if (target) {
+    router.push({ name: 'ProjectDetail', params: { slug: target.slug } });
+  }
 }
 function openLightbox(idx: number) {
   carouselIndex.value = idx;
@@ -327,6 +445,13 @@ function nextImage() {
     carouselIndex.value++;
   }
 }
+function onLightboxSwipe({ direction }: { direction?: string }) {
+  if (direction === 'left') {
+    nextImage();
+  } else if (direction === 'right') {
+    prevImage();
+  }
+}
 function handleLightboxKeydown(event: KeyboardEvent) {
   if (event.key === 'ArrowLeft') {
     prevImage();
@@ -337,29 +462,96 @@ function handleLightboxKeydown(event: KeyboardEvent) {
   }
 }
 
-onMounted(() => {
-  project.value = projects.find((p) => p.slug === slug.value);
-  loading.value = false;
+function revealHero() {
+  heroVisible.value = false;
   requestAnimationFrame(() => {
     setTimeout(() => {
       heroVisible.value = true;
     }, 50);
   });
-  if (project.value) {
-    useMeta({
-      title: project.value.title,
-      meta: {
-        description: {
-          name: 'description',
-          content: project.value.description,
-        },
-      },
-    });
-  }
+}
+function loadProject() {
+  project.value = projects.find((p) => p.slug === slug.value);
+  carouselIndex.value = 0;
+  lightbox.value = false;
+}
+
+// The ProjectDetail route reuses this component across slugs, so onMounted only
+// fires once — re-resolve and re-animate whenever the slug changes in place.
+watch(slug, () => {
+  loadProject();
+  revealHero();
+});
+
+onMounted(() => {
+  loadProject();
+  revealHero();
+});
+
+// Reactive so title/description/social tags refresh on in-place navigation.
+useMeta(() => {
+  const p = project.value;
+  if (!p) return { title: 'Project Not Found' };
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
+  const url = `${origin}${import.meta.env.BASE_URL}#/project/${p.slug}`;
+  const image = `${origin}${p.images[0]}`;
+  return {
+    title: p.title,
+    meta: {
+      description: { name: 'description', content: p.description },
+      ogTitle: { property: 'og:title', content: p.title },
+      ogDescription: { property: 'og:description', content: p.description },
+      ogImage: { property: 'og:image', content: image },
+      ogType: { property: 'og:type', content: 'website' },
+      ogUrl: { property: 'og:url', content: url },
+      twitterCard: { name: 'twitter:card', content: 'summary_large_image' },
+    },
+    link: {
+      canonical: { rel: 'canonical', href: url },
+    },
+  };
 });
 </script>
 
 <style scoped>
+/* ─── SKIP LINK ─── */
+.skip-to-main {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: 50;
+  transform: translateY(calc(-100% - 1.5rem));
+  padding: 0.625rem 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bg-charcoal);
+  background: var(--accent-teal);
+  border: 1px solid var(--accent-teal);
+  border-radius: 2px;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.skip-to-main:focus {
+  outline: none;
+}
+
+.skip-to-main:focus-visible {
+  transform: translateY(0.75rem);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.45);
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
+}
+
+.skip-to-main:focus-visible:hover {
+  color: var(--bg-charcoal);
+  background: #00c4cd;
+}
+
 /* ─── PAGE SHELL ─── */
 .project-detail-page {
   min-height: 100vh;
@@ -667,7 +859,7 @@ onMounted(() => {
 }
 
 .project-desc {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.78);
   line-height: 1.7;
   font-size: 0.875rem;
   letter-spacing: 0.01em;
@@ -832,7 +1024,7 @@ onMounted(() => {
 }
 
 .sec-body p {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   line-height: 1.75;
   font-size: 0.875rem;
   letter-spacing: 0.01em;
@@ -853,7 +1045,7 @@ onMounted(() => {
   align-items: flex-start;
   gap: 0.7rem;
   min-width: 0;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 0.875rem;
   line-height: 1.65;
   padding: 0.6rem 0;
@@ -965,6 +1157,77 @@ onMounted(() => {
   opacity: 1;
 }
 
+/* ─── PROJECT PAGER ─── */
+.project-pager {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+  margin-top: clamp(2rem, 1.25rem + 3vw, 3rem);
+}
+
+.pager-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 64px;
+  padding: 0.75rem clamp(0.85rem, 0.5rem + 1.5vw, 1.25rem);
+  min-width: 0;
+  cursor: pointer;
+  background: var(--bg-grey);
+  border: 1px solid rgba(0, 173, 181, 0.25);
+  box-shadow: 6px 6px 0 rgba(0, 0, 0, 0.3);
+  color: rgba(255, 255, 255, 0.85);
+  transition: box-shadow 0.22s ease, transform 0.22s ease,
+    border-color 0.22s ease;
+}
+
+.pager-next {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.pager-btn:hover {
+  border-color: var(--accent-teal);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.35);
+  transform: translate(-2px, -2px);
+}
+
+.pager-btn:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+}
+
+.pager-arrow {
+  flex-shrink: 0;
+  color: var(--accent-teal);
+}
+
+.pager-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.pager-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-teal);
+  opacity: 0.7;
+}
+
+.pager-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /* ─── LIGHTBOX ─── */
 .lightbox {
   position: relative;
@@ -1038,6 +1301,17 @@ onMounted(() => {
   outline-offset: 2px;
 }
 
+.lb-nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.lb-nav:disabled:hover {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+
 .lb-img {
   max-width: 100%;
   max-height: min(65vh, 65svh);
@@ -1056,37 +1330,59 @@ onMounted(() => {
   overflow-wrap: anywhere;
 }
 
-/* ─── LOADING STATE ─── */
-.loader-wrap,
+/* Lightbox thumbnail strip */
+.lb-strip {
+  display: flex;
+  gap: 0.4rem;
+  max-width: 100%;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+
+.lb-thumb {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 40px;
+  padding: 0;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+  background: #111;
+  opacity: 0.55;
+  transition: opacity 0.18s ease, border-color 0.18s ease;
+}
+
+.lb-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lb-thumb:hover {
+  opacity: 0.85;
+  border-color: rgba(0, 173, 181, 0.5);
+}
+
+.lb-thumb.is-active {
+  opacity: 1;
+  border-color: var(--accent-teal);
+}
+
+.lb-thumb:focus-visible {
+  outline: 2px solid var(--accent-teal);
+  outline-offset: 2px;
+}
+
+/* ─── NOT FOUND ─── */
 .not-found {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   min-height: min(60vh, 60svh);
-  gap: 1.5rem;
-}
-
-.loader-label {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.8rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  animation: blink 1.5s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 0.35;
-  }
-  50% {
-    opacity: 1;
-  }
-}
-
-/* ─── NOT FOUND ─── */
-.not-found {
   gap: 1rem;
   text-align: center;
   color: rgba(255, 255, 255, 0.7);
@@ -1192,9 +1488,17 @@ onMounted(() => {
   .cta-btn {
     width: auto;
   }
+
+  .project-pager {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .skip-to-main {
+    transition: none;
+  }
+
   *,
   *::before,
   *::after {
