@@ -118,3 +118,16 @@ Unchanged terminal styling (charcoal, teal border, hard shadow, ▲); size and o
 ### Edge case
 
 If **N unchanged** but filters change, identical live text may not re-announce in all SRs (out of scope per Danny plan).
+
+---
+
+## Heading `text-wrap` — parity check (Danny reference)
+
+**Date:** 2026-04-18
+
+**Verified in source (no code gap):** [`src/pages/ProjectsPage.vue`](src/pages/ProjectsPage.vue)
+
+- `h1.page-heading` contains `<span class="page-heading__title">My Projects</span>` plus count badge; `.page-heading__title` has `flex: 1 1 auto; min-width: 0`.
+- `.page-heading__title`, `.empty-state__heading`, `.cta-heading` declare `text-wrap: balance`, with `@supports (text-wrap: pretty) { … text-wrap: pretty; }`.
+
+**Manual check:** Resize viewport on `/#/projects` in DevTools or device to confirm multi-line headings look acceptable in supported browsers (Phase 4 visual verification).
