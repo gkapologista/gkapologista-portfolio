@@ -14,7 +14,7 @@
       <TagChips v-model="selectedTags" :available-tags="availableTags" :max-visible="8" />
 
       <div class="filters-meta">
-        <span class="results-count" aria-live="polite" aria-atomic="true">
+        <span class="results-count">
           <strong>{{ resultsCount }}</strong>
           {{ resultsCount === 1 ? 'project' : 'projects' }}
         </span>
@@ -33,7 +33,7 @@
         <CategoryDropdown v-model="selectedCategories" />
 
         <div class="filters-meta-mobile">
-          <span class="results-count-mobile" aria-live="polite" aria-atomic="true">
+          <span class="results-count-mobile">
             {{ resultsCount }}
           </span>
           <transition name="fade">

@@ -94,3 +94,27 @@
 ### Vibe
 
 Unchanged terminal styling (charcoal, teal border, hard shadow, ▲); size and offsets only.
+
+---
+
+## Filter results live region (SR announcements)
+
+### DOM
+
+- First child inside `.content` (inside `<main>`): `<p id="projects-filter-results-live" class="projects-results-live" role="status" aria-live="polite" aria-atomic="true">` bound to a computed string from `filteredProjects.length`.
+
+### Copy
+
+| Count | Text |
+|-------|------|
+| `1` | `Showing 1 project` |
+| else | `Showing N projects` |
+
+### Dedupe checklist
+
+- [x] Remove `aria-live` / `aria-atomic` from `ProjectFilters.vue` `.results-count` and `.results-count-mobile`.
+- [ ] Empty-state panel (`.empty-state`) still uses `role="status"` when visible — possible double announcement at zero results; acceptable unless follow-up narrows it.
+
+### Edge case
+
+If **N unchanged** but filters change, identical live text may not re-announce in all SRs (out of scope per Danny plan).
