@@ -662,21 +662,24 @@ watch(filteredProjects, async () => {
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
-/* Scroll to top button */
+/* Scroll to top button — min 44×44px touch target; safe area clears iOS home indicator */
 .scroll-top-btn {
   position: fixed;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+  right: calc(2rem + env(safe-area-inset-right, 0px));
   z-index: 10;
-  width: 2.5rem;
-  height: 2.5rem;
+  box-sizing: border-box;
+  min-width: 44px;
+  min-height: 44px;
+  width: 2.75rem;
+  height: 2.75rem;
   background: var(--bg-charcoal);
   border: 1px solid var(--accent-teal);
   color: var(--accent-teal);
   border-radius: 2px;
   cursor: pointer;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 700;
   display: flex;
   align-items: center;

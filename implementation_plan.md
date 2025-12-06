@@ -75,3 +75,22 @@
 - `text-wrap: balance` — Chromium, Safari (recent), Firefox.
 - `text-wrap: pretty` — newer; layered so supporting UAs prefer `pretty`, others keep `balance` or no-op if neither applies.
 - No change to [`src/css/app.css`](src/css/app.css).
+
+---
+
+## Scroll-to-top FAB (touch target + safe area)
+
+### Current vs target
+
+| Property | Before | After |
+|----------|--------|--------|
+| Hit box | `2.5rem` (~40px) | **≥ 44×44 CSS px** (`min-width` / `min-height` + `box-sizing: border-box`) |
+| `bottom` / `right` | `2rem` | `calc(2rem + env(safe-area-inset-bottom, 0px))` and `calc(2rem + env(safe-area-inset-right, 0px))` |
+
+### Viewport caveat
+
+[`index.html`](index.html) only adds `viewport-fit=cover` in Cordova/Capacitor builds. On plain mobile Safari, `env(safe-area-inset-bottom)` may stay **0** until the viewport meta includes `viewport-fit=cover` for the web SPA — optional global follow-up if devices still clip the home indicator.
+
+### Vibe
+
+Unchanged terminal styling (charcoal, teal border, hard shadow, ▲); size and offsets only.
