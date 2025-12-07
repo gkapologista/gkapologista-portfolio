@@ -18,7 +18,7 @@
     <div class="content">
       <div class="header-section">
         <h1 class="text-h2 text-white q-mb-sm page-heading">
-          My Projects
+          <span class="page-heading__title">My Projects</span>
           <span class="project-count-badge" :aria-label="`${projects.length} projects total`">[ {{ projects.length }} ]</span>
         </h1>
         <q-btn
@@ -338,6 +338,25 @@ watch(filteredProjects, async () => {
   display: flex;
   align-items: baseline;
   gap: 0.625rem;
+}
+
+.page-heading__title {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.page-heading__title,
+.empty-state__heading,
+.cta-heading {
+  text-wrap: balance;
+}
+
+@supports (text-wrap: pretty) {
+  .page-heading__title,
+  .empty-state__heading,
+  .cta-heading {
+    text-wrap: pretty;
+  }
 }
 
 .project-count-badge {

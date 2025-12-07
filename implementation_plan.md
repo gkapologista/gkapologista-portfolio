@@ -46,3 +46,32 @@
 | `:deep(.search-input …)` | Placeholder `rgba(255,255,255,0.62)` on charcoal |
 | `:deep(.category-badge--game)` | Lighter label `#eeb4d8` on grey panel |
 | `:deep(.tech-chip--overflow)` / `:deep(.tag-chip--more)` | `opacity: 1` to avoid diluted contrast over grey |
+
+---
+
+## Heading `text-wrap` (follow-up)
+
+### DOM (after)
+
+```html
+<h1 class="… page-heading">
+  <span class="page-heading__title">My Projects</span>
+  <span class="project-count-badge" …>[ … ]</span>
+</h1>
+```
+
+`h1.page-heading` stays `display: flex`; the title span gets `flex: 1 1 auto; min-width: 0` so it can shrink-wrap while the badge stays a sibling.
+
+### Selectors
+
+| Selector | `text-wrap: balance` | `@supports (text-wrap: pretty)` → `pretty` |
+|----------|----------------------|---------------------------------------------|
+| `.page-heading__title` | yes | yes |
+| `.empty-state__heading` | yes | yes |
+| `.cta-heading` | yes | yes |
+
+### Browser support
+
+- `text-wrap: balance` — Chromium, Safari (recent), Firefox.
+- `text-wrap: pretty` — newer; layered so supporting UAs prefer `pretty`, others keep `balance` or no-op if neither applies.
+- No change to [`src/css/app.css`](src/css/app.css).
