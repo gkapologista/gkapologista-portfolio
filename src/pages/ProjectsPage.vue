@@ -345,8 +345,8 @@ watch(filteredProjects, async () => {
   font-size: 0.9375rem;
   font-weight: 400;
   letter-spacing: 0.06em;
+  /* Full-strength teal on charcoal meets WCAG AA (opacity was ~3.67:1). */
   color: var(--accent-teal);
-  opacity: 0.75;
   white-space: nowrap;
 }
 
@@ -532,7 +532,8 @@ watch(filteredProjects, async () => {
 }
 
 .empty-state__bracket {
-  color: rgba(238, 238, 238, 0.4);
+  /* Brackets sit on grey panel; ≥4.5:1 at large sizes for consistency */
+  color: rgba(238, 238, 238, 0.62);
 }
 
 .empty-state__cursor {
@@ -552,7 +553,7 @@ watch(filteredProjects, async () => {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   letter-spacing: 0.15em;
-  color: rgba(238, 238, 238, 0.35);
+  color: rgba(238, 238, 238, 0.74);
   text-transform: uppercase;
   margin: 0;
 }
@@ -574,7 +575,7 @@ watch(filteredProjects, async () => {
   font-size: 0.9rem;
   color: var(--text-white);
   background: var(--bg-charcoal);
-  border: 1px solid rgba(0, 173, 181, 0.35);
+  border: 1px solid rgba(0, 173, 181, 0.55);
   border-radius: 2px;
   padding: 0.625rem 1rem;
   max-width: 100%;
@@ -599,7 +600,7 @@ watch(filteredProjects, async () => {
 }
 
 .empty-state__filter-sep {
-  color: rgba(238, 238, 238, 0.4);
+  color: rgba(238, 238, 238, 0.62);
 }
 
 /* Clear button */
@@ -926,7 +927,7 @@ watch(filteredProjects, async () => {
 .footer-copyright {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
-  color: rgba(238, 238, 238, 0.5);
+  color: rgba(238, 238, 238, 0.58);
 }
 
 .footer-links {
@@ -955,7 +956,26 @@ watch(filteredProjects, async () => {
 }
 
 .footer-divider {
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* WCAG AA: child / Quasar surfaces under this page only (tokens unchanged) */
+.projects-page :deep(.search-input .q-field__native::placeholder) {
+  color: rgba(255, 255, 255, 0.62);
+}
+
+.projects-page :deep(.category-badge--game) {
+  color: #eeb4d8;
+  background: rgba(166, 77, 121, 0.22);
+  border-color: rgba(238, 180, 216, 0.75);
+}
+
+.projects-page :deep(.tech-chip--overflow) {
+  opacity: 1;
+}
+
+.projects-page :deep(.tag-chip--more) {
+  opacity: 1;
 }
 
 @media (max-width: 768px) {
