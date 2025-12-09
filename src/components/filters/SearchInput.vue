@@ -1,6 +1,7 @@
 <template>
   <div class="search-input-wrapper">
     <q-input
+      ref="qInput"
       v-model="modelValue"
       :placeholder="placeholder"
       dense
@@ -29,7 +30,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 
 interface Props {
   modelValue: string;
@@ -56,6 +57,19 @@ const handleClear = () => {
   emit('update:modelValue', '');
   emit('clear');
 };
+
+const qInput = ref<{ focus: () => void } | null>(null);
+
+const handleSlashKey = (e: KeyboardEvent) => {
+  if (e.key !== '/') return;
+  const tag = (e.target as HTMLElement).tagName;
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(tag)) return;
+  e.preventDefault();
+  qInput.value?.focus();
+};
+
+onMounted(() => document.addEventListener('keydown', handleSlashKey));
+onUnmounted(() => document.removeEventListener('keydown', handleSlashKey));
 </script>
 
 <style scoped>

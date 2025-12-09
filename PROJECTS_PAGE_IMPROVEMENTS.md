@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-19 — 22 / 27 items resolved
+> Last updated: 2025-12-19 — 23 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -40,6 +40,6 @@
 ## Minor / Polish
 
 - [x] **No scroll-to-top control** — Added a fixed `▲` button (bottom-right, `z-index: 10`) that appears after 300px of scroll via a passive `scroll` listener. Inverts teal/charcoal on hover with a hard-shadow lift. `scrollToTop` reads `prefers-reduced-motion` to use `behavior: 'instant'` vs `'smooth'`. Entrance/exit uses `scroll-top-fade` transition (opacity + `translateY(8px)`); reduced-motion users get opacity-only fade.
-- [ ] **`/` keyboard shortcut to focus search** — A common pattern (GitHub, Linear, Notion) that significantly improves keyboard-first navigation. `SearchInput` already handles `Escape` to clear — `Enter` to open and `/` to focus would complete the set.
+- [x] **`/` keyboard shortcut to focus search** — Added a document-level `keydown` listener in `SearchInput.vue` (same component that owns the Escape handler). Pressing `/` when focus is outside any form field calls `qInput.focus()` and `preventDefault()` to suppress the character. Guard: skips `INPUT`, `TEXTAREA`, and `SELECT` targets. Listener is cleaned up on unmount.
 - [ ] **`setTimeout(400)` in watcher is fragile** (`ProjectsPage.vue:131–135`) — Hardcoded duration must be kept in sync with the `0.4s` transition. Extract both to a shared constant or CSS custom property.
 - [ ] **CTA email `subject` param lacks encoding** (`ProjectsPage.vue:51`) — `?subject=Project Inquiry` has an unencoded space. Use `%20` or `encodeURIComponent` to ensure cross-client compatibility.
