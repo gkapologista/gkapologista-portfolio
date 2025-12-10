@@ -116,6 +116,18 @@
       </section>
     </div>
 
+    <!-- Scroll to top -->
+    <Transition name="scroll-top-fade">
+      <button
+        v-if="showScrollTop"
+        class="scroll-top-btn"
+        @click="scrollToTop"
+        aria-label="Scroll to top"
+      >
+        ▲
+      </button>
+    </Transition>
+
     <!-- Footer -->
     <footer class="site-footer">
       <div class="footer-content">
@@ -151,7 +163,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, nextTick, watch } from 'vue';
+import { ref, computed, nextTick, watch, onMounted, onUnmounted } from 'vue';
 import { projects } from '../data/projects';
 import { useRouter, useRoute } from 'vue-router';
 import { useFilters, categories, type Category } from '../composables/useFilters';
@@ -212,6 +224,22 @@ watch(
 
 // Sync URL → filter state (handles browser back/forward)
 watch(() => route.query, syncFromQuery, { deep: true });
+
+// --- Scroll to top ---
+
+const showScrollTop = ref(false);
+
+const onScroll = () => {
+  showScrollTop.value = window.scrollY > 300;
+};
+
+const scrollToTop = () => {
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  window.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' });
+};
+
+onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }));
+onUnmounted(() => window.removeEventListener('scroll', onScroll));
 
 // --- Layout shift prevention ---
 
@@ -559,6 +587,52 @@ watch(filteredProjects, async () => {
   box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
+/* Scroll to top button */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 10;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: var(--bg-charcoal);
+  border: 1px solid var(--accent-teal);
+  color: var(--accent-teal);
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.scroll-top-btn:hover {
+  background: var(--accent-teal);
+  color: var(--bg-charcoal);
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-top-btn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+.scroll-top-fade-enter-active,
+.scroll-top-fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.scroll-top-fade-enter-from,
+.scroll-top-fade-leave-to {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
 /* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
   /* Project grid — instant filter transitions */
@@ -605,6 +679,24 @@ watch(filteredProjects, async () => {
 
   .empty-state__clear-btn:hover,
   .empty-state__clear-btn:active {
+    transform: none;
+  }
+
+  .scroll-top-btn {
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .scroll-top-btn:hover {
+    transform: none;
+  }
+
+  .scroll-top-fade-enter-active,
+  .scroll-top-fade-leave-active {
+    transition: opacity 0.2s ease;
+  }
+
+  .scroll-top-fade-enter-from,
+  .scroll-top-fade-leave-to {
     transform: none;
   }
 }

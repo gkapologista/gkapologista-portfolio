@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-19 — 21 / 27 items resolved
+> Last updated: 2025-12-19 — 22 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -39,7 +39,7 @@
 
 ## Minor / Polish
 
-- [ ] **No scroll-to-top control** — On a page with many projects, no way to quickly return to the top after scrolling past the filters to the bottom cards.
+- [x] **No scroll-to-top control** — Added a fixed `▲` button (bottom-right, `z-index: 10`) that appears after 300px of scroll via a passive `scroll` listener. Inverts teal/charcoal on hover with a hard-shadow lift. `scrollToTop` reads `prefers-reduced-motion` to use `behavior: 'instant'` vs `'smooth'`. Entrance/exit uses `scroll-top-fade` transition (opacity + `translateY(8px)`); reduced-motion users get opacity-only fade.
 - [ ] **`/` keyboard shortcut to focus search** — A common pattern (GitHub, Linear, Notion) that significantly improves keyboard-first navigation. `SearchInput` already handles `Escape` to clear — `Enter` to open and `/` to focus would complete the set.
 - [ ] **`setTimeout(400)` in watcher is fragile** (`ProjectsPage.vue:131–135`) — Hardcoded duration must be kept in sync with the `0.4s` transition. Extract both to a shared constant or CSS custom property.
 - [ ] **CTA email `subject` param lacks encoding** (`ProjectsPage.vue:51`) — `?subject=Project Inquiry` has an unencoded space. Use `%20` or `encodeURIComponent` to ensure cross-client compatibility.
