@@ -773,7 +773,7 @@ watch(filteredProjects, async () => {
 }
 
 .footer-copyright {
-  font-family: 'JetBrains Mono', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
   color: rgba(238, 238, 238, 0.5);
 }
@@ -787,7 +787,7 @@ watch(filteredProjects, async () => {
 .footer-link {
   display: inline-flex;
   align-items: center;
-  font-family: 'JetBrains Mono', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
   color: var(--accent-teal);
   text-decoration: none;

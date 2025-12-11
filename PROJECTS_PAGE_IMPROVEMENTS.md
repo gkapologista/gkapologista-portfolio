@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-19 — 20 / 27 items resolved
+> Last updated: 2025-12-19 — 21 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -35,7 +35,7 @@
 - [x] **No total project count in unfiltered state** — Added `[ N ]` inline with the `<h1>` via `.project-count-badge` (JetBrains Mono, teal, 75% opacity). Uses `projects.length` directly (the static import), so it always reflects the true total regardless of active filters. `aria-label` exposes the count to screen readers.
 - [x] **Grid breakpoint gap between 768–1024px** — Added `@media (min-width: 769px) and (max-width: 899px)` with `grid-template-columns: repeat(2, 1fr)`. At those widths, `minmax(360px, 1fr)` fell to 1 column because two 360px columns + 32px gap (752px) exceeded the ~705–751px content area. The forced 2-column layout bridges the gap until `auto-fill` naturally takes over at ≥900px.
 - [x] **`position: fixed` background on a scrollable page** — Added `transform: translateZ(0)` to `.background-effects`, promoting it to its own GPU compositor layer. iOS Safari's rubber-band scroll no longer triggers a main-thread repaint of the fixed element. The ancestral `overflow-x: clip` (set earlier) already prevents clipping; this closes the remaining jank vector.
-- [ ] **Font fallback typo in footer** (`ProjectsPage.vue:420, 434`) — `.footer-copyright` and `.footer-link` declare `font-family: 'JetBrains Mono', sans-serif`. The fallback should be `monospace`, not `sans-serif`.
+- [x] **Font fallback typo in footer** — Changed `font-family: 'JetBrains Mono', sans-serif` to `'JetBrains Mono', monospace` on both `.footer-copyright` and `.footer-link`. If JetBrains Mono fails to load, the browser now falls back to a monospace face instead of a proportional sans-serif.
 
 ## Minor / Polish
 
