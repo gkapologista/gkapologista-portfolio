@@ -297,6 +297,7 @@ watch(filteredProjects, async () => {
   right: 0;
   bottom: 0;
   z-index: 1;
+  transform: translateZ(0); /* promote to compositor layer — prevents iOS Safari scroll jank */
 }
 
 .grid-pattern {
