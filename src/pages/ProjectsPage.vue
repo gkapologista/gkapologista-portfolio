@@ -379,6 +379,15 @@ watch(filteredProjects, async () => {
   transition: opacity 0.3s ease;
 }
 
+/* Mid-range breakpoint: force 2 columns between mobile and the point where
+   auto-fill naturally produces 2 columns (~816px viewport). Without this,
+   minmax(360px, 1fr) falls back to 1 very wide column at 769–815px. */
+@media (min-width: 769px) and (max-width: 899px) {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Fade Animation Classes */
 .project-fade-enter-active {
   transition: opacity 0.4s ease, transform 0.4s ease;

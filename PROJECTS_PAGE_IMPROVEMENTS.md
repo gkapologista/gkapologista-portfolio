@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-19 — 18 / 27 items resolved
+> Last updated: 2025-12-19 — 19 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -33,7 +33,7 @@
 
 - [x] **Stagger animation missing from project grid** — Added `(project, index)` to the `v-for` and bound `--card-index` via `:style`. Enter transition uses `transition-delay: min(calc(var(--card-index, 0) * 50ms), 400ms)` plus a `translateY(14px)` rise for a premium staggered reveal. Leave is instant (no stagger). Reduced-motion users get `transition: none; transition-delay: 0ms; transform: none`.
 - [x] **No total project count in unfiltered state** — Added `[ N ]` inline with the `<h1>` via `.project-count-badge` (JetBrains Mono, teal, 75% opacity). Uses `projects.length` directly (the static import), so it always reflects the true total regardless of active filters. `aria-label` exposes the count to screen readers.
-- [ ] **Grid breakpoint gap between 768–1024px** — At ~800–900px viewport widths, `minmax(360px, 1fr)` produces a single very wide card. A mid-range breakpoint (e.g. 900px with 2-column layout) would smooth this.
+- [x] **Grid breakpoint gap between 768–1024px** — Added `@media (min-width: 769px) and (max-width: 899px)` with `grid-template-columns: repeat(2, 1fr)`. At those widths, `minmax(360px, 1fr)` fell to 1 column because two 360px columns + 32px gap (752px) exceeded the ~705–751px content area. The forced 2-column layout bridges the gap until `auto-fill` naturally takes over at ≥900px.
 - [ ] **`position: fixed` background on a scrollable page** (`ProjectsPage.vue:185`) — On iOS Safari, `position: fixed` combined with `overflow: hidden` on an ancestor can cause scroll jank and visual artifacts.
 - [ ] **Font fallback typo in footer** (`ProjectsPage.vue:420, 434`) — `.footer-copyright` and `.footer-link` declare `font-family: 'JetBrains Mono', sans-serif`. The fallback should be `monospace`, not `sans-serif`.
 
