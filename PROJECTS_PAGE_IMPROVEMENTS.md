@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-19 — 17 / 27 items resolved
+> Last updated: 2025-12-19 — 18 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -32,7 +32,7 @@
 ## Layout & Visual Design
 
 - [x] **Stagger animation missing from project grid** — Added `(project, index)` to the `v-for` and bound `--card-index` via `:style`. Enter transition uses `transition-delay: min(calc(var(--card-index, 0) * 50ms), 400ms)` plus a `translateY(14px)` rise for a premium staggered reveal. Leave is instant (no stagger). Reduced-motion users get `transition: none; transition-delay: 0ms; transform: none`.
-- [ ] **No total project count in unfiltered state** — A subtle "X projects" badge near the page heading or filters lets users orient before interacting.
+- [x] **No total project count in unfiltered state** — Added `[ N ]` inline with the `<h1>` via `.project-count-badge` (JetBrains Mono, teal, 75% opacity). Uses `projects.length` directly (the static import), so it always reflects the true total regardless of active filters. `aria-label` exposes the count to screen readers.
 - [ ] **Grid breakpoint gap between 768–1024px** — At ~800–900px viewport widths, `minmax(360px, 1fr)` produces a single very wide card. A mid-range breakpoint (e.g. 900px with 2-column layout) would smooth this.
 - [ ] **`position: fixed` background on a scrollable page** (`ProjectsPage.vue:185`) — On iOS Safari, `position: fixed` combined with `overflow: hidden` on an ancestor can cause scroll jank and visual artifacts.
 - [ ] **Font fallback typo in footer** (`ProjectsPage.vue:420, 434`) — `.footer-copyright` and `.footer-link` declare `font-family: 'JetBrains Mono', sans-serif`. The fallback should be `monospace`, not `sans-serif`.

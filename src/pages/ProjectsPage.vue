@@ -9,7 +9,10 @@
 
     <div class="content">
       <div class="header-section">
-        <h1 class="text-h2 text-white q-mb-sm">My Projects</h1>
+        <h1 class="text-h2 text-white q-mb-sm page-heading">
+          My Projects
+          <span class="project-count-badge" :aria-label="`${projects.length} projects total`">[ {{ projects.length }} ]</span>
+        </h1>
         <q-btn
           flat
           icon="home"
@@ -246,6 +249,22 @@ watch(filteredProjects, async () => {
   z-index: 3;
   max-width: var(--content-max-width, 1280px);
   margin: 0 auto;
+}
+
+.page-heading {
+  display: flex;
+  align-items: baseline;
+  gap: 0.625rem;
+}
+
+.project-count-badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--accent-teal);
+  opacity: 0.75;
+  white-space: nowrap;
 }
 
 .header-section {
