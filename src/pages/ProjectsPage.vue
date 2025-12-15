@@ -36,9 +36,10 @@
         class="projects-grid"
       >
         <div
-          v-for="project in filteredProjects"
+          v-for="(project, index) in filteredProjects"
           :key="project.id"
           class="project-card-container"
+          :style="{ '--card-index': index }"
         >
           <ProjectCard :project="project" />
         </div>
@@ -360,12 +361,20 @@ watch(filteredProjects, async () => {
 }
 
 /* Fade Animation Classes */
-.project-fade-enter-active,
-.project-fade-leave-active {
-  transition: opacity 0.4s ease;
+.project-fade-enter-active {
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition-delay: min(calc(var(--card-index, 0) * 50ms), 400ms);
 }
 
-.project-fade-enter-from,
+.project-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.project-fade-enter-from {
+  opacity: 0;
+  transform: translateY(14px);
+}
+
 .project-fade-leave-to {
   opacity: 0;
 }
@@ -531,6 +540,11 @@ watch(filteredProjects, async () => {
   .project-fade-enter-active,
   .project-fade-leave-active {
     transition: none;
+    transition-delay: 0ms;
+  }
+
+  .project-fade-enter-from {
+    transform: none;
   }
 
   /* Nav button hover lift */
