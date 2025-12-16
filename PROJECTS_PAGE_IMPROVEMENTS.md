@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-19 — 15 / 27 items resolved
+> Last updated: 2025-12-19 — 16 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -27,7 +27,7 @@
 - [x] **Fixed card heights are brittle** — Replaced `height / min-height / max-height: 450px` with `min-height: 450px; height: 100%` on `.project-card`, and added `height: 100%` to `.project-card-link`. The grid's existing `align-items: stretch` now propagates row height down the chain, equalizing all cards in a row. Mobile floor dropped to `min-height: 380px; height: 100%` on the same pattern.
 - [x] **Project title ellipsis silently truncates** — Added `:title="project.title"` to the `<h3>` so the native browser tooltip exposes the full name on hover whenever the text is truncated by ellipsis.
 - [x] **Border-radius inconsistency** — Changed `.project-card-link` from `border-radius: 1rem` to `4px` to match `.project-card`. Focus ring now hugs the card's sharp corners correctly.
-- [ ] **`will-change` is on the wrong element** (`ProjectCard.vue:93`) — `will-change: transform, opacity` is on `.project-card-container` but the transforms are applied to `.project-card`. Move it.
+- [x] **`will-change` is on the wrong element** — Moved `will-change: transform, opacity` from `.project-card-container` to `.project-card`, where the hover `transform` and transition `opacity` are actually applied.
 
 ## Layout & Visual Design
 

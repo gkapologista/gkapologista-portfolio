@@ -84,12 +84,11 @@ const categoryConfig = computed(
   width: 100%;
   box-sizing: border-box;
   position: relative;
+  will-change: transform, opacity;
 }
 
 .project-card-container {
   width: 100%;
-  /* Fluid width */
-  will-change: transform, opacity;
 }
 
 .project-card:hover {
