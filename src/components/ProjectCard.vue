@@ -335,7 +335,7 @@ const categoryConfig = computed(
   color: inherit;
   display: block;
   height: 100%;
-  border-radius: 1rem;
+  border-radius: 4px;
   transition: outline 0.2s ease;
 }
 
