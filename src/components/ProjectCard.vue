@@ -14,7 +14,7 @@
         <img :src="project.images[0]" :alt="project.title" loading="lazy" @load="onImageLoad"
           :class="{ 'is-loaded': imageLoaded }" />
         <div class="project-title-overlay">
-          <h3 class="project-title">{{ project.title }}</h3>
+          <h3 class="project-title" :title="project.title">{{ project.title }}</h3>
         </div>
       </div>
       <div class="project-info">

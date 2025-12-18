@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2026-04-16 — 13 / 27 items resolved
+> Last updated: 2025-12-19 — 14 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -25,7 +25,7 @@
 - [ ] **No `year` displayed on card** — The `year` field exists on `Project` but is never rendered anywhere on the card.
 - [ ] **No quick-action links (live/repo)** — `liveUrl` and `repoUrl` are in the data model but users must navigate into the detail page to find them. Consider small icon links on card hover.
 - [x] **Fixed card heights are brittle** — Replaced `height / min-height / max-height: 450px` with `min-height: 450px; height: 100%` on `.project-card`, and added `height: 100%` to `.project-card-link`. The grid's existing `align-items: stretch` now propagates row height down the chain, equalizing all cards in a row. Mobile floor dropped to `min-height: 380px; height: 100%` on the same pattern.
-- [ ] **Project title ellipsis silently truncates** (`ProjectCard.vue:225–227`) — `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` on the image overlay hides long titles with no tooltip (`title` attribute) to expose the full name.
+- [x] **Project title ellipsis silently truncates** — Added `:title="project.title"` to the `<h3>` so the native browser tooltip exposes the full name on hover whenever the text is truncated by ellipsis.
 - [ ] **Border-radius inconsistency** — `.project-card-link` has `border-radius: 1rem` (`:338`) but `.project-card` is `4px` (`:75`). The focus ring follows the link's radius, misaligning with the card's visual shape.
 - [ ] **`will-change` is on the wrong element** (`ProjectCard.vue:93`) — `will-change: transform, opacity` is on `.project-card-container` but the transforms are applied to `.project-card`. Move it.
 
