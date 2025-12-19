@@ -79,9 +79,8 @@ const categoryConfig = computed(
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  height: 450px;
   min-height: 450px;
-  max-height: 450px;
+  height: 100%;
   width: 100%;
   box-sizing: border-box;
   position: relative;
@@ -335,6 +334,7 @@ const categoryConfig = computed(
   text-decoration: none;
   color: inherit;
   display: block;
+  height: 100%;
   border-radius: 1rem;
   transition: outline 0.2s ease;
 }
@@ -347,9 +347,8 @@ const categoryConfig = computed(
 @media (max-width: 768px) {
   .project-card {
     width: 100%;
-    height: 380px;
     min-height: 380px;
-    max-height: 380px;
+    height: 100%;
   }
 
   .project-image {

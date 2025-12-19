@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2026-04-16 — 12 / 27 items resolved
+> Last updated: 2026-04-16 — 13 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -21,13 +21,13 @@
 
 - [x] **No affordance that the card is clickable** — Added a `> VIEW PROJECT ↗` teal strip (`position: absolute, bottom: 0`) that slides up from below the card on hover (`translateY(100%)` → `translateY(0)`). Works with the existing `overflow: hidden`. Reduced-motion users get an opacity fade instead of a slide.
 - [x] **Tags truncated with no overflow indicator** — Added a `+N` chip after the three visible tags (`v-if="project.tags.length > 3"`), styled with dashed teal border and italic text matching the `tag-chip--more` pattern from `TagChips.vue`. Includes `aria-label` for screen readers and suppressed hover lift since the chip is non-interactive.
-- [x] **No category badge on card** — The `category` field (`'Web Application' | 'Game' | 'System'`) exists in data but isn't displayed on the card. Users can't tell what type a project is at a glance.
+- [x] **No category badge on card** — Added a terminal-style badge (`position: absolute`, top-left of image) with per-category symbols and colors: `</>` teal (Web Application), `▶` purple (Game), `>_` white (System). `backdrop-filter: blur(6px)` ensures legibility over any image; `pointer-events: none` since it's informational only. Driven by a `CATEGORY_CONFIG` map in `<script setup>`.
 - [ ] **No `year` displayed on card** — The `year` field exists on `Project` but is never rendered anywhere on the card.
 - [ ] **No quick-action links (live/repo)** — `liveUrl` and `repoUrl` are in the data model but users must navigate into the detail page to find them. Consider small icon links on card hover.
-- [ ] **Fixed card heights are brittle** (`ProjectCard.vue:50–52`) — `height: 450px / min-height / max-height` all hardcoded. If description text length varies, this creates visual imbalance. Consider `min-height` only and let the grid equalize row heights.
-- [ ] **Project title ellipsis silently truncates** (`ProjectCard.vue:147–149`) — `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` on the image overlay hides long titles with no tooltip (`title` attribute) to expose the full name.
-- [ ] **Border-radius inconsistency** — `.project-card-link` has `border-radius: 1rem` (`:209`) but `.project-card` is `4px` (`:46`). The focus ring follows the link's radius, misaligning with the card's visual shape.
-- [ ] **`will-change` is on the wrong element** (`ProjectCard.vue:61`) — `will-change: transform, opacity` is on `.project-card-container` but the transforms are applied to `.project-card`. Move it.
+- [x] **Fixed card heights are brittle** — Replaced `height / min-height / max-height: 450px` with `min-height: 450px; height: 100%` on `.project-card`, and added `height: 100%` to `.project-card-link`. The grid's existing `align-items: stretch` now propagates row height down the chain, equalizing all cards in a row. Mobile floor dropped to `min-height: 380px; height: 100%` on the same pattern.
+- [ ] **Project title ellipsis silently truncates** (`ProjectCard.vue:225–227`) — `white-space: nowrap; overflow: hidden; text-overflow: ellipsis` on the image overlay hides long titles with no tooltip (`title` attribute) to expose the full name.
+- [ ] **Border-radius inconsistency** — `.project-card-link` has `border-radius: 1rem` (`:338`) but `.project-card` is `4px` (`:75`). The focus ring follows the link's radius, misaligning with the card's visual shape.
+- [ ] **`will-change` is on the wrong element** (`ProjectCard.vue:93`) — `will-change: transform, opacity` is on `.project-card-container` but the transforms are applied to `.project-card`. Move it.
 
 ## Layout & Visual Design
 
