@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-29 — 9 / 27 items resolved
+> Last updated: 2025-12-29 — 10 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -19,7 +19,7 @@
 
 ## Card UX (`ProjectCard.vue`)
 
-- [ ] **No affordance that the card is clickable** — On hover, the card lifts (`translateY(-5px)`) but there's no overlay, arrow icon, "View Project" label, or cursor pointer indicator beyond the browser default. Add a visible hover CTA.
+- [x] **No affordance that the card is clickable** — Added a `> VIEW PROJECT ↗` teal strip (`position: absolute, bottom: 0`) that slides up from below the card on hover (`translateY(100%)` → `translateY(0)`). Works with the existing `overflow: hidden`. Reduced-motion users get an opacity fade instead of a slide.
 - [ ] **Tags truncated with no overflow indicator** (`ProjectCard.vue:15`) — `.slice(0, 3)` silently drops tags. Add a `+N more` chip when the project has more than 3 tags.
 - [ ] **No category badge on card** — The `category` field (`'Web Application' | 'Game' | 'System'`) exists in data but isn't displayed on the card. Users can't tell what type a project is at a glance.
 - [ ] **No `year` displayed on card** — The `year` field exists on `Project` but is never rendered anywhere on the card.

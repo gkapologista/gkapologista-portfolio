@@ -18,6 +18,10 @@
           </q-chip>
         </div>
       </div>
+      <div class="project-cta" aria-hidden="true">
+        <span class="project-cta__label">&gt;&nbsp;VIEW PROJECT</span>
+        <span class="project-cta__arrow">↗</span>
+      </div>
     </div>
   </router-link>
 </template>
@@ -202,6 +206,42 @@ const onImageLoad = () => {
   background: white !important;
 }
 
+.project-cta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2.75rem;
+  background: var(--accent-teal);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  z-index: 2;
+}
+
+.project-card:hover .project-cta {
+  transform: translateY(0);
+}
+
+.project-cta__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--bg-charcoal);
+}
+
+.project-cta__arrow {
+  font-size: 1.125rem;
+  color: var(--bg-charcoal);
+  font-weight: 700;
+  line-height: 1;
+}
+
 .project-card-link {
   text-decoration: none;
   color: inherit;
@@ -266,6 +306,16 @@ const onImageLoad = () => {
   .brand-pulse {
     animation: none;
     opacity: 0.45;
+  }
+
+  .project-cta {
+    transform: translateY(0);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .project-card:hover .project-cta {
+    opacity: 1;
   }
 }
 </style>
