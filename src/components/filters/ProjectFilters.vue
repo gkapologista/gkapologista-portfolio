@@ -13,16 +13,16 @@
 
       <TagChips v-model="selectedTags" :available-tags="availableTags" :max-visible="8" />
 
-      <transition name="fade">
-        <div v-if="hasActiveFilters" class="filters-meta">
-          <span class="results-count" aria-live="polite">
-            <strong>{{ resultsCount }}</strong>
-            {{ resultsCount === 1 ? 'project' : 'projects' }}
-          </span>
-          <q-btn flat dense round icon="filter_alt_off" class="clear-all-btn" aria-label="Clear all filters"
-            @click="handleClearAll" />
-        </div>
-      </transition>
+      <div class="filters-meta">
+        <span class="results-count" aria-live="polite" aria-atomic="true">
+          <strong>{{ resultsCount }}</strong>
+          {{ resultsCount === 1 ? 'project' : 'projects' }}
+        </span>
+        <transition name="fade">
+          <q-btn v-if="hasActiveFilters" flat dense round icon="filter_alt_off" class="clear-all-btn"
+            aria-label="Clear all filters" @click="handleClearAll" />
+        </transition>
+      </div>
     </div>
 
     <!-- Mobile Layout -->
@@ -32,15 +32,15 @@
       <div class="filters-mobile-row">
         <CategoryDropdown v-model="selectedCategories" />
 
-        <transition name="fade">
-          <div v-if="hasActiveFilters" class="filters-meta-mobile">
-            <span class="results-count-mobile" aria-live="polite">
-              {{ resultsCount }}
-            </span>
-            <q-btn flat dense round icon="filter_alt_off" size="sm" class="clear-all-btn-mobile"
-              aria-label="Clear all filters" @click="handleClearAll" />
-          </div>
-        </transition>
+        <div class="filters-meta-mobile">
+          <span class="results-count-mobile" aria-live="polite" aria-atomic="true">
+            {{ resultsCount }}
+          </span>
+          <transition name="fade">
+            <q-btn v-if="hasActiveFilters" flat dense round icon="filter_alt_off" size="sm"
+              class="clear-all-btn-mobile" aria-label="Clear all filters" @click="handleClearAll" />
+          </transition>
+        </div>
       </div>
 
       <TagChips v-model="selectedTags" :available-tags="availableTags" :max-visible="6" />

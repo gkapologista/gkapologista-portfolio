@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-29 — 8 / 27 items resolved
+> Last updated: 2025-12-29 — 9 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -15,7 +15,7 @@
 - [x] **Footer icons missing `aria-hidden`** — Added `aria-hidden="true"` to the GitHub and LinkedIn `<q-icon>` elements in the footer, matching the home page pattern.
 - [x] **No `prefers-reduced-motion` support** — Added `@media (prefers-reduced-motion: reduce)` to `ProjectCard.vue` (disables card lift, image scale, chip lift, skeleton pulse) and expanded the existing block in `ProjectsPage.vue` (removes nav/CTA/clear-btn lifts, disables project-fade and grid transitions). Opacity fades are preserved as they don't cause vestibular issues.
 - [x] **`overflow: hidden` on `.projects-page`** — Replaced with `overflow-x: clip`. Clips any accidental horizontal overflow without creating a scroll container, so focus rings on edge cards are no longer clipped. `background-effects` is `position: fixed` and never contributed to page overflow anyway.
-- [ ] **Results count disappears when no filters active** — The `aria-live` region only renders when `hasActiveFilters`. Users never know the total project count, and screen readers get no announcement on initial page load.
+- [x] **Results count disappears when no filters active** — Removed `v-if="hasActiveFilters"` from the count container; moved it onto the clear button alone (with its own `<transition>`). Count badge is now always in the DOM showing total or filtered count. Added `aria-atomic="true"` to both desktop and mobile `aria-live` spans.
 
 ## Card UX (`ProjectCard.vue`)
 
