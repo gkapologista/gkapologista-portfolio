@@ -237,4 +237,35 @@ const onImageLoad = () => {
     font-size: 1.5rem;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .project-card {
+    transition: box-shadow 0.3s ease;
+  }
+
+  .project-card:hover {
+    transform: none;
+  }
+
+  .project-image img {
+    transition: opacity 0.5s ease;
+  }
+
+  .project-card:hover .project-image img {
+    transform: none;
+  }
+
+  .tech-chip {
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .tech-chip:hover {
+    transform: none;
+  }
+
+  .brand-pulse {
+    animation: none;
+    opacity: 0.45;
+  }
+}
 </style>

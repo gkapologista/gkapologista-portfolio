@@ -235,7 +235,7 @@ watch(filteredProjects, async () => {
   min-height: 100vh;
   width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
   background-color: var(--bg-charcoal);
   padding: 2rem;
 }
@@ -523,6 +523,27 @@ watch(filteredProjects, async () => {
 
 /* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
+  /* Project grid — instant filter transitions */
+  .projects-grid {
+    transition: none;
+  }
+
+  .project-fade-enter-active,
+  .project-fade-leave-active {
+    transition: none;
+  }
+
+  /* Nav button hover lift */
+  .nav-btn:hover {
+    transform: none;
+  }
+
+  /* CTA button hover lift */
+  .cta-btn:hover {
+    transform: none;
+  }
+
+  /* Empty state — cursor blink, slide transitions, button lifts */
   .empty-state__cursor {
     animation: none;
     opacity: 1;
@@ -536,6 +557,11 @@ watch(filteredProjects, async () => {
   .empty-state-fade-enter-from,
   .empty-state-fade-leave-to {
     opacity: 0;
+    transform: none;
+  }
+
+  .empty-state__clear-btn:hover,
+  .empty-state__clear-btn:active {
     transform: none;
   }
 }
