@@ -26,6 +26,7 @@
         :available-tags="availableTags"
         :results-count="filteredProjects.length"
         @clear-all="clearFilters"
+        @search-cleared="clearSearch"
       />
 
       <TransitionGroup
@@ -170,6 +171,7 @@ const {
   filteredProjects,
   clearFilters,
   hasActiveFilters,
+  clearSearch,
 } = useFilters(ref(projects));
 
 // --- URL ↔ Filter sync ---
