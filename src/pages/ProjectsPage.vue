@@ -146,14 +146,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick, watch } from 'vue';
+import { ref, computed, nextTick, watch } from 'vue';
 import { projects } from '../data/projects';
-import { useRouter } from 'vue-router';
-import { useFilters } from '../composables/useFilters';
+import { useRouter, useRoute } from 'vue-router';
+import { useFilters, categories, type Category } from '../composables/useFilters';
 import { ProjectFilters } from '../components/filters';
 import ProjectCard from '../components/ProjectCard.vue';
 
 const router = useRouter();
+const route = useRoute();
 
 const goHome = () => {
   router.push('/');
@@ -171,6 +172,43 @@ const {
   hasActiveFilters,
 } = useFilters(ref(projects));
 
+// --- URL ↔ Filter sync ---
+
+const syncFromQuery = (query: typeof route.query) => {
+  const q = typeof query.q === 'string' ? query.q : '';
+  const cats = typeof query.category === 'string'
+    ? (query.category.split(',').filter(c => (categories as readonly string[]).includes(c)) as Category[])
+    : [];
+  const tgs = typeof query.tags === 'string'
+    ? query.tags.split(',').filter(Boolean)
+    : [];
+
+  if (q !== searchQuery.value) searchQuery.value = q;
+  if (JSON.stringify(cats) !== JSON.stringify(selectedCategories.value)) selectedCategories.value = cats;
+  if (JSON.stringify(tgs) !== JSON.stringify(selectedTags.value)) selectedTags.value = tgs;
+};
+
+// Initialize from URL on load (supports bookmarked/shared URLs)
+syncFromQuery(route.query);
+
+// Sync filter state → URL (uses replace to avoid polluting history)
+watch(
+  [searchQuery, selectedCategories, selectedTags],
+  () => {
+    const query: Record<string, string> = {};
+    if (searchQuery.value) query.q = searchQuery.value;
+    if (selectedCategories.value.length) query.category = selectedCategories.value.join(',');
+    if (selectedTags.value.length) query.tags = selectedTags.value.join(',');
+    router.replace({ query });
+  },
+  { deep: true },
+);
+
+// Sync URL → filter state (handles browser back/forward)
+watch(() => route.query, syncFromQuery, { deep: true });
+
+// --- Layout shift prevention ---
+
 const projectsGrid = ref<HTMLElement | null>(null);
 
 watch(filteredProjects, async () => {
@@ -187,10 +225,6 @@ watch(filteredProjects, async () => {
       projectsGrid.value.style.minHeight = '';
     }
   }, 400); // Matches transition duration
-});
-
-onMounted(() => {
-  // Simple mounting logic if needed
 });
 </script>
 

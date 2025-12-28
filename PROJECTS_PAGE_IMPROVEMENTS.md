@@ -1,12 +1,14 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
+> Last updated: 2025-12-29 — 4 / 27 items resolved
+
 ## Critical / Functional Gaps
 
 - [x] **Empty state for zero results** — When filters return 0 projects, nothing is rendered. Add a "No projects found" message with a clear-filters prompt.
-- [ ] **No search debounce** (`SearchInput.vue:50`) — `v-model` fires on every keystroke. Add a debounce (~250ms) to avoid thrashing `filteredProjects` on rapid typing.
-- [ ] **Filter state not persisted in URL** — Filters (search, categories, tags) don't sync to query params. Users can't bookmark or share a filtered view. Use `useRoute`/`useRouter` to read/write `?q=&tags=` on change.
+- [x] **No search debounce** (`useFilters.ts`) — Already implemented: `useFilters` uses `useDebounce(searchQuery, 300)` internally; `filteredProjects` only recomputes after 300ms of inactivity.
+- [x] **Filter state not persisted in URL** — `syncFromQuery` initializes state from `route.query` on load; a `watch` on filters syncs to URL via `router.replace`; a second `watch` on `route.query` handles back/forward navigation. URL format: `?q=&category=&tags=`.
 - [ ] **`search-cleared` event goes nowhere** (`ProjectsPage.vue:28`) — `ProjectFilters` emits `search-cleared` but `ProjectsPage` has no listener for it. Dead event.
-- [ ] **`onMounted` is a no-op** (`ProjectsPage.vue:138–140`) — Remove the empty lifecycle hook entirely.
+- [x] **`onMounted` is a no-op** — Removed the empty lifecycle hook and `onMounted` from the Vue import.
 
 ## Accessibility
 
