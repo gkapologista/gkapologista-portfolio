@@ -126,7 +126,7 @@
             rel="noopener noreferrer"
             class="footer-link"
           >
-            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" />
+            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" aria-hidden="true" />
             GitHub
           </a>
           <span class="footer-divider">•</span>
@@ -136,7 +136,7 @@
             rel="noopener noreferrer"
             class="footer-link"
           >
-            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" />
+            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" aria-hidden="true" />
             LinkedIn
           </a>
         </div>

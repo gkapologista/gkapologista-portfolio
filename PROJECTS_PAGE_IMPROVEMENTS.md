@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-29 — 4 / 27 items resolved
+> Last updated: 2025-12-29 — 5 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -12,7 +12,7 @@
 
 ## Accessibility
 
-- [ ] **Footer icons missing `aria-hidden`** (`ProjectsPage.vue:76, 86`) — The GitHub and LinkedIn `<q-icon>` elements in the footer are decorative but lack `aria-hidden="true"`, unlike the home page which already does this correctly.
+- [x] **Footer icons missing `aria-hidden`** — Added `aria-hidden="true"` to the GitHub and LinkedIn `<q-icon>` elements in the footer, matching the home page pattern.
 - [ ] **No `prefers-reduced-motion` support** — Card hover transforms (`translateY(-5px)`, `scale(1.05)` on image), `project-fade` transitions, and glow orb rendering don't respond to `@media (prefers-reduced-motion: reduce)`.
 - [ ] **`overflow: hidden` on `.projects-page`** (`ProjectsPage.vue:148`) — Can clip keyboard focus rings at the page edge, particularly on the first/last cards.
 - [ ] **Results count disappears when no filters active** — The `aria-live` region only renders when `hasActiveFilters`. Users never know the total project count, and screen readers get no announcement on initial page load.
