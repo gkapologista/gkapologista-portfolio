@@ -81,10 +81,10 @@
     <section class="contact-section" aria-labelledby="contact-heading">
       <div class="contact-content animate-fade-up">
         <h2 id="contact-heading" class="contact-heading">
-          Let's Work Together
+          Let&#8217;s Work Together
         </h2>
         <p class="contact-tagline">
-          Have a project in mind? I'd love to hear about it.
+          Have a project in mind? I&#8217;d love to hear about it.
         </p>
 
         <a
@@ -126,7 +126,7 @@
     <!-- Footer -->
     <footer class="site-footer">
       <div class="footer-content">
-        <span class="footer-copyright">© {{ currentYear }} GK Apologista</span>
+        <small class="footer-copyright">© {{ currentYear }} GK Apologista</small>
         <a href="mailto:gkapologista@gmail.com" class="footer-link">
           Contact
         </a>

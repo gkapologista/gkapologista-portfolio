@@ -1,6 +1,6 @@
 # HomePage.vue — Web Interface Guidelines Audit Checklist
 
-> Last updated: 2025-12-31 — 12 / 14 items resolved
+> Last updated: 2026-04-15 — 14 / 14 items resolved ✓
 
 ## Animation / `prefers-reduced-motion`
 
@@ -27,9 +27,9 @@
 
 ## Typography — Curly Quotes
 
-- [ ] **`:84` `Let's Work Together`** — straight apostrophe `'` → curly `'`
-- [ ] **`:87` `I'd love to hear about it`** — straight apostrophe `'` → curly `'`
+- [x] **`:84` `Let's Work Together`** — straight apostrophe `'` → curly `'`
+- [x] **`:87` `I'd love to hear about it`** — straight apostrophe `'` → curly `'`
 
 ## Misc
 
-- [ ] **`<span class="footer-copyright">` (`:129`)** — non-semantic wrapper around static text; use `<p>` or `<small>` instead
+- [x] **`<span class="footer-copyright">` (`:129`)** — non-semantic wrapper around static text; use `<p>` or `<small>` instead
