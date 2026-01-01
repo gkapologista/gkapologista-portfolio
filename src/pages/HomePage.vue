@@ -35,7 +35,7 @@
             >_</span
           >
         </p>
-        <h1 class="hero-heading">
+        <h1 class="hero-heading" aria-label="Crafting Digital Solutions">
           {{ displayedHeading
           }}<span
             v-if="cursorTarget === 'heading'"

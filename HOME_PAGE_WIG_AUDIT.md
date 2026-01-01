@@ -1,6 +1,6 @@
 # HomePage.vue — Web Interface Guidelines Audit Checklist
 
-> Last updated: 2026-04-15 — 10 / 14 items resolved
+> Last updated: 2026-01-01 — 11 / 14 items resolved
 
 ## Animation / `prefers-reduced-motion`
 
@@ -22,7 +22,7 @@
 
 ## Accessibility — Heading & Zoom
 
-- [ ] **Typewriter `<h1>` accessible name (`:38`)** — heading starts empty on mount; add `aria-label="Crafting Digital Solutions"` so screen readers announce a stable name immediately
+- [x] **Typewriter `<h1>` accessible name (`:38`)** — heading starts empty on mount; add `aria-label="Crafting Digital Solutions"` so screen readers announce a stable name immediately
 - [ ] **`user-scalable=no` / `maximum-scale=1` in `index.html`** — disables pinch-zoom; WCAG 1.4.4 failure — remove both attributes from the viewport meta tag
 
 ## Typography — Curly Quotes
