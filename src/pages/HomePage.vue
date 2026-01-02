@@ -92,7 +92,7 @@
           class="contact-btn"
           aria-label="Send email to GK Apologista"
         >
-          <q-icon name="email" size="sm" class="q-mr-sm" />
+          <q-icon name="email" size="sm" class="q-mr-sm" aria-hidden="true" />
           Get in Touch
         </a>
 
