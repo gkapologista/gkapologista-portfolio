@@ -12,6 +12,11 @@ export interface Project {
   category: 'Web Application' | 'Game' | 'System';
 }
 
+// Images are served from the public folder with the base path
+// In production: /gkapologista-portfolio/images/...
+// In development: /images/...
+const basePath = import.meta.env.BASE_URL;
+
 export const projects: Project[] = [
   {
     id: 1,
@@ -36,9 +41,9 @@ export const projects: Project[] = [
       'Creating a unified UI for diverse communication types',
     ],
     images: [
-      'src/assets/images/unifiedCommunicationApp1.png',
-      'src/assets/images/unifiedCommunicationApp2.png',
-      'src/assets/images/unifiedCommunicationApp3.png',
+      `${basePath}images/unifiedCommunicationApp1.png`,
+      `${basePath}images/unifiedCommunicationApp2.png`,
+      `${basePath}images/unifiedCommunicationApp3.png`,
     ],
     tags: ['Vue.js 3', 'Node.js', 'PostgreSQL', 'Express.js', 'Socket.io', 'Gmail API', 'Twilio', 'WebRTC'],
     category: 'Web Application',
@@ -66,9 +71,9 @@ export const projects: Project[] = [
       'Managing real-time data synchronization between Python and Node.js',
     ],
     images: [
-      'src/assets/images/personaWeb1.JPG',
-      'src/assets/images/personaWeb2.JPG',
-      'src/assets/images/personaWeb3.JPG',
+      `${basePath}images/personaWeb1.JPG`,
+      `${basePath}images/personaWeb2.JPG`,
+      `${basePath}images/personaWeb3.JPG`,
     ],
     tags: ['Node.js', 'Python', 'MySQL', 'Express.js', 'scikit-learn', 'Machine Learning', 'Decision Tree'],
     category: 'Web Application',
@@ -90,9 +95,9 @@ export const projects: Project[] = [
       'Managing user roles and permissions',
     ],
     images: [
-      'src/assets/images/certificationPlatform1.png',
-      'src/assets/images/certificationPlatform2.png',
-      'src/assets/images/certificationPlatform3.png',
+      `${basePath}images/certificationPlatform1.png`,
+      `${basePath}images/certificationPlatform2.png`,
+      `${basePath}images/certificationPlatform3.png`,
     ],
     tags: ['Vue.js', 'Strapi', 'PostgreSQL'],
     category: 'Web Application',
@@ -114,10 +119,10 @@ export const projects: Project[] = [
       'Complex relational data modeling',
     ],
     images: [
-      'src/assets/images/healthRecordManagementSystem1.png',
-      'src/assets/images/healthRecordManagementSystem2.png',
-      'src/assets/images/healthRecordManagementSystem3.png',
-      'src/assets/images/healthRecordManagementSystem4.png',
+      `${basePath}images/healthRecordManagementSystem1.png`,
+      `${basePath}images/healthRecordManagementSystem2.png`,
+      `${basePath}images/healthRecordManagementSystem3.png`,
+      `${basePath}images/healthRecordManagementSystem4.png`,
     ],
     tags: ['HTML', 'CSS', 'Laravel'],
     category: 'Web Application',
@@ -139,10 +144,10 @@ export const projects: Project[] = [
       'Game physics and mechanics',
     ],
     images: [
-      'src/assets/images/sausageRoyale1.png',
-      'src/assets/images/sausageRoyale2.png',
-      'src/assets/images/sausageRoyale3.png',
-      'src/assets/images/sausageRoyale4.png',
+      `${basePath}images/sausageRoyale1.png`,
+      `${basePath}images/sausageRoyale2.png`,
+      `${basePath}images/sausageRoyale3.png`,
+      `${basePath}images/sausageRoyale4.png`,
     ],
     tags: ['Unity', 'Blender', 'C++'],
     category: 'Game',
@@ -164,8 +169,8 @@ export const projects: Project[] = [
       'Optimizing for performance and SEO',
     ],
     images: [
-      'src/assets/images/websitePortfolio1.png',
-      'src/assets/images/websitePortfolio2.png',
+      `${basePath}images/websitePortfolio1.png`,
+      `${basePath}images/websitePortfolio2.png`,
     ],
     tags: ['Vue.js', 'Quasar'],
     category: 'Web Application',
@@ -187,9 +192,9 @@ export const projects: Project[] = [
       'Responsive controls',
     ],
     images: [
-      'src/assets/images/defenseQuest1.JPG',
-      'src/assets/images/defenseQuest2.JPG',
-      'src/assets/images/defenseQuest3.JPG',
+      `${basePath}images/defenseQuest1.JPG`,
+      `${basePath}images/defenseQuest2.JPG`,
+      `${basePath}images/defenseQuest3.JPG`,
     ],
     tags: ['HTML', 'CSS', 'JavaScript'],
     category: 'Game',
@@ -210,8 +215,8 @@ export const projects: Project[] = [
       'Implementing efficient data storage',
     ],
     images: [
-      'src/assets/images/studentManagementSystem1.JPG',
-      'src/assets/images/studentManagementSystem2.JPG',
+      `${basePath}images/studentManagementSystem1.JPG`,
+      `${basePath}images/studentManagementSystem2.JPG`,
     ],
     tags: ['Java'],
     category: 'System',
