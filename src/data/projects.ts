@@ -221,4 +221,31 @@ export const projects: Project[] = [
     tags: ['Java'],
     category: 'System',
   },
+  {
+    id: 9,
+    slug: 'kalifate-craft-website',
+    title: 'Kalifate Craft Website',
+    description: 'A commissioned project for a Minecraft server named Kalifate Craft. The client requested a website to showcase the server, its features, and related content.',
+    overview: 'A commissioned website project built for the Kalifate Craft Minecraft server. The website was designed to showcase the server, highlight its unique features, and provide information for players looking to join the community.',
+    technologies: ['Vue.js', 'Quasar'],
+    features: [
+      'Server showcase and feature highlights',
+      'Responsive design for all devices',
+      'Modern UI with Quasar framework',
+      'Content sections for server information',
+    ],
+    challenges: [
+      'Meeting client requirements for design and functionality',
+      'Creating an engaging presentation for the Minecraft community',
+      'Ensuring optimal performance and user experience',
+    ],
+    images: [
+      `${basePath}images/kalifateWebsite1.png`,
+      `${basePath}images/kalifateWebsite2.png`,
+      `${basePath}images/kalifateWebsite3.png`,
+      `${basePath}images/kalifateWebsite4.png`,
+    ],
+    tags: ['Vue.js', 'Quasar'],
+    category: 'Web Application',
+  },
 ];
