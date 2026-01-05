@@ -51,7 +51,7 @@
           :to="{ name: 'ProjectDetail', params: { slug: project.slug } }" class="project-card-link">
           <div class="project-card">
             <div class="project-image">
-              <img :src="project.images[0]" :alt="project.title" />
+              <img :src="project.images[0]" :alt="project.title" loading="lazy" />
               <div class="project-title-overlay">
                 <h3 class="project-title">{{ project.title }}</h3>
               </div>
@@ -68,12 +68,56 @@
           </div>
         </router-link>
       </transition-group>
+
+      <!-- Contextual CTA -->
+      <section class="contact-cta" aria-labelledby="cta-heading">
+        <h2 id="cta-heading" class="cta-heading">Like what you see?</h2>
+        <p class="cta-tagline">Let's discuss your next project.</p>
+        <a
+          href="mailto:gkapologista@gmail.com?subject=Project Inquiry"
+          class="cta-btn"
+          aria-label="Send email to discuss a project"
+        >
+          <q-icon name="email" size="sm" class="q-mr-sm" />
+          Get in Touch
+        </a>
+      </section>
     </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <span class="footer-copyright">© {{ currentYear }} GK Apologista</span>
+        <div class="footer-links">
+          <a href="mailto:gkapologista@gmail.com" class="footer-link">Contact</a>
+          <span class="footer-divider">•</span>
+          <a
+            href="https://github.com/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" />
+            GitHub
+          </a>
+          <span class="footer-divider">•</span>
+          <a
+            href="https://linkedin.com/in/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" />
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { projects } from '../data/projects';
 import { useRouter } from 'vue-router';
 import { useFilters, categories } from '../composables/useFilters';
@@ -83,6 +127,8 @@ const router = useRouter();
 const goHome = () => {
   router.push('/');
 };
+
+const currentYear = computed(() => new Date().getFullYear());
 
 const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clearFilters } =
   useFilters(ref(projects));
@@ -507,6 +553,13 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
   text-decoration: none;
   color: inherit;
   display: block;
+  border-radius: 1rem;
+  transition: outline 0.2s ease;
+}
+
+.project-card-link:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 4px;
 }
 
 @media (max-width: 768px) {
@@ -584,6 +637,131 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
     min-width: 36px;
     min-height: 36px;
     flex-shrink: 0;
+  }
+}
+
+/* Contextual CTA */
+.contact-cta {
+  margin-top: 4rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cta-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(to right, #ffffff, #e0e0e0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.cta-tagline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 1.5rem;
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.875rem 1.75rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--q-secondary);
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(106, 30, 85, 0.4);
+}
+
+.cta-btn:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 4px;
+}
+
+/* Footer */
+.site-footer {
+  position: relative;
+  z-index: 3;
+  padding: 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copyright {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.footer-divider {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .contact-cta {
+    margin-top: 2rem;
+    padding: 2rem 1.5rem;
+  }
+
+  .cta-heading {
+    font-size: 1.5rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
   }
 }
 </style>

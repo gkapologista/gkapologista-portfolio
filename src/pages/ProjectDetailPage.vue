@@ -58,12 +58,17 @@
                   v-for="(img, idx) in project.images?.slice(0, 4)"
                   :key="img"
                   class="gallery-item"
-                  @click="openLightbox(idx)"
+                  tabindex="0"
+                  role="button"
+                  :aria-label="'View ' + project.title + ' screenshot ' + (Number(idx) + 1)"
+                  @click="openLightbox(Number(idx))"
+                  @keydown.enter="openLightbox(Number(idx))"
                 >
                   <img
                     :src="img"
-                    :alt="project.title + ' screenshot ' + (idx + 1)"
+                    :alt="project.title + ' screenshot ' + (Number(idx) + 1)"
                     class="gallery-img"
+                    loading="lazy"
                   />
                 </div>
               </div>
@@ -132,7 +137,7 @@
       </div>
 
       <!-- Lightbox Dialog -->
-      <q-dialog v-model="lightbox" persistent>
+      <q-dialog v-model="lightbox" persistent @keydown="handleLightboxKeydown">
         <div class="custom-lightbox">
           <q-btn
             icon="close"
@@ -141,19 +146,69 @@
             dense
             class="lightbox-close"
             @click="lightbox = false"
-            aria-label="Close"
+            aria-label="Close lightbox"
+          />
+          <q-btn
+            v-if="carouselIndex > 0"
+            icon="chevron_left"
+            flat
+            round
+            dense
+            class="lightbox-prev"
+            @click="prevImage"
+            aria-label="Previous image"
           />
           <img
             :src="project.images[carouselIndex]"
             :alt="project.title + ' screenshot ' + (carouselIndex + 1)"
             class="lightbox-img"
           />
+          <q-btn
+            v-if="carouselIndex < project.images.length - 1"
+            icon="chevron_right"
+            flat
+            round
+            dense
+            class="lightbox-next"
+            @click="nextImage"
+            aria-label="Next image"
+          />
           <div class="lightbox-caption">
-            {{ project.title }} — Screenshot {{ carouselIndex + 1 }}
+            {{ project.title }} — {{ carouselIndex + 1 }} / {{ project.images.length }}
           </div>
         </div>
       </q-dialog>
     </div>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <span class="footer-copyright">© {{ currentYear }} GK Apologista</span>
+        <div class="footer-links">
+          <a href="mailto:gkapologista@gmail.com" class="footer-link">Contact</a>
+          <span class="footer-divider">•</span>
+          <a
+            href="https://github.com/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" />
+            GitHub
+          </a>
+          <span class="footer-divider">•</span>
+          <a
+            href="https://linkedin.com/in/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" />
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -170,6 +225,7 @@ const loading = ref(true);
 const project = ref();
 const carouselIndex = ref(0);
 const lightbox = ref(false);
+const currentYear = computed(() => new Date().getFullYear());
 
 function goBack() {
   router.back();
@@ -178,23 +234,40 @@ function openLightbox(idx: number) {
   carouselIndex.value = idx;
   lightbox.value = true;
 }
+function prevImage() {
+  if (carouselIndex.value > 0) {
+    carouselIndex.value--;
+  }
+}
+function nextImage() {
+  if (project.value && carouselIndex.value < project.value.images.length - 1) {
+    carouselIndex.value++;
+  }
+}
+function handleLightboxKeydown(event: KeyboardEvent) {
+  if (event.key === 'ArrowLeft') {
+    prevImage();
+  } else if (event.key === 'ArrowRight') {
+    nextImage();
+  } else if (event.key === 'Escape') {
+    lightbox.value = false;
+  }
+}
 
 onMounted(() => {
-  setTimeout(() => {
-    project.value = projects.find((p) => p.slug === slug.value);
-    loading.value = false;
-    if (project.value) {
-      useMeta({
-        title: project.value.title,
-        meta: {
-          description: {
-            name: 'description',
-            content: project.value.description,
-          },
+  project.value = projects.find((p) => p.slug === slug.value);
+  loading.value = false;
+  if (project.value) {
+    useMeta({
+      title: project.value.title,
+      meta: {
+        description: {
+          name: 'description',
+          content: project.value.description,
         },
-      });
-    }
-  }, 500); // Simulate loading
+      },
+    });
+  }
 });
 </script>
 
@@ -385,6 +458,12 @@ onMounted(() => {
   transform: scale(1.05);
 }
 
+.gallery-item:focus-visible {
+  outline: 3px solid var(--q-primary);
+  outline-offset: 2px;
+  transform: scale(1.02);
+}
+
 .gallery-img {
   width: 100%;
   height: 150px;
@@ -481,6 +560,39 @@ onMounted(() => {
 }
 .lightbox-close:hover {
   background: rgba(0, 0, 0, 0.4);
+}
+
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.4);
+  transition: all 0.2s ease;
+  width: 48px;
+  height: 48px;
+}
+
+.lightbox-prev {
+  left: 1rem;
+}
+
+.lightbox-next {
+  right: 1rem;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: rgba(0, 0, 0, 0.6);
+  transform: translateY(-50%) scale(1.1);
+}
+
+.lightbox-prev:focus-visible,
+.lightbox-next:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
 }
 
 .lightbox-img {
@@ -642,5 +754,66 @@ html {
   font-size: 1.2rem;
   letter-spacing: 0.02em;
   opacity: 0.8;
+}
+
+/* Footer */
+.site-footer {
+  position: relative;
+  z-index: 3;
+  padding: 2rem;
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copyright {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.footer-divider {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
+  }
 }
 </style>

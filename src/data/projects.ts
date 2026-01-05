@@ -10,6 +10,9 @@ export interface Project {
   images: string[];
   tags: string[];
   category: 'Web Application' | 'Game' | 'System';
+  year?: number;
+  liveUrl?: string;
+  repoUrl?: string;
 }
 
 // Images are served from the public folder with the base path
