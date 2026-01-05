@@ -23,6 +23,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Hero Section -->
     <div class="content">
       <div class="text-center q-mb-lg animate-fade-up">
         <h1 class="text-h2 text-white q-mb-md">
@@ -38,14 +40,77 @@
         @click="navigateToProjects"
       />
     </div>
+
+    <!-- Contact Section -->
+    <section class="contact-section" aria-labelledby="contact-heading">
+      <div class="contact-content animate-fade-up">
+        <h2 id="contact-heading" class="contact-heading">Let's Work Together</h2>
+        <p class="contact-tagline">
+          Have a project in mind? I'd love to hear about it.
+        </p>
+
+        <a
+          href="mailto:gkapologista@gmail.com?subject=Portfolio Inquiry"
+          class="contact-btn"
+          aria-label="Send email to GK Apologista"
+        >
+          <q-icon name="email" size="sm" class="q-mr-sm" />
+          Get in Touch
+        </a>
+
+        <div class="social-links" role="list" aria-label="Social media links">
+          <a
+            href="https://github.com/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            aria-label="Visit GitHub profile"
+            role="listitem"
+          >
+            <q-icon name="fab fa-github" size="md" />
+          </a>
+          <a
+            href="https://linkedin.com/in/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="social-link"
+            aria-label="Visit LinkedIn profile"
+            role="listitem"
+          >
+            <q-icon name="fab fa-linkedin" size="md" />
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-content">
+        <span class="footer-copyright">© {{ currentYear }} GK Apologista</span>
+        <div class="footer-links">
+          <a href="mailto:gkapologista@gmail.com" class="footer-link">Contact</a>
+          <span class="footer-divider">•</span>
+          <a
+            href="https://github.com/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const navigateToProjects = () => router.push('/projects');
+const currentYear = computed(() => new Date().getFullYear());
 
 const codeSnippets = [
   'const app = createApp({})',
@@ -367,6 +432,179 @@ const getRandomCode = () => {
   100% {
     transform: translateY(100%);
     opacity: 0;
+  }
+}
+
+/* Contact Section */
+.contact-section {
+  position: relative;
+  z-index: 3;
+  padding: 4rem 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-content {
+  text-align: center;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 1.5rem;
+  padding: 3rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.contact-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 1rem;
+  background: linear-gradient(to right, #ffffff, #e0e0e0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.contact-tagline {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.contact-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--q-secondary);
+  border-radius: 0.75rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(106, 30, 85, 0.4);
+}
+
+.contact-btn:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 4px;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.social-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.social-link:focus-visible {
+  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 4px;
+}
+
+/* Footer */
+.site-footer {
+  position: relative;
+  z-index: 3;
+  padding: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copyright {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.footer-link {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-link:hover {
+  color: #fff;
+}
+
+.footer-link:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 2px;
+}
+
+.footer-divider {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 3rem 1rem;
+  }
+
+  .contact-content {
+    padding: 2rem;
+  }
+
+  .contact-heading {
+    font-size: 2rem;
+  }
+
+  .contact-tagline {
+    font-size: 1rem;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    text-align: center;
   }
 }
 </style>
