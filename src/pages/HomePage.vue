@@ -96,7 +96,18 @@
             rel="noopener noreferrer"
             class="footer-link"
           >
+            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" />
             GitHub
+          </a>
+          <span class="footer-divider">•</span>
+          <a
+            href="https://linkedin.com/in/gkapologista"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="footer-link"
+          >
+            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" />
+            LinkedIn
           </a>
         </div>
       </div>
@@ -564,6 +575,8 @@ const getRandomCode = () => {
 }
 
 .footer-link {
+  display: inline-flex;
+  align-items: center;
   font-family: 'Outfit', sans-serif;
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.6);
