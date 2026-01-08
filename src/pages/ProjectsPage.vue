@@ -10,7 +10,7 @@
     <div class="content">
       <div class="header-section">
         <h1 class="text-h2 text-white q-mb-sm">My Projects</h1>
-        <q-btn flat icon="home" label="Home" @click="goHome" class="home-btn q-mb-xl" />
+        <q-btn flat icon="home" label="Home" @click="goHome" class="nav-btn q-mb-xl" />
       </div>
 
       <div
@@ -147,7 +147,7 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 .content {
   position: relative;
   z-index: 3;
-  max-width: 1200px;
+  max-width: var(--content-max-width, 1280px);
   margin: 0 auto;
 }
 
@@ -160,15 +160,15 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
   margin-bottom: 2rem;
 }
 
-.home-btn {
-  color: rgba(255, 255, 255, 0.8) !important;
+.nav-btn {
+  color: var(--text-secondary, rgba(255, 255, 255, 0.8)) !important;
   font-weight: 500;
   transition: all 0.3s ease;
   border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
 }
 
-.home-btn:hover {
+.nav-btn:hover {
   color: white !important;
   background: rgba(255, 255, 255, 0.1) !important;
   transform: translateY(-1px);
@@ -234,9 +234,9 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 }
 
 .text-h2 {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   font-size: 3.5rem;
-  line-height: 1.3;
+  line-height: var(--lh-snug, 1.3);
   font-weight: 700;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -318,10 +318,10 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 }
 
 .category-chip {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'Outfit', system-ui, sans-serif;
   font-weight: 500;
-  font-size: 0.8125rem;
-  padding: 0.4375rem 0.75rem;
+  font-size: 0.875rem;
+  padding: var(--space-sm, 0.5rem) 0.75rem;
   border-radius: 0.5rem;
   background: rgba(255, 255, 255, 0.1) !important;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -443,12 +443,12 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 }
 
 .project-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+  background: var(--card-bg, rgba(255, 255, 255, 0.08));
+  border-radius: var(--card-radius, 1rem);
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.15));
   display: flex;
   flex-direction: column;
   height: 450px;
@@ -492,13 +492,14 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 }
 
 .project-title {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.75rem;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-size: 1.875rem;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   letter-spacing: -0.02em;
+  line-height: var(--lh-tight, 1.1);
 }
 
 .project-info {
@@ -510,10 +511,11 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 }
 
 .project-description {
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary, rgba(255, 255, 255, 0.8));
   font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 1rem;
+  line-height: var(--lh-relaxed, 1.6);
+  letter-spacing: 0.01em;
+  margin-bottom: var(--space-md, 1rem);
   display: -webkit-box;
   line-clamp: 3;
   -webkit-line-clamp: 3;
@@ -562,9 +564,15 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
   outline-offset: 4px;
 }
 
+@media (max-width: 1024px) {
+  .text-h2 {
+    font-size: 3rem;
+  }
+}
+
 @media (max-width: 768px) {
   .projects-page {
-    padding: 1rem;
+    padding: var(--space-md, 1rem);
   }
 
   .text-h2 {

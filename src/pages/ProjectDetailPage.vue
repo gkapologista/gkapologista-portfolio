@@ -15,7 +15,7 @@
           icon="arrow_back"
           label="Back"
           @click="goBack"
-          class="back-btn"
+          class="nav-btn"
         />
       </div>
 
@@ -351,7 +351,7 @@ onMounted(() => {
 .content {
   position: relative;
   z-index: 3;
-  max-width: 1400px;
+  max-width: var(--content-max-width, 1280px);
   margin: 0 auto;
 }
 
@@ -359,14 +359,17 @@ onMounted(() => {
   margin-bottom: 2rem;
 }
 
-.back-btn {
-  color: rgba(255, 255, 255, 0.8);
+.nav-btn {
+  color: var(--text-secondary, rgba(255, 255, 255, 0.8));
   font-weight: 500;
   transition: all 0.3s ease;
+  border-radius: 0.5rem;
+  padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
 }
 
-.back-btn:hover {
+.nav-btn:hover {
   color: white;
+  background: rgba(255, 255, 255, 0.1);
   transform: translateX(-5px);
 }
 
@@ -382,9 +385,9 @@ onMounted(() => {
 }
 
 .project-title {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
   font-size: 4rem;
-  line-height: 1.1;
+  line-height: var(--lh-tight, 1.1);
   font-weight: 700;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -392,7 +395,7 @@ onMounted(() => {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-md, 1rem);
 }
 
 .project-meta {
@@ -477,16 +480,16 @@ onMounted(() => {
 }
 
 .content-card {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg, rgba(255, 255, 255, 0.08));
   backdrop-filter: blur(10px);
-  border-radius: 1rem;
-  padding: 2rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--card-radius, 1rem);
+  padding: var(--card-padding, 1.5rem);
+  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.15));
   transition: all 0.3s ease;
 }
 
 .content-card:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--card-bg-hover, rgba(255, 255, 255, 0.12));
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
 }
@@ -496,8 +499,9 @@ onMounted(() => {
   align-items: center;
   gap: 0.75rem;
   font-size: 1.5rem;
+  line-height: var(--lh-tight, 1.1);
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-md, 1rem);
   color: #fff;
 }
 
@@ -507,9 +511,10 @@ onMounted(() => {
 }
 
 .section-content {
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
+  color: var(--text-primary, rgba(255, 255, 255, 0.9));
+  line-height: var(--lh-relaxed, 1.6);
   font-size: 1rem;
+  letter-spacing: 0.01em;
 }
 
 .feature-list {
@@ -519,20 +524,20 @@ onMounted(() => {
 }
 
 .feature-list li {
-  color: rgba(255, 255, 255, 0.9);
-  line-height: 1.6;
-  padding: 0.5rem 0;
+  color: var(--text-primary, rgba(255, 255, 255, 0.9));
+  line-height: var(--lh-relaxed, 1.6);
+  padding: var(--space-sm, 0.5rem) 0;
+  padding-left: var(--space-lg, 1.5rem);
   position: relative;
-  padding-left: 1.5rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  margin-left: var(--space-sm, 0.5rem);
+  transition: all 0.2s ease;
 }
 
-.feature-list li::before {
-  content: '•';
-  color: var(--q-primary);
-  font-weight: bold;
-  position: absolute;
-  left: 0;
-  font-size: 1.2rem;
+.feature-list li:hover {
+  border-left-color: var(--q-primary);
+  background: rgba(255, 255, 255, 0.02);
+  padding-left: calc(var(--space-lg, 1.5rem) + 4px);
 }
 
 .custom-lightbox {
@@ -689,7 +694,7 @@ onMounted(() => {
   }
 
   .content-card {
-    padding: 1.5rem;
+    padding: var(--card-padding, 1.5rem);
   }
 
   .section-title {
