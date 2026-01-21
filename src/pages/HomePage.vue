@@ -441,12 +441,6 @@ const codeRainData = Array.from({ length: 15 }, () =>
   text-transform: uppercase;
 }
 
-.animate-fade-up-stagger {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.8s ease forwards 0.15s;
-}
-
 .type-cursor {
   display: inline-block;
   color: var(--accent-teal);
@@ -943,8 +937,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
 
   /* Fade-up utilities: skip to final visible state */
   .animate-fade-up,
-  .animate-fade-up-delayed,
-  .animate-fade-up-stagger {
+  .animate-fade-up-delayed {
     animation: none;
     opacity: 1;
     transform: none;
