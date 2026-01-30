@@ -919,4 +919,64 @@ const codeRainData = Array.from({ length: 15 }, () =>
     text-align: center;
   }
 }
+
+/* ── prefers-reduced-motion ─────────────────────────────────────────────────
+   Disable all decorative CSS animations for users who prefer reduced motion.
+   The JS guard in onMounted already handles the typewriter + button reveal;
+   this block covers everything else.
+   ────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* Background grid stays visible but static */
+  .grid-pattern {
+    animation: none;
+  }
+
+  /* Orbs stay in place */
+  .glow-orb {
+    animation: none;
+  }
+
+  /* Code rain is purely motion-dependent — hide it entirely */
+  .code-rain {
+    display: none;
+  }
+
+  /* Fade-up utilities: skip to final visible state */
+  .animate-fade-up,
+  .animate-fade-up-delayed,
+  .animate-fade-up-stagger {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Cursor: stop blinking, keep it visible as a static underscore */
+  .type-cursor {
+    animation: none;
+    opacity: 1;
+  }
+
+  /* Scroll indicator: appear immediately, suppress dot fall */
+  .scroll-indicator {
+    animation: none;
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .scroll-indicator__dot {
+    animation: none;
+    opacity: 0; /* static dot without animation serves no purpose */
+  }
+
+  /* Explore button hover: skip glitch jitter and scanline flash */
+  .explore-btn:hover {
+    animation: none;
+    transform: translateY(-2px);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  .explore-btn:hover::after {
+    animation: none;
+  }
+}
 </style>
