@@ -10,7 +10,13 @@
     <div class="content">
       <div class="header-section">
         <h1 class="text-h2 text-white q-mb-sm">My Projects</h1>
-        <q-btn flat icon="home" label="Home" @click="goHome" class="nav-btn q-mb-xl" />
+        <q-btn
+          flat
+          icon="home"
+          label="Home"
+          @click="goHome"
+          class="nav-btn q-mb-xl"
+        />
       </div>
 
       <div
@@ -21,52 +27,99 @@
         aria-live="polite"
       >
         <div class="filters-row">
-          <div class="category-chips-container" role="group" aria-label="Category filters">
-            <q-chip v-for="category in categories" :key="category" :class="{
-              'category-chip': true,
-              'category-chip--active': selectedCategories.includes(category),
-            }" :color="selectedCategories.includes(category) ? 'white' : undefined"
-              :text-color="selectedCategories.includes(category) ? 'secondary' : undefined"
-              :removable="selectedCategories.includes(category)" size="sm" clickable @click="toggleCategory(category)"
-              @remove="removeFilter(category)" :aria-pressed="selectedCategories.includes(category)"
-              :aria-label="`Filter by ${category}`">
+          <div
+            class="category-chips-container"
+            role="group"
+            aria-label="Category filters"
+          >
+            <q-chip
+              v-for="category in categories"
+              :key="category"
+              :class="{
+                'category-chip': true,
+                'category-chip--active': selectedCategories.includes(category),
+              }"
+              :color="
+                selectedCategories.includes(category) ? 'white' : undefined
+              "
+              :text-color="
+                selectedCategories.includes(category) ? 'secondary' : undefined
+              "
+              :removable="selectedCategories.includes(category)"
+              size="sm"
+              clickable
+              @click="toggleCategory(category)"
+              @remove="removeFilter(category)"
+              :aria-pressed="selectedCategories.includes(category)"
+              :aria-label="`Filter by ${category}`"
+            >
               {{ category }}
             </q-chip>
           </div>
           <transition name="fade">
-            <span v-if="selectedCategories.length > 0" class="results-count-inline" aria-live="polite">
+            <span
+              v-if="selectedCategories.length > 0"
+              class="results-count-inline"
+              aria-live="polite"
+            >
               <strong>{{ filteredProjects.length }}</strong>
               {{ filteredProjects.length === 1 ? 'project' : 'projects' }}
             </span>
           </transition>
           <transition name="fade">
-            <q-btn v-if="selectedCategories.length > 0" flat dense round icon="clear_all" @click="clearFilters"
-              class="clear-btn-inline" aria-label="Clear all filters" />
+            <q-btn
+              v-if="selectedCategories.length > 0"
+              flat
+              dense
+              round
+              icon="clear_all"
+              @click="clearFilters"
+              class="clear-btn-inline"
+              aria-label="Clear all filters"
+            />
           </transition>
         </div>
       </div>
 
       <transition-group name="projects" tag="div" class="projects-grid">
-        <router-link v-for="project in filteredProjects" :key="project.id"
-          :to="{ name: 'ProjectDetail', params: { slug: project.slug } }" class="project-card-link">
-          <div class="project-card">
-            <div class="project-image">
-              <img :src="project.images[0]" :alt="project.title" loading="lazy" />
-              <div class="project-title-overlay">
-                <h3 class="project-title">{{ project.title }}</h3>
+        <div
+          v-for="project in filteredProjects"
+          :key="project.id"
+          class="project-card-container"
+        >
+          <router-link
+            :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
+            class="project-card-link"
+          >
+            <div class="project-card">
+              <div class="project-image">
+                <img
+                  :src="project.images[0]"
+                  :alt="project.title"
+                  loading="lazy"
+                />
+                <div class="project-title-overlay">
+                  <h3 class="project-title">{{ project.title }}</h3>
+                </div>
+              </div>
+              <div class="project-info">
+                <p class="project-description">{{ project.description }}</p>
+                <div class="project-tags">
+                  <q-chip
+                    v-for="tag in project.tags.slice(0, 3)"
+                    :key="tag"
+                    color="white"
+                    text-color="secondary"
+                    size="sm"
+                    class="tech-chip"
+                  >
+                    {{ tag }}
+                  </q-chip>
+                </div>
               </div>
             </div>
-            <div class="project-info">
-              <p class="project-description">{{ project.description }}</p>
-              <div class="project-tags">
-                <q-chip v-for="tag in project.tags.slice(0, 3)" :key="tag" color="white" text-color="secondary"
-                  size="sm" class="tech-chip">
-                  {{ tag }}
-                </q-chip>
-              </div>
-            </div>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </transition-group>
 
       <!-- Contextual CTA -->
@@ -89,7 +142,9 @@
       <div class="footer-content">
         <span class="footer-copyright">© {{ currentYear }} GK Apologista</span>
         <div class="footer-links">
-          <a href="mailto:gkapologista@gmail.com" class="footer-link">Contact</a>
+          <a href="mailto:gkapologista@gmail.com" class="footer-link"
+            >Contact</a
+          >
           <span class="footer-divider">•</span>
           <a
             href="https://github.com/gkapologista"
@@ -117,10 +172,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, watch, nextTick } from 'vue';
 import { projects } from '../data/projects';
 import { useRouter } from 'vue-router';
 import { useFilters, categories } from '../composables/useFilters';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const router = useRouter();
 
@@ -130,8 +189,55 @@ const goHome = () => {
 
 const currentYear = computed(() => new Date().getFullYear());
 
-const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clearFilters } =
-  useFilters(ref(projects));
+const {
+  selectedCategories,
+  filteredProjects,
+  toggleCategory,
+  removeFilter,
+  clearFilters,
+} = useFilters(ref(projects));
+
+const initAnimations = () => {
+  // Kill existing triggers to avoid memory leaks/double animations
+  ScrollTrigger.getAll().forEach((t) => t.kill());
+
+  nextTick(() => {
+    const cards = document.querySelectorAll('.project-card-container');
+    if (cards.length === 0) return;
+
+    // Reset initial state
+    gsap.set(cards, { opacity: 0, y: 30, scale: 0.9 });
+
+    ScrollTrigger.batch(cards, {
+      onEnter: (batch) => {
+        gsap.to(batch, {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.15,
+          ease: 'back.out(1.7)',
+          overwrite: true,
+        });
+      },
+      start: 'top 85%',
+      once: true,
+    });
+  });
+};
+
+onMounted(() => {
+  initAnimations();
+});
+
+// Re-run animations when filters change
+watch(
+  filteredProjects,
+  () => {
+    initAnimations();
+  },
+  { deep: true }
+);
 </script>
 
 <style scoped>
@@ -189,8 +295,10 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px,
-      transparent 1px),
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.1) 1px,
+      transparent 1px
+    ),
     linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
   background-size: 50px 50px;
   opacity: 0.3;
@@ -206,9 +314,11 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 .orb-1 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle,
-      rgba(255, 255, 255, 0.4),
-      transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.4),
+    transparent 70%
+  );
   top: 20%;
   left: 20%;
 }
@@ -216,9 +326,11 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 .orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle,
-      rgba(255, 255, 255, 0.3),
-      transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.3),
+    transparent 70%
+  );
   top: 50%;
   right: 20%;
 }
@@ -226,9 +338,11 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
 .orb-3 {
   width: 250px;
   height: 250px;
-  background: radial-gradient(circle,
-      rgba(255, 255, 255, 0.2),
-      transparent 70%);
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.2),
+    transparent 70%
+  );
   bottom: 20%;
   left: 40%;
 }
@@ -454,8 +568,13 @@ const { selectedCategories, filteredProjects, toggleCategory, removeFilter, clea
   height: 450px;
   min-height: 450px;
   max-height: 450px;
-  width: 360px;
+  width: 100%;
   box-sizing: border-box;
+}
+
+.project-card-container {
+  width: 360px;
+  will-change: transform, opacity;
 }
 
 .project-card:hover {
