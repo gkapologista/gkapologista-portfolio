@@ -93,15 +93,6 @@ const toggleTag = (tag: string) => {
     : [...props.modelValue, tag];
 
   emit('update:modelValue', newValue);
-
-  // Debug logging for verification
-  if (import.meta.env.DEV) {
-    console.log('[TagChips] Tag toggled:', {
-      tag,
-      isSelected: !props.modelValue.includes(tag),
-      newSelection: newValue,
-    });
-  }
 };
 </script>
 

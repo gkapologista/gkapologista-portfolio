@@ -6,18 +6,8 @@
       <div class="glow-orb orb-2"></div>
       <div class="glow-orb orb-3"></div>
       <div class="code-rain">
-        <div
-          v-for="n in 15"
-          :key="n"
-          class="code-column"
-          :style="{ left: `${(n - 1) * 6.5}%` }"
-        >
-          <div
-            v-for="i in 15"
-            :key="i"
-            class="code-line"
-            :style="{ animationDelay: `${Math.random() * 5}s` }"
-          >
+        <div v-for="n in 15" :key="n" class="code-column" :style="{ left: `${(n - 1) * 6.5}%` }">
+          <div v-for="i in 15" :key="i" class="code-line" :style="{ animationDelay: `${Math.random() * 5}s` }">
             {{ getRandomCode() }}
           </div>
         </div>
@@ -27,18 +17,13 @@
     <!-- Hero Section -->
     <div class="content">
       <div class="text-center q-mb-lg animate-fade-up">
-        <h1 class="text-h2 text-white q-mb-md">
+        <h1 class="text-h2 q-mb-md" style="color: var(--text-primary)">
           Crafting Digital Solutions with GK Apologista
         </h1>
       </div>
 
-      <q-btn
-        color="secondary"
-        size="lg"
-        label="Explore My Work"
-        class="q-mt-lg explore-btn animate-fade-up-delayed"
-        @click="navigateToProjects"
-      />
+      <q-btn color="secondary" size="lg" label="Explore My Work" class="q-mt-lg explore-btn animate-fade-up-delayed"
+        @click="navigateToProjects" />
     </div>
 
     <!-- Contact Section -->
@@ -49,34 +34,19 @@
           Have a project in mind? I'd love to hear about it.
         </p>
 
-        <a
-          href="mailto:gkapologista@gmail.com?subject=Portfolio Inquiry"
-          class="contact-btn"
-          aria-label="Send email to GK Apologista"
-        >
+        <a href="mailto:gkapologista@gmail.com?subject=Portfolio Inquiry" class="contact-btn"
+          aria-label="Send email to GK Apologista">
           <q-icon name="email" size="sm" class="q-mr-sm" />
           Get in Touch
         </a>
 
         <div class="social-links" role="list" aria-label="Social media links">
-          <a
-            href="https://github.com/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            aria-label="Visit GitHub profile"
-            role="listitem"
-          >
+          <a href="https://github.com/gkapologista" target="_blank" rel="noopener noreferrer" class="social-link"
+            aria-label="Visit GitHub profile" role="listitem">
             <q-icon name="fab fa-github" size="md" />
           </a>
-          <a
-            href="https://linkedin.com/in/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            aria-label="Visit LinkedIn profile"
-            role="listitem"
-          >
+          <a href="https://linkedin.com/in/gkapologista" target="_blank" rel="noopener noreferrer" class="social-link"
+            aria-label="Visit LinkedIn profile" role="listitem">
             <q-icon name="fab fa-linkedin" size="md" />
           </a>
         </div>
@@ -90,22 +60,12 @@
         <div class="footer-links">
           <a href="mailto:gkapologista@gmail.com" class="footer-link">Contact</a>
           <span class="footer-divider">•</span>
-          <a
-            href="https://github.com/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-link"
-          >
+          <a href="https://github.com/gkapologista" target="_blank" rel="noopener noreferrer" class="footer-link">
             <q-icon name="fab fa-github" size="xs" class="q-mr-xs" />
             GitHub
           </a>
           <span class="footer-divider">•</span>
-          <a
-            href="https://linkedin.com/in/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-link"
-          >
+          <a href="https://linkedin.com/in/gkapologista" target="_blank" rel="noopener noreferrer" class="footer-link">
             <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" />
             LinkedIn
           </a>
@@ -231,10 +191,8 @@ const getRandomCode = () => {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px
-    ),
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px,
+      transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
   opacity: 0.3;
@@ -252,7 +210,9 @@ const getRandomCode = () => {
 .orb-1 {
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(106, 30, 85, 0.8), transparent 70%);
+  background: radial-gradient(circle,
+      var(--q-third),
+      transparent 70%);
   top: 20%;
   left: 20%;
   animation-delay: 0s;
@@ -261,7 +221,9 @@ const getRandomCode = () => {
 .orb-2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(58, 28, 50, 0.8), transparent 70%);
+  background: radial-gradient(circle,
+      var(--q-secondary),
+      transparent 70%);
   top: 50%;
   right: 20%;
   animation-delay: -5s;
@@ -270,7 +232,9 @@ const getRandomCode = () => {
 .orb-3 {
   width: 250px;
   height: 250px;
-  background: radial-gradient(circle, rgba(26, 26, 29, 0.8), transparent 70%);
+  background: radial-gradient(circle,
+      var(--q-primary),
+      transparent 70%);
   bottom: 20%;
   left: 40%;
   animation-delay: -10s;
@@ -334,11 +298,8 @@ const getRandomCode = () => {
   letter-spacing: -0.02em;
   max-width: 700px;
   margin: 0 auto;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(to right, #ffffff, #e0e0e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(106, 30, 85, 0.2);
 }
 
 .explore-btn {
@@ -363,12 +324,10 @@ const getRandomCode = () => {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
-  );
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent);
   transition: 0.5s;
 }
 
@@ -398,6 +357,7 @@ const getRandomCode = () => {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -408,22 +368,27 @@ const getRandomCode = () => {
   0% {
     transform: translateY(0);
   }
+
   100% {
     transform: translateY(50px);
   }
 }
 
 @keyframes orbFloat {
+
   0%,
   100% {
     transform: translate(0, 0);
   }
+
   25% {
     transform: translate(50px, 50px);
   }
+
   50% {
     transform: translate(0, 100px);
   }
+
   75% {
     transform: translate(-50px, 50px);
   }
@@ -434,12 +399,15 @@ const getRandomCode = () => {
     transform: translateY(-100%);
     opacity: 0;
   }
+
   10% {
     opacity: 1;
   }
+
   90% {
     opacity: 1;
   }
+
   100% {
     transform: translateY(100%);
     opacity: 0;
@@ -472,10 +440,6 @@ const getRandomCode = () => {
   font-weight: 700;
   color: #fff;
   margin-bottom: 1rem;
-  background: linear-gradient(to right, #ffffff, #e0e0e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
 
 .contact-tagline {

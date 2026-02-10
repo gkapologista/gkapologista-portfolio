@@ -95,17 +95,6 @@ export function useFilters(projects: Ref<Project[]>) {
       );
     }
 
-    // Debug logging for verification (Phase 4)
-    if (import.meta.env.DEV) {
-      console.log('[useFilters] Filter state:', {
-        searchQuery: debouncedSearch.value,
-        selectedCategories: selectedCategories.value,
-        selectedTags: selectedTags.value,
-        totalProjects: projects.value.length,
-        filteredCount: result.length,
-      });
-    }
-
     return result;
   });
 

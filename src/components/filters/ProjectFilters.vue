@@ -135,11 +135,6 @@ const hasActiveFilters = computed(() => {
 
 const handleClearAll = () => {
   emit('clear-all');
-
-  // Debug logging for verification
-  if (import.meta.env.DEV) {
-    console.log('[ProjectFilters] All filters cleared');
-  }
 };
 </script>
 

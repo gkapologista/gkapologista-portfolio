@@ -248,32 +248,6 @@ Components use the existing design system:
 
 ---
 
-## Debug Mode
-
-In development (`import.meta.env.DEV`), the following console logs are available:
-
-1. **useFilters**: Logs filter state on every change
-   ```
-   [useFilters] Filter state: { searchQuery, selectedCategories, selectedTags, totalProjects, filteredCount }
-   ```
-
-2. **TagChips**: Logs tag toggle events
-   ```
-   [TagChips] Tag toggled: { tag, isSelected, newSelection }
-   ```
-
-3. **ProjectFilters**: Logs clear all events
-   ```
-   [ProjectFilters] All filters cleared
-   ```
-
-4. **ProjectsPage**: Logs initial state
-   ```
-   [ProjectsPage] Initial filter state: { totalProjects, availableTagsCount }
-   ```
-
----
-
 ## Responsive Breakpoints
 
 | Breakpoint | Layout | Notes |
