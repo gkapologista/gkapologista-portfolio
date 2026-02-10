@@ -1,24 +1,11 @@
 <template>
   <div class="project-card-container">
-    <router-link
-      :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
-      class="project-card-link"
-    >
+    <router-link :to="{ name: 'ProjectDetail', params: { slug: project.slug } }" class="project-card-link">
       <div class="project-card">
         <div class="project-image">
-          <q-skeleton
-            v-if="!imageLoaded"
-            class="image-skeleton brand-pulse"
-            square
-            animation="none"
-          />
-          <img
-            :src="project.images[0]"
-            :alt="project.title"
-            loading="lazy"
-            @load="onImageLoad"
-            :class="{ 'is-loaded': imageLoaded }"
-          />
+          <q-skeleton v-if="!imageLoaded" class="image-skeleton brand-pulse" square animation="none" />
+          <img :src="project.images[0]" :alt="project.title" loading="lazy" @load="onImageLoad"
+            :class="{ 'is-loaded': imageLoaded }" />
           <div class="project-title-overlay">
             <h3 class="project-title">{{ project.title }}</h3>
           </div>
@@ -26,14 +13,8 @@
         <div class="project-info">
           <p class="project-description">{{ project.description }}</p>
           <div class="project-tags">
-            <q-chip
-              v-for="tag in project.tags.slice(0, 3)"
-              :key="tag"
-              color="white"
-              text-color="secondary"
-              size="sm"
-              class="tech-chip"
-            >
+            <q-chip v-for="tag in project.tags.slice(0, 3)" :key="tag" color="white" text-color="secondary" size="sm"
+              class="tech-chip">
               {{ tag }}
             </q-chip>
           </div>
@@ -47,14 +28,13 @@
 import { ref } from 'vue';
 import type { Project } from '../data/projects';
 
-const props = defineProps<{
+defineProps<{
   project: Project;
 }>();
 
 const imageLoaded = ref(false);
 
 const onImageLoad = () => {
-  console.log('[ProjectCard] Image loaded for:', props.project.title);
   imageLoaded.value = true;
 };
 </script>
@@ -116,10 +96,13 @@ const onImageLoad = () => {
     opacity: 0.3;
     background: rgba(255, 255, 255, 0.05);
   }
+
   50% {
     opacity: 0.6;
-    background: rgba(106, 30, 85, 0.15); /* #6A1E55 */
+    background: rgba(106, 30, 85, 0.15);
+    /* #6A1E55 */
   }
+
   100% {
     opacity: 0.3;
     background: rgba(255, 255, 255, 0.05);
