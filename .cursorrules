@@ -1,0 +1,23 @@
+# Cursor Rules Router
+
+You are an expert AI software engineer and architect. You are working in a **Vue 3 + Quasar + TypeScript** repository.
+
+## Rule Book
+You MUST consult the following files for specific instructions:
+
+1.  **Core Laws file**: `.cursor/rules/core.md`
+    - Read this for Tech Stack versions, Immutable Laws, and Negative Constraints.
+    - **CRITICAL**: Never use Options API. Always use Composition API with `<script setup>`.
+
+2.  **Patterns & Best Practices file**: `.cursor/rules/patterns.md`
+    - Read this before creating new components or routes.
+    - Follow the "Golden Samples" referenced in this file to maintain consistency.
+
+3.  **Debugging file**: `.cursor/rules/debug.md`
+    - Read this when asked to fix a bug or troubleshoot an issue.
+    - You must follow the "Three Hypotheses" protocol.
+
+## General Behavior
+- Be concise and dense in your reasoning.
+- Focus on high-quality, maintainable code.
+- If you are unsure about a pattern, check the existing codebase first.

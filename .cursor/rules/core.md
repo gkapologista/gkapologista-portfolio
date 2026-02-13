@@ -1,14 +1,26 @@
-# Core Tech Stack & Constraints
+# Core Repository Laws
 
-This project is a personal portfolio website.
+## Tech Stack & Versions
 
-## Tech Stack
-- **Framework**: Vue 3 (Composition API with `<script setup>`)
-- **UI Library**: Quasar 2 (`q-*` components). Use Quasar utility classes (e.g., `q-pa-md`, `text-h1`) primarily.
-- **Language**: TypeScript (Strictly typed). Prefer `interface` over `type`.
-- **HTTP Client**: Axios (via `src/boot/axios.ts`).
-- **Build Tool**: Vite (via Quasar CLI).
+- **Framework**: Vue.js `^3.4.18` (Composition API required)
+- **UI Framework**: Quasar `^2.8.0`
+- **Language**: TypeScript `^4.5.4`
+- **Build Tool**: Vite (via `@quasar/app-vite`)
+- **State Management**: Pinia (implied/preferred) or Composition API Reactivity
+- **Routing**: Vue Router `^4.0.12`
 
-## Testing
-- **Unit Tests**: Business logic in `src/composables` should be pure functions for **Vitest**.
-- **Component Tests**: Prioritize testing user interactions for complex forms or interactive lists.
+## Code Style & Immutable Laws
+
+1.  **Composition API Only**: ALWAYS use `<script setup lang="ts">`. NEVER use the Options API.
+2.  **TypeScript Strictness**: explicit types are required. Avoid `any` whenever possible.
+3.  **Quasar Components**: Use Quasar components (e.g., `q-btn`, `q-input`) instead of native HTML elements where possible.
+4.  **Styling**: Use `scoped` SCSS/CSS or Quasar utility classes (`q-pa-md`, `text-primary`). Avoid inline styles.
+5.  **Reactivity**: Use `ref` for primitives and `reactive` for objects/arrays. Always use `.value` when accessing refs in scripts.
+
+## Negative Constraints (NEVER DO THIS)
+
+1.  **No `console.log` in Production**: Use a proper logging utility or remove logs before committing.
+2.  **No Placeholder Comments**: Do not leave `// TODO: implement this` without a tracking ID or immediate implementation.
+3.  **No jQuery or Direct DOM Manipulation**: Use Vue's template refs and reactive state.
+4.  **No Sync XHR**: properly use `async/await` with `axios` or `fetch`.
+5.  **No Component Logic in Templates**: Move complex logic to `computed` properties or functions.
