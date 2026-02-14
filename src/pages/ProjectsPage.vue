@@ -163,7 +163,7 @@ watch(
   width: 100%;
   position: relative;
   overflow: hidden;
-  background-color: var(--q-secondary);
+  background-color: var(--bg-charcoal);
   padding: 2rem;
 }
 
@@ -265,16 +265,14 @@ watch(
 }
 
 .text-h2 {
-  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 3.5rem;
   line-height: var(--lh-snug, 1.3);
   font-weight: 700;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(to right, #ffffff, #e0e0e0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-teal);
+  text-transform: uppercase;
 }
 
 .projects-grid {
@@ -328,28 +326,25 @@ watch(
   margin-top: 4rem;
   padding: 3rem 2rem;
   text-align: center;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border-radius: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--bg-grey);
+  border-radius: 4px;
+  border: 1px solid var(--accent-teal);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
 .cta-heading {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 2rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--accent-teal);
   margin-bottom: 0.5rem;
-  background: linear-gradient(to right, #ffffff, #e0e0e0);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
 }
 
 .cta-tagline {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
-  color: rgba(255, 255, 255, 0.7);
+  color: var(--text-white);
   margin-bottom: 1.5rem;
 }
 
@@ -358,23 +353,24 @@ watch(
   align-items: center;
   justify-content: center;
   padding: 0.875rem 1.75rem;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
   font-weight: 600;
-  color: #fff;
-  background: var(--q-secondary);
-  border-radius: 0.75rem;
+  color: var(--bg-charcoal);
+  background: var(--accent-teal);
+  border-radius: 2px;
   text-decoration: none;
   transition: all 0.3s ease;
+  text-transform: uppercase;
 }
 
 .cta-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(106, 30, 85, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
 .cta-btn:focus-visible {
-  outline: 3px solid rgba(255, 255, 255, 0.8);
+  outline: 2px solid var(--accent-teal);
   outline-offset: 4px;
 }
 
@@ -398,9 +394,9 @@ watch(
 }
 
 .footer-copyright {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(238, 238, 238, 0.5);
 }
 
 .footer-links {
@@ -412,9 +408,9 @@ watch(
 .footer-link {
   display: inline-flex;
   align-items: center;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--accent-teal);
   text-decoration: none;
   transition: color 0.2s ease;
 }
@@ -424,7 +420,7 @@ watch(
 }
 
 .footer-link:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline: 2px solid var(--accent-teal);
   outline-offset: 2px;
 }
 

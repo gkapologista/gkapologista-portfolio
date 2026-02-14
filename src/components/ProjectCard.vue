@@ -1,11 +1,24 @@
 <template>
   <div class="project-card-container">
-    <router-link :to="{ name: 'ProjectDetail', params: { slug: project.slug } }" class="project-card-link">
+    <router-link
+      :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
+      class="project-card-link"
+    >
       <div class="project-card">
         <div class="project-image">
-          <q-skeleton v-if="!imageLoaded" class="image-skeleton brand-pulse" square animation="none" />
-          <img :src="project.images[0]" :alt="project.title" loading="lazy" @load="onImageLoad"
-            :class="{ 'is-loaded': imageLoaded }" />
+          <q-skeleton
+            v-if="!imageLoaded"
+            class="image-skeleton brand-pulse"
+            square
+            animation="none"
+          />
+          <img
+            :src="project.images[0]"
+            :alt="project.title"
+            loading="lazy"
+            @load="onImageLoad"
+            :class="{ 'is-loaded': imageLoaded }"
+          />
           <div class="project-title-overlay">
             <h3 class="project-title">{{ project.title }}</h3>
           </div>
@@ -13,8 +26,14 @@
         <div class="project-info">
           <p class="project-description">{{ project.description }}</p>
           <div class="project-tags">
-            <q-chip v-for="tag in project.tags.slice(0, 3)" :key="tag" color="white" text-color="secondary" size="sm"
-              class="tech-chip">
+            <q-chip
+              v-for="tag in project.tags.slice(0, 3)"
+              :key="tag"
+              color="white"
+              text-color="secondary"
+              size="sm"
+              class="tech-chip"
+            >
               {{ tag }}
             </q-chip>
           </div>
@@ -41,12 +60,12 @@ const onImageLoad = () => {
 
 <style scoped>
 .project-card {
-  background: var(--card-bg, rgba(255, 255, 255, 0.08));
-  border-radius: var(--card-radius, 1rem);
+  background: var(--bg-grey);
+  border-radius: 4px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.15));
+  border: 1px solid var(--accent-teal);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   height: 450px;
@@ -63,7 +82,7 @@ const onImageLoad = () => {
 
 .project-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
 }
 
 .project-image {
@@ -135,14 +154,15 @@ const onImageLoad = () => {
 }
 
 .project-title {
-  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 1.875rem;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  text-shadow: 2px 2px 0px #000;
   letter-spacing: -0.02em;
   line-height: var(--lh-tight, 1.1);
+  text-transform: uppercase;
 }
 
 .project-info {
@@ -177,15 +197,19 @@ const onImageLoad = () => {
 }
 
 .tech-chip {
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.02em;
   padding: 0.4rem 0.8rem;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9) !important;
+  background: var(--bg-charcoal) !important;
+  color: var(--accent-teal) !important;
+  border: 1px solid var(--accent-teal);
   height: 1.8rem;
   line-height: 1.2;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+  border-radius: 2px;
 }
 
 .tech-chip:hover {

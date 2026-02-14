@@ -60,7 +60,9 @@
                   class="gallery-item"
                   tabindex="0"
                   role="button"
-                  :aria-label="'View ' + project.title + ' screenshot ' + (Number(idx) + 1)"
+                  :aria-label="
+                    'View ' + project.title + ' screenshot ' + (Number(idx) + 1)
+                  "
                   @click="openLightbox(Number(idx))"
                   @keydown.enter="openLightbox(Number(idx))"
                 >
@@ -174,7 +176,8 @@
             aria-label="Next image"
           />
           <div class="lightbox-caption">
-            {{ project.title }} — {{ carouselIndex + 1 }} / {{ project.images.length }}
+            {{ project.title }} — {{ carouselIndex + 1 }} /
+            {{ project.images.length }}
           </div>
         </div>
       </q-dialog>
@@ -185,7 +188,9 @@
       <div class="footer-content">
         <span class="footer-copyright">© {{ currentYear }} GK Apologista</span>
         <div class="footer-links">
-          <a href="mailto:gkapologista@gmail.com" class="footer-link">Contact</a>
+          <a href="mailto:gkapologista@gmail.com" class="footer-link"
+            >Contact</a
+          >
           <span class="footer-divider">•</span>
           <a
             href="https://github.com/gkapologista"
@@ -277,7 +282,7 @@ onMounted(() => {
   width: 100%;
   position: relative;
   overflow-x: hidden;
-  background-color: var(--q-secondary);
+  background-color: var(--bg-charcoal);
   padding: 2rem;
 }
 
@@ -385,16 +390,14 @@ onMounted(() => {
 }
 
 .project-title {
-  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 4rem;
   line-height: var(--lh-tight, 1.1);
   font-weight: 700;
   letter-spacing: -0.02em;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(to right, #ffffff, #e0e0e0);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent-teal);
+  text-transform: uppercase;
   margin-bottom: var(--space-md, 1rem);
 }
 
@@ -480,18 +483,18 @@ onMounted(() => {
 }
 
 .content-card {
-  background: var(--card-bg, rgba(255, 255, 255, 0.08));
-  backdrop-filter: blur(10px);
-  border-radius: var(--card-radius, 1rem);
+  background: var(--bg-grey);
+  border-radius: 4px;
   padding: var(--card-padding, 1.5rem);
-  border: 1px solid var(--card-border, rgba(255, 255, 255, 0.15));
+  border: 1px solid var(--accent-teal);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
 }
 
 .content-card:hover {
-  background: var(--card-bg-hover, rgba(255, 255, 255, 0.12));
+  background: var(--bg-grey);
   transform: translateY(-2px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
 }
 
 .section-title {
@@ -795,9 +798,9 @@ html {
 .footer-link {
   display: inline-flex;
   align-items: center;
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   font-size: 0.875rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--accent-teal);
   text-decoration: none;
   transition: color 0.2s ease;
 }
