@@ -66,23 +66,24 @@ const handleClear = () => {
 }
 
 .search-input {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--filter-radius, 0.75rem);
+  background: var(--bg-charcoal);
+  border: 1px solid var(--accent-teal);
+  border-radius: 10px;
   padding: 0.25rem 0.75rem;
   transition: var(--filter-transition, all 0.3s ease);
   height: var(--search-height, 44px);
+  color: var(--text-white);
 }
 
 .search-input:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: var(--bg-charcoal);
+  box-shadow: 2px 2px 0px rgba(0, 173, 181, 0.4);
 }
 
 .search-input:focus-within {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  background: var(--bg-charcoal);
+  box-shadow: 4px 4px 0px rgba(0, 173, 181, 0.6);
+  border-color: var(--accent-teal);
 }
 
 .search-input :deep(.q-field__control) {
@@ -90,8 +91,8 @@ const handleClear = () => {
 }
 
 .search-input :deep(.q-field__native) {
-  color: white;
-  font-family: 'Outfit', sans-serif;
+  color: var(--text-white);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
   padding: 0;
 }
@@ -101,7 +102,7 @@ const handleClear = () => {
 }
 
 .search-icon {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--accent-teal);
   font-size: 1.125rem;
 }
 

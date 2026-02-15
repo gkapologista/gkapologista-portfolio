@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="tag-chips-wrapper"
-    role="group"
-    :aria-label="ariaLabel"
-  >
+  <div class="tag-chips-wrapper" role="group" :aria-label="ariaLabel">
     <div class="tag-chips-scroll" ref="scrollContainer">
       <q-chip
         v-for="tag in displayedTags"
@@ -70,8 +66,12 @@ const emit = defineEmits<{
 const showAll = ref(false);
 const scrollContainer = ref<HTMLElement | null>(null);
 
-const hasMoreTags = computed(() => props.availableTags.length > props.maxVisible);
-const hiddenCount = computed(() => props.availableTags.length - props.maxVisible);
+const hasMoreTags = computed(
+  () => props.availableTags.length > props.maxVisible
+);
+const hiddenCount = computed(
+  () => props.availableTags.length - props.maxVisible
+);
 
 const displayedTags = computed(() => {
   if (showAll.value || !hasMoreTags.value) {
@@ -133,14 +133,14 @@ const toggleTag = (tag: string) => {
 }
 
 .tag-chip {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-weight: 500;
   font-size: 0.8125rem;
   padding: 0.375rem 0.625rem;
-  border-radius: 0.5rem;
-  background: rgba(255, 255, 255, 0.1) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: rgba(255, 255, 255, 0.85) !important;
+  border-radius: 10px;
+  background: var(--bg-charcoal) !important;
+  border: 1px solid var(--accent-teal);
+  color: var(--accent-teal) !important;
   transition: all 0.25s ease;
   cursor: pointer;
   height: var(--tag-chip-height, 32px);
@@ -149,35 +149,39 @@ const toggleTag = (tag: string) => {
 }
 
 .tag-chip:hover {
-  background: rgba(255, 255, 255, 0.18) !important;
-  border-color: rgba(255, 255, 255, 0.35);
-  transform: translateY(-1px);
+  background: var(--bg-charcoal) !important;
+  border-color: var(--accent-teal);
+  transform: translateY(-2px);
+  box-shadow: 4px 4px 0px rgba(0, 173, 181, 0.4);
 }
 
 .tag-chip--active {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-color: rgba(255, 255, 255, 0.5);
-  color: var(--q-secondary) !important;
+  background: var(--accent-teal) !important;
+  border-color: var(--accent-teal);
+  color: var(--bg-charcoal) !important;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(166, 77, 121, 0.3);
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .tag-chip--active:hover {
-  background: white !important;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(166, 77, 121, 0.4);
+  background: var(--accent-teal) !important;
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
 }
 
 .tag-chip--more {
-  background: rgba(255, 255, 255, 0.05) !important;
-  border-style: dashed;
-  color: rgba(255, 255, 255, 0.6) !important;
+  background: var(--bg-charcoal) !important;
+  border: 1px dashed var(--accent-teal);
+  color: var(--accent-teal) !important;
   font-style: italic;
+  opacity: 0.7;
 }
 
 .tag-chip--more:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: rgba(255, 255, 255, 0.85) !important;
+  background: var(--bg-charcoal) !important;
+  color: var(--text-white) !important;
+  opacity: 1;
+  border-style: solid;
 }
 
 .tag-chip:focus-visible {

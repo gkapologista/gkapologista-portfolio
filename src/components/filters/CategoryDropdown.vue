@@ -87,23 +87,23 @@ const selectedCount = computed(() => props.modelValue.length);
 }
 
 .category-dropdown {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--filter-radius, 0.75rem);
+  background: var(--bg-charcoal);
+  border: 1px solid var(--accent-teal);
+  border-radius: 10px;
   padding: 0.25rem 0.5rem;
   transition: var(--filter-transition, all 0.3s ease);
   min-height: var(--search-height, 44px);
 }
 
 .category-dropdown:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: var(--bg-charcoal);
+  box-shadow: 2px 2px 0px rgba(0, 173, 181, 0.4);
 }
 
 .category-dropdown:focus-within {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.35);
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+  background: var(--bg-charcoal);
+  border-color: var(--accent-teal);
+  box-shadow: 4px 4px 0px rgba(0, 173, 181, 0.6);
 }
 
 .category-dropdown :deep(.q-field__control) {
@@ -111,14 +111,14 @@ const selectedCount = computed(() => props.modelValue.length);
 }
 
 .category-dropdown :deep(.q-field__label) {
-  color: rgba(255, 255, 255, 0.6);
-  font-family: 'Outfit', sans-serif;
+  color: var(--accent-teal);
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
 }
 
 .category-dropdown :deep(.q-field__native) {
-  color: white;
-  font-family: 'Outfit', sans-serif;
+  color: var(--text-white);
+  font-family: 'JetBrains Mono', monospace;
 }
 
 .category-dropdown :deep(.q-select__dropdown-icon) {
@@ -126,15 +126,18 @@ const selectedCount = computed(() => props.modelValue.length);
 }
 
 .dropdown-icon {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--accent-teal);
   font-size: 1.125rem;
 }
 
 .selected-chip {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', monospace;
   font-size: 0.75rem;
   font-weight: 500;
   margin: 2px;
+  background: var(--accent-teal) !important;
+  color: var(--bg-charcoal) !important;
+  border-radius: 10px;
 }
 
 .selected-chip :deep(.q-chip__icon--remove) {
@@ -161,25 +164,26 @@ const selectedCount = computed(() => props.modelValue.length);
 <style>
 /* Popup styles (not scoped) */
 .category-dropdown-popup {
-  background: rgba(40, 20, 35, 0.95) !important;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 0.75rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: var(--bg-charcoal) !important;
+  border: 1px solid var(--accent-teal);
+  border-radius: 10px;
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
 .category-dropdown-popup .q-item {
-  color: rgba(255, 255, 255, 0.85);
-  font-family: 'Outfit', sans-serif;
+  color: var(--text-white);
+  font-family: 'JetBrains Mono', monospace;
   min-height: 40px;
   transition: background 0.2s ease;
 }
 
 .category-dropdown-popup .q-item:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--bg-grey);
+  color: var(--accent-teal);
 }
 
 .category-dropdown-popup .q-item--active {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--accent-teal);
+  color: var(--bg-charcoal);
 }
 </style>

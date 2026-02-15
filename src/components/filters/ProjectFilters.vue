@@ -7,10 +7,7 @@
   >
     <!-- Desktop/Tablet Layout -->
     <div class="filters-desktop">
-      <SearchInput
-        v-model="searchQuery"
-        @clear="$emit('search-cleared')"
-      />
+      <SearchInput v-model="searchQuery" @clear="$emit('search-cleared')" />
 
       <div class="filters-divider" aria-hidden="true"></div>
 
@@ -45,10 +42,7 @@
 
     <!-- Mobile Layout -->
     <div class="filters-mobile">
-      <SearchInput
-        v-model="searchQuery"
-        @clear="$emit('search-cleared')"
-      />
+      <SearchInput v-model="searchQuery" @clear="$emit('search-cleared')" />
 
       <div class="filters-mobile-row">
         <CategoryDropdown v-model="selectedCategories" />
@@ -140,19 +134,18 @@ const handleClearAll = () => {
 
 <style scoped>
 .project-filters {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: var(--filter-radius, 0.75rem);
+  background: var(--bg-grey);
+  border: 1px solid var(--accent-teal);
+  border-radius: 10px;
   padding: var(--filter-padding, 0.75rem 1rem);
   transition: var(--filter-transition, all 0.3s ease);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
 .project-filters--active {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  background: var(--bg-grey);
+  border-color: var(--accent-teal);
+  box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
 }
 
 /* Desktop Layout */
@@ -169,8 +162,9 @@ const handleClearAll = () => {
 .filters-divider {
   width: 1px;
   height: 24px;
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--accent-teal);
   flex-shrink: 0;
+  opacity: 0.5;
 }
 
 .filters-meta {
@@ -182,25 +176,28 @@ const handleClearAll = () => {
 }
 
 .results-count {
-  font-family: 'Outfit', sans-serif;
+  font-family: 'JetBrains Mono', sans-serif;
   font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-white);
   white-space: nowrap;
   padding: 0.25rem 0.625rem;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 0.375rem;
+  background: var(--bg-charcoal);
+  border-radius: 10px;
+  border: 1px solid var(--accent-teal);
 }
 
 .results-count strong {
-  color: rgba(255, 255, 255, 0.9);
+  color: var(--accent-teal);
   font-weight: 600;
   margin-right: 0.25rem;
 }
 
 .clear-all-btn {
-  color: rgba(255, 255, 255, 0.7) !important;
+  color: var(--accent-teal) !important;
   transition: all 0.2s ease;
-  background: rgba(255, 255, 255, 0.08) !important;
+  background: var(--bg-charcoal) !important;
+  border-radius: 10px !important;
+  border: 1px solid var(--accent-teal);
 }
 
 .clear-all-btn:hover {
@@ -256,25 +253,27 @@ const handleClearAll = () => {
   }
 
   .results-count-mobile {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'JetBrains Mono', sans-serif;
     font-size: 0.75rem;
     font-weight: 600;
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(255, 255, 255, 0.1);
+    color: var(--accent-teal);
+    background: var(--bg-charcoal);
     padding: 0.25rem 0.5rem;
-    border-radius: 0.25rem;
+    border-radius: 10px;
     min-width: 24px;
     text-align: center;
+    border: 1px solid var(--accent-teal);
   }
 
   .clear-all-btn-mobile {
-    color: rgba(255, 255, 255, 0.7) !important;
+    color: var(--accent-teal) !important;
     transition: all 0.2s ease;
   }
 
   .clear-all-btn-mobile:hover {
-    color: white !important;
-    background: rgba(255, 255, 255, 0.15) !important;
+    color: var(--text-white) !important;
+    background: var(--bg-charcoal) !important;
+    border: 1px solid var(--accent-teal);
   }
 }
 
