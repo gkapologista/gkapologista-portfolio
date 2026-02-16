@@ -29,11 +29,13 @@
       />
 
       <transition-group name="projects" tag="div" class="projects-grid">
-        <ProjectCard
+        <div
           v-for="project in filteredProjects"
           :key="project.id"
-          :project="project"
-        />
+          class="project-card-container"
+        >
+          <ProjectCard :project="project" />
+        </div>
       </transition-group>
 
       <!-- Contextual CTA -->
@@ -86,7 +88,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch, nextTick } from 'vue';
+import { ref, computed, onMounted, nextTick } from 'vue';
 import { projects } from '../data/projects';
 import { useRouter } from 'vue-router';
 import { useFilters } from '../composables/useFilters';
@@ -146,15 +148,6 @@ const initAnimations = () => {
 onMounted(() => {
   initAnimations();
 });
-
-// Re-run animations when filters change
-watch(
-  filteredProjects,
-  () => {
-    initAnimations();
-  },
-  { deep: true }
-);
 </script>
 
 <style scoped>
@@ -285,19 +278,25 @@ watch(
 }
 
 /* Transition-group animations */
+/* Transition-group animations */
 .projects-enter-active,
 .projects-leave-active {
-  transition: all 250ms ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .projects-enter-from,
 .projects-leave-to {
   opacity: 0;
-  transform: translateY(8px) scale(0.98);
+  transform: scale(0.9);
+}
+
+.projects-leave-active {
+  position: absolute; /* Crucial for smooth layout changes */
+  width: 360px; /* Match grid column width */
 }
 
 .projects-move {
-  transition: transform 250ms ease;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 @media (max-width: 1024px) {

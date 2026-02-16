@@ -39,8 +39,8 @@ export function useFilters(projects: Ref<Project[]>) {
     const tagCount = new Map<string, number>();
 
     projects.value.forEach((project) => {
-      project.tags.forEach((tag) => {
-        tagCount.set(tag, (tagCount.get(tag) || 0) + 1);
+      project.technologies.forEach((tech) => {
+        tagCount.set(tech, (tagCount.get(tech) || 0) + 1);
       });
     });
 
@@ -91,7 +91,7 @@ export function useFilters(projects: Ref<Project[]>) {
     // Filter by tags (AND - project must have ALL selected tags)
     if (selectedTags.value.length > 0) {
       result = result.filter((p) =>
-        selectedTags.value.every((tag) => p.tags.includes(tag))
+        selectedTags.value.every((tag) => p.technologies.includes(tag))
       );
     }
 
