@@ -16,6 +16,7 @@
 3.  **Quasar Components**: Use Quasar components (e.g., `q-btn`, `q-input`) instead of native HTML elements where possible.
 4.  **Styling**: Use `scoped` SCSS/CSS or Quasar utility classes (`q-pa-md`, `text-primary`). Avoid inline styles.
 5.  **Reactivity**: Use `ref` for primitives and `reactive` for objects/arrays. Always use `.value` when accessing refs in scripts.
+6.  **Performance First**: Use component pre-fetching for high-traffic navigation paths. lazy-load images using a dedicated Intersection Observer or custom directive.
 
 ## Negative Constraints (NEVER DO THIS)
 
@@ -24,3 +25,4 @@
 3.  **No jQuery or Direct DOM Manipulation**: Use Vue's template refs and reactive state.
 4.  **No Sync XHR**: properly use `async/await` with `axios` or `fetch`.
 5.  **No Component Logic in Templates**: Move complex logic to `computed` properties or functions.
+6.  **No Heavy Synchronous Logic in onMounted**: Offload heavy initialization to `requestIdleCallback` or use `nextTick` carefully to avoid blocking the main thread.

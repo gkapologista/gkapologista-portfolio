@@ -31,4 +31,8 @@ Use these files as the source of truth for code style and structure.
 ## Component Logic
 
 - **Key Principle**: Encapsulate logic in composables (`src/composables/`) if reused across multiple components.
-- **Example**: `useFilters.ts` (if available) for filtering logic.
+
+## Transitions & Animations
+
+- **Reference Pattern**: Use a global `TransitionState` composable to orchestrate complex multi-step transitions (e.g., Glitch -> Route Change -> Data Load).
+- **Golden Sample**: Glitch effect logic should be centralized in a reusable component or directive to prevent repetition in page files.

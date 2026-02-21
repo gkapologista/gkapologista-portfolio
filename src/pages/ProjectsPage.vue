@@ -120,29 +120,37 @@ const initAnimations = () => {
   // Kill existing triggers to avoid memory leaks/double animations
   ScrollTrigger.getAll().forEach((t) => t.kill());
 
-  nextTick(() => {
-    const cards = document.querySelectorAll('.project-card-container');
-    if (cards.length === 0) return;
+  const setup = () => {
+    nextTick(() => {
+      const cards = document.querySelectorAll('.project-card-container');
+      if (cards.length === 0) return;
 
-    // Reset initial state
-    gsap.set(cards, { opacity: 0, y: 30, scale: 0.9 });
+      // Reset initial state
+      gsap.set(cards, { opacity: 0, y: 30, scale: 0.9 });
 
-    ScrollTrigger.batch(cards, {
-      onEnter: (batch) => {
-        gsap.to(batch, {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.6,
-          stagger: 0.15,
-          ease: 'back.out(1.7)',
-          overwrite: true,
-        });
-      },
-      start: 'top 85%',
-      once: true,
+      ScrollTrigger.batch(cards, {
+        onEnter: (batch) => {
+          gsap.to(batch, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.6,
+            stagger: 0.15,
+            ease: 'back.out(1.7)',
+            overwrite: true,
+          });
+        },
+        start: 'top 85%',
+        once: true,
+      });
     });
-  });
+  };
+
+  if ('requestIdleCallback' in window) {
+    window.requestIdleCallback(() => setup());
+  } else {
+    setTimeout(setup, 100);
+  }
 };
 
 onMounted(() => {

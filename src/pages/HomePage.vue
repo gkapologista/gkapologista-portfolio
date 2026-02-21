@@ -37,7 +37,8 @@
         size="lg"
         label="Explore My Work"
         class="q-mt-lg explore-btn animate-fade-up-delayed"
-        @click="navigateToProjects"
+        @click="handleExplore"
+        @mouseenter="handleHover"
       />
     </div>
 
@@ -120,11 +121,32 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import { useRouter } from 'vue-router';
+import { usePrefetch } from '../composables/usePrefetch';
+import { projects } from '../data/projects';
 
 const router = useRouter();
-const navigateToProjects = () => router.push('/projects');
+const { prefetchComponent, prefetchImages } = usePrefetch();
+const transition = inject('transition') as {
+  triggerTransition: (cb: () => Promise<void>) => Promise<void>;
+};
+
+const handleExplore = () => {
+  transition.triggerTransition(async () => {
+    await router.push('/projects');
+  });
+};
+
+const handleHover = () => {
+  // Prefetch ProjectsPage component
+  prefetchComponent(() => import('./ProjectsPage.vue'));
+
+  // Prefetch images for the first 3 projects
+  const imageUrls = projects.slice(0, 3).map((p) => p.images[0]);
+  prefetchImages(imageUrls);
+};
+
 const currentYear = computed(() => new Date().getFullYear());
 
 const codeSnippets = [

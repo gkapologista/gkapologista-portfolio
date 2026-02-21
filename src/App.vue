@@ -1,8 +1,29 @@
 <template>
+  <GlitchTransition :show="isTransitioning" />
   <router-view />
 </template>
 
 <script setup lang="ts">
+import { ref, provide } from 'vue';
+import GlitchTransition from './components/GlitchTransition.vue';
+
+const isTransitioning = ref(false);
+
+const triggerTransition = async (callback: () => Promise<void>) => {
+  isTransitioning.value = true;
+  // Give the glitch effect a moment to "hit"
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  await callback();
+  // Keep the overlay for a split second on the new page
+  setTimeout(() => {
+    isTransitioning.value = false;
+  }, 400);
+};
+
+provide('transition', {
+  isTransitioning,
+  triggerTransition,
+});
 </script>
 
 <style>
