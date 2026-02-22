@@ -1,6 +1,6 @@
 <template>
   <transition name="glitch-fade">
-    <div v-if="isVisible" class="glitch-overlay">
+    <div v-if="isVisible" ref="overlay" class="glitch-overlay">
       <div class="glitch-content">
         <div class="glitch-text" data-text="FETCHING_DATA...">
           FETCHING_DATA...
@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import { gsap } from 'gsap';
 
 const props = defineProps<{
@@ -21,13 +21,16 @@ const props = defineProps<{
 }>();
 
 const isVisible = ref(false);
+const overlay = ref<HTMLElement | null>(null);
 
 watch(
   () => props.show,
   (newVal) => {
     if (newVal) {
       isVisible.value = true;
-      startGlitch();
+      nextTick(() => {
+        startGlitch();
+      });
     } else {
       // Small delay to ensure the target page is ready
       setTimeout(() => {
@@ -38,9 +41,11 @@ watch(
 );
 
 const startGlitch = () => {
+  if (!overlay.value) return;
+
   // GSAP animations for chromatic aberration and jitter
   // Real implementation would target specific CSS variables or elements
-  gsap.to('.glitch-overlay', {
+  gsap.to(overlay.value, {
     duration: 0.1,
     repeat: -1,
     yoyo: true,

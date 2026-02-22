@@ -28,15 +28,19 @@
         @clear-all="clearFilters"
       />
 
-      <transition-group name="projects" tag="div" class="projects-grid">
+      <div
+        ref="projectsGrid"
+        class="projects-grid"
+        :class="{ 'is-resyncing': isSyncing }"
+      >
         <div
-          v-for="project in filteredProjects"
+          v-for="project in displayedProjects"
           :key="project.id"
           class="project-card-container"
         >
           <ProjectCard :project="project" />
         </div>
-      </transition-group>
+      </div>
 
       <!-- Contextual CTA -->
       <section class="contact-cta" aria-labelledby="cta-heading">
@@ -88,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue';
+import { ref, computed, onMounted, nextTick, watch } from 'vue';
 import { projects } from '../data/projects';
 import { useRouter } from 'vue-router';
 import { useFilters } from '../composables/useFilters';
@@ -115,6 +119,34 @@ const {
   filteredProjects,
   clearFilters,
 } = useFilters(ref(projects));
+
+const projectsGrid = ref<HTMLElement | null>(null);
+const isSyncing = ref(false);
+const displayedProjects = ref([...filteredProjects.value]);
+
+watch(filteredProjects, async (newProjects) => {
+  if (!projectsGrid.value) return;
+
+  // 1. Capture and trap height to prevent layout shifts
+  const currentHeight = projectsGrid.value.clientHeight;
+  projectsGrid.value.style.minHeight = `${currentHeight}px`;
+  isSyncing.value = true;
+
+  // 2. Wait for the out-animation peak
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  // 3. Snap the data
+  displayedProjects.value = [...newProjects];
+
+  // 4. End syncing and release height after a short settling period
+  await nextTick();
+  setTimeout(() => {
+    isSyncing.value = false;
+    if (projectsGrid.value) {
+      projectsGrid.value.style.minHeight = '';
+    }
+  }, 100);
+});
 
 const initAnimations = () => {
   // Kill existing triggers to avoid memory leaks/double animations
@@ -278,38 +310,47 @@ onMounted(() => {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 360px);
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 2rem;
   margin-top: 2rem;
   align-items: stretch;
   justify-content: center;
+  position: relative;
+  transition: opacity 0.3s ease;
 }
 
-.project-card-container {
-  width: 360px;
-  will-change: transform, opacity;
+/* Digital Snap Animation Classes */
+.is-resyncing {
+  animation: resync-glitch 0.3s infinite;
+  opacity: 0.3;
+  pointer-events: none;
 }
 
-/* Transition-group animations */
-/* Transition-group animations */
-.projects-enter-active,
-.projects-leave-active {
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.projects-enter-from,
-.projects-leave-to {
-  opacity: 0;
-  transform: scale(0.9);
-}
-
-.projects-leave-active {
-  position: absolute; /* Crucial for smooth layout changes */
-  width: 360px; /* Match grid column width */
-}
-
-.projects-move {
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+@keyframes resync-glitch {
+  0% {
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
+  }
+  20% {
+    transform: translate(-5px, 2px);
+    clip-path: inset(10% 0 80% 0);
+  }
+  40% {
+    transform: translate(5px, -2px);
+    clip-path: inset(40% 0 20% 0);
+  }
+  60% {
+    transform: translate(-2px, -3px);
+    clip-path: inset(70% 0 10% 0);
+  }
+  80% {
+    transform: translate(2px, 3px);
+    clip-path: inset(20% 0 60% 0);
+  }
+  100% {
+    transform: translate(0);
+    clip-path: inset(0 0 0 0);
+  }
 }
 
 @media (max-width: 1024px) {

@@ -71,8 +71,13 @@ const onImageLoad = () => {
   max-height: 450px;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 
+.project-card-container {
+  width: 100%; /* Fluid width */
+  will-change: transform, opacity;
+}
 .project-card:hover {
   transform: translateY(-5px);
   box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
