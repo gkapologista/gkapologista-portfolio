@@ -285,6 +285,11 @@ onMounted(() => {
   justify-content: center;
 }
 
+.project-card-container {
+  width: 360px;
+  will-change: transform, opacity;
+}
+
 /* Transition-group animations */
 /* Transition-group animations */
 .projects-enter-active,
@@ -316,15 +321,58 @@ onMounted(() => {
 @media (max-width: 768px) {
   .projects-page {
     padding: var(--space-md, 1rem);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100dvh - 2rem);
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .header-section {
+    margin-bottom: 0.5rem;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-btn {
+    margin-bottom: 0 !important;
+    padding: 0.25rem 0.5rem;
   }
 
   .text-h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    margin-bottom: 0 !important;
   }
 
   .projects-grid {
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    justify-content: stretch;
+    grid-template-columns: 1fr;
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 1.5rem;
+    margin-top: 1rem;
+  }
+
+  .project-card-container {
+    width: 100%;
+  }
+
+  .contact-cta {
+    margin-top: 2rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .site-footer {
+    margin-top: 2rem;
+    padding: 1rem;
   }
 }
 
