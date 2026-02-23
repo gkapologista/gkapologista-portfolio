@@ -1,46 +1,44 @@
 <template>
-  <div class="project-card-container">
-    <router-link
-      :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
-      class="project-card-link"
-    >
-      <div class="project-card">
-        <div class="project-image">
-          <q-skeleton
-            v-if="!imageLoaded"
-            class="image-skeleton brand-pulse"
-            square
-            animation="none"
-          />
-          <img
-            :src="project.images[0]"
-            :alt="project.title"
-            loading="lazy"
-            @load="onImageLoad"
-            :class="{ 'is-loaded': imageLoaded }"
-          />
-          <div class="project-title-overlay">
-            <h3 class="project-title">{{ project.title }}</h3>
-          </div>
-        </div>
-        <div class="project-info">
-          <p class="project-description">{{ project.description }}</p>
-          <div class="project-tags">
-            <q-chip
-              v-for="tag in project.tags.slice(0, 3)"
-              :key="tag"
-              color="white"
-              text-color="secondary"
-              size="sm"
-              class="tech-chip"
-            >
-              {{ tag }}
-            </q-chip>
-          </div>
+  <router-link
+    :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
+    class="project-card-link"
+  >
+    <div class="project-card">
+      <div class="project-image">
+        <q-skeleton
+          v-if="!imageLoaded"
+          class="image-skeleton brand-pulse"
+          square
+          animation="none"
+        />
+        <img
+          :src="project.images[0]"
+          :alt="project.title"
+          loading="lazy"
+          @load="onImageLoad"
+          :class="{ 'is-loaded': imageLoaded }"
+        />
+        <div class="project-title-overlay">
+          <h3 class="project-title">{{ project.title }}</h3>
         </div>
       </div>
-    </router-link>
-  </div>
+      <div class="project-info">
+        <p class="project-description">{{ project.description }}</p>
+        <div class="project-tags">
+          <q-chip
+            v-for="tag in project.tags.slice(0, 3)"
+            :key="tag"
+            color="white"
+            text-color="secondary"
+            size="sm"
+            class="tech-chip"
+          >
+            {{ tag }}
+          </q-chip>
+        </div>
+      </div>
+    </div>
+  </router-link>
 </template>
 
 <script setup lang="ts">
@@ -73,11 +71,6 @@ const onImageLoad = () => {
   max-height: 450px;
   width: 100%;
   box-sizing: border-box;
-}
-
-.project-card-container {
-  width: 360px;
-  will-change: transform, opacity;
 }
 
 .project-card:hover {
