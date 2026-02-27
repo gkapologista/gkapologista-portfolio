@@ -36,3 +36,9 @@ Use these files as the source of truth for code style and structure.
 
 - **Reference Pattern**: Use a global `TransitionState` composable to orchestrate complex multi-step transitions (e.g., Glitch -> Route Change -> Data Load).
 - **Golden Sample**: Glitch effect logic should be centralized in a reusable component or directive to prevent repetition in page files.
+
+### Standard List Transitions
+
+- **Pattern**: Use Vue `<TransitionGroup>` for simple list filtering (fade/slide) instead of imperative GSAP logic.
+- **Why**: Keeps UI logic declarative and leverages Vue's internal diffing for smoother cross-fades.
+- **Reference**: `src/pages/ProjectsPage.vue` (Post-Implementation)

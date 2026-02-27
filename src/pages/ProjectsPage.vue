@@ -28,19 +28,20 @@
         @clear-all="clearFilters"
       />
 
-      <div
+      <TransitionGroup
+        name="project-fade"
+        tag="div"
         ref="projectsGrid"
         class="projects-grid"
-        :class="{ 'is-resyncing': isSyncing }"
       >
         <div
-          v-for="project in displayedProjects"
+          v-for="project in filteredProjects"
           :key="project.id"
           class="project-card-container"
         >
           <ProjectCard :project="project" />
         </div>
-      </div>
+      </TransitionGroup>
 
       <!-- Contextual CTA -->
       <section class="contact-cta" aria-labelledby="cta-heading">
@@ -98,10 +99,6 @@ import { useRouter } from 'vue-router';
 import { useFilters } from '../composables/useFilters';
 import { ProjectFilters } from '../components/filters';
 import ProjectCard from '../components/ProjectCard.vue';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const router = useRouter();
 
@@ -121,72 +118,25 @@ const {
 } = useFilters(ref(projects));
 
 const projectsGrid = ref<HTMLElement | null>(null);
-const isSyncing = ref(false);
-const displayedProjects = ref([...filteredProjects.value]);
 
-watch(filteredProjects, async (newProjects) => {
+watch(filteredProjects, async () => {
   if (!projectsGrid.value) return;
 
-  // 1. Capture and trap height to prevent layout shifts
+  // Capture and trap height to prevent layout shifts
   const currentHeight = projectsGrid.value.clientHeight;
   projectsGrid.value.style.minHeight = `${currentHeight}px`;
-  isSyncing.value = true;
 
-  // 2. Wait for the out-animation peak
-  await new Promise((resolve) => setTimeout(resolve, 300));
-
-  // 3. Snap the data
-  displayedProjects.value = [...newProjects];
-
-  // 4. End syncing and release height after a short settling period
+  // Release height after the transition settles
   await nextTick();
   setTimeout(() => {
-    isSyncing.value = false;
     if (projectsGrid.value) {
       projectsGrid.value.style.minHeight = '';
     }
-  }, 100);
+  }, 400); // Matches transition duration
 });
 
-const initAnimations = () => {
-  // Kill existing triggers to avoid memory leaks/double animations
-  ScrollTrigger.getAll().forEach((t) => t.kill());
-
-  const setup = () => {
-    nextTick(() => {
-      const cards = document.querySelectorAll('.project-card-container');
-      if (cards.length === 0) return;
-
-      // Reset initial state
-      gsap.set(cards, { opacity: 0, y: 30, scale: 0.9 });
-
-      ScrollTrigger.batch(cards, {
-        onEnter: (batch) => {
-          gsap.to(batch, {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: 'back.out(1.7)',
-            overwrite: true,
-          });
-        },
-        start: 'top 85%',
-        once: true,
-      });
-    });
-  };
-
-  if ('requestIdleCallback' in window) {
-    window.requestIdleCallback(() => setup());
-  } else {
-    setTimeout(setup, 100);
-  }
-};
-
 onMounted(() => {
-  initAnimations();
+  // Simple mounting logic if needed
 });
 </script>
 
@@ -319,38 +269,15 @@ onMounted(() => {
   transition: opacity 0.3s ease;
 }
 
-/* Digital Snap Animation Classes */
-.is-resyncing {
-  animation: resync-glitch 0.3s infinite;
-  opacity: 0.3;
-  pointer-events: none;
+/* Fade Animation Classes */
+.project-fade-enter-active,
+.project-fade-leave-active {
+  transition: opacity 0.4s ease;
 }
 
-@keyframes resync-glitch {
-  0% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-  }
-  20% {
-    transform: translate(-5px, 2px);
-    clip-path: inset(10% 0 80% 0);
-  }
-  40% {
-    transform: translate(5px, -2px);
-    clip-path: inset(40% 0 20% 0);
-  }
-  60% {
-    transform: translate(-2px, -3px);
-    clip-path: inset(70% 0 10% 0);
-  }
-  80% {
-    transform: translate(2px, 3px);
-    clip-path: inset(20% 0 60% 0);
-  }
-  100% {
-    transform: translate(0);
-    clip-path: inset(0 0 0 0);
-  }
+.project-fade-enter-from,
+.project-fade-leave-to {
+  opacity: 0;
 }
 
 @media (max-width: 1024px) {
