@@ -42,3 +42,9 @@ Use these files as the source of truth for code style and structure.
 - **Pattern**: Use Vue `<TransitionGroup>` for simple list filtering (fade/slide) instead of imperative GSAP logic.
 - **Why**: Keeps UI logic declarative and leverages Vue's internal diffing for smoother cross-fades.
 - **Reference**: `src/pages/ProjectsPage.vue` (Post-Implementation)
+
+### Coordinated Route Transitions
+
+- **Pattern**: Orchestrate global route changes using a centralized `GlitchTransition` component in `App.vue` combined with `router.beforeEach`.
+- **Why**: Ensures a consistent "Cyberpunk" loading feel across the entire application without duplicating logic in individual pages.
+- **Reference**: `src/App.vue` & `src/router/index.ts`
