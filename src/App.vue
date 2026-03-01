@@ -5,24 +5,32 @@
 
 <script setup lang="ts">
 import { ref, provide } from 'vue';
+import { useRouter } from 'vue-router';
 import GlitchTransition from './components/GlitchTransition.vue';
 
 const isTransitioning = ref(false);
+const router = useRouter();
 
-const triggerTransition = async (callback: () => Promise<void>) => {
+// Global Transition Guard
+router.beforeEach(async () => {
+  // Avoid re-triggering if we are already in the middle of a transition
+  if (isTransitioning.value) return true;
+
   isTransitioning.value = true;
-  // Give the glitch effect a moment to "hit"
+
+  // Hold the navigation for 300ms to allow the glitch to "hit"
   await new Promise((resolve) => setTimeout(resolve, 300));
-  await callback();
-  // Keep the overlay for a split second on the new page
+
+  // Proceed with navigation and schedule the hide
   setTimeout(() => {
     isTransitioning.value = false;
   }, 400);
-};
+
+  return true;
+});
 
 provide('transition', {
   isTransitioning,
-  triggerTransition,
 });
 </script>
 

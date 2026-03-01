@@ -35,7 +35,7 @@ watch(
       // Small delay to ensure the target page is ready
       setTimeout(() => {
         isVisible.value = false;
-      }, 500);
+      }, 50);
     }
   }
 );

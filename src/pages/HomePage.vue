@@ -121,21 +121,16 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from 'vue';
+import { computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { usePrefetch } from '../composables/usePrefetch';
 import { projects } from '../data/projects';
 
 const router = useRouter();
 const { prefetchComponent, prefetchImages } = usePrefetch();
-const transition = inject('transition') as {
-  triggerTransition: (cb: () => Promise<void>) => Promise<void>;
-};
 
 const handleExplore = () => {
-  transition.triggerTransition(async () => {
-    await router.push('/projects');
-  });
+  router.push('/projects');
 };
 
 const handleHover = () => {
