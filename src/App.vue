@@ -7,14 +7,29 @@
 import { ref, provide } from 'vue';
 import { useRouter } from 'vue-router';
 import GlitchTransition from './components/GlitchTransition.vue';
+import { projects } from './data/projects';
 
 const isTransitioning = ref(false);
+const currentTransitionText = ref('FETCHING_DATA...');
 const router = useRouter();
 
 // Global Transition Guard
-router.beforeEach(async () => {
+router.beforeEach(async (to) => {
   // Avoid re-triggering if we are already in the middle of a transition
   if (isTransitioning.value) return true;
+
+  // Resolve Transition Text
+  if (to.name === 'ProjectDetail') {
+    const slug = to.params.slug;
+    const project = projects.find((p) => p.slug === slug);
+    if (project) {
+      currentTransitionText.value = `DECRYPTING: ${project.title.toUpperCase()} ARCHIVES...`;
+    } else {
+      currentTransitionText.value = 'FETCHING_DATA...';
+    }
+  } else {
+    currentTransitionText.value = (to.meta.transitionText as string) || 'FETCHING_DATA...';
+  }
 
   isTransitioning.value = true;
 

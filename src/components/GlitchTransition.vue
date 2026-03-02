@@ -2,8 +2,8 @@
   <transition name="glitch-fade">
     <div v-if="isVisible" ref="overlay" class="glitch-overlay">
       <div class="glitch-content">
-        <div class="glitch-text" data-text="FETCHING_DATA...">
-          FETCHING_DATA...
+        <div class="glitch-text" :data-text="displayText">
+          {{ displayText }}
         </div>
         <div class="glitch-bar"></div>
         <div class="scanlines"></div>
@@ -18,10 +18,13 @@ import { gsap } from 'gsap';
 
 const props = defineProps<{
   show: boolean;
+  text?: string;
 }>();
 
 const isVisible = ref(false);
 const overlay = ref<HTMLElement | null>(null);
+const displayText = ref('');
+const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$#@&%*<>[]{}';
 
 watch(
   () => props.show,
@@ -30,6 +33,7 @@ watch(
       isVisible.value = true;
       nextTick(() => {
         startGlitch();
+        animateText();
       });
     } else {
       // Small delay to ensure the target page is ready
@@ -39,6 +43,35 @@ watch(
     }
   }
 );
+
+const animateText = () => {
+  const targetText = props.text || 'FETCHING_DATA...';
+  const duration = 0.4; // seconds
+  const frames = 15;
+  const frameDuration = duration / frames;
+
+  displayText.value = '';
+
+  let currentFrame = 0;
+  const interval = setInterval(() => {
+    if (currentFrame >= frames) {
+      displayText.value = targetText;
+      clearInterval(interval);
+      return;
+    }
+
+    let scrambled = '';
+    for (let i = 0; i < targetText.length; i++) {
+      if (targetText[i] === ' ' || Math.random() < currentFrame / frames) {
+        scrambled += targetText[i];
+      } else {
+        scrambled += chars[Math.floor(Math.random() * chars.length)];
+      }
+    }
+    displayText.value = scrambled;
+    currentFrame++;
+  }, frameDuration * 1000);
+};
 
 const startGlitch = () => {
   if (!overlay.value) return;
