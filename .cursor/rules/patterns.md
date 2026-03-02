@@ -46,5 +46,6 @@ Use these files as the source of truth for code style and structure.
 ### Coordinated Route Transitions
 
 - **Pattern**: Orchestrate global route changes using a centralized `GlitchTransition` component in `App.vue` combined with `router.beforeEach`.
-- **Why**: Ensures a consistent "Cyberpunk" loading feel across the entire application without duplicating logic in individual pages.
+- **Extension (Route-Aware Data)**: Use the route's `meta` field to define descriptive transition text. For dynamic routes (e.g., project details), resolve data in the guard to provide context-sensitive feedback (e.g., "DECRYPTING: [PROJECT] ARCHIVES...").
+- **Why**: Enhances the "Cyberpunk" immersion by making the system feel reactive to the user's target.
 - **Reference**: `src/App.vue` & `src/router/index.ts`
