@@ -8,6 +8,7 @@ A modern, responsive portfolio website built with Vue.js 3 and Quasar Framework.
 - **Project Details**: Detailed view of each project with images, technologies, features, and challenges
 - **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 - **Modern UI**: Glassmorphism effects, smooth animations, and dark theme
+- **Dynamic Transitions**: Orchestrated "Cyberpunk" global glitch transitions with route-aware, character-swapping decrypt animations
 - **Type-Safe**: Built with TypeScript for better code quality and developer experience
 
 ## Tech Stack
@@ -30,12 +31,14 @@ A modern, responsive portfolio website built with Vue.js 3 and Quasar Framework.
 ### Setup
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/gkapologista/gkapologista-portfolio.git
 cd gkapologista-portfolio
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 # or
@@ -43,6 +46,7 @@ yarn install
 ```
 
 3. Start the development server:
+
 ```bash
 npm run dev
 # or
@@ -104,13 +108,14 @@ If you need to add environment variables in the future:
 
 ## Available Scripts
 
-| Script | Description |
-|--------|-------------|
-| `npm run dev` | Start development server with hot reload |
-| `npm run build` | Build for production (outputs to `dist/spa/`) |
-| `npm run lint` | Run ESLint to check code quality |
-| `npm run format` | Format code using Prettier |
-| `npm test` | Run tests (currently placeholder) |
+| Script           | Description                                   |
+| ---------------- | --------------------------------------------- |
+| `npm run dev`    | Start development server with hot reload      |
+| `npm run build`  | Build for production (outputs to `dist/spa/`) |
+| `npm run lint`   | Run ESLint to check code quality              |
+| `npm run deploy` | Build and deploy to GitHub Pages (SPA)        |
+| `npm run format` | Format code using Prettier                    |
+| `npm test`       | Run tests (currently placeholder)             |
 
 ## Project Structure
 
@@ -160,10 +165,12 @@ npm install -D vitest @vue/test-utils
 Contributions are welcome! Please follow these guidelines:
 
 1. **Code Style**: Follow ESLint and Prettier configurations
+
    - Run `npm run lint` before committing
    - Run `npm run format` to auto-format code
 
 2. **Git Workflow**:
+
    - Create a feature branch from `main`
    - Make your changes
    - Ensure code passes linting
@@ -181,6 +188,5 @@ This project is currently **unlicensed**. It is intended for demonstration and d
 
 ---
 
-**Author**: Geoff Kevin G. Apologista  
+**Author**: Geoff Kevin G. Apologista
 **Email**: gkapologista0800@gmail.com
-

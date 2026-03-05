@@ -1,10 +1,6 @@
 <template>
-  <div
-    class="project-filters"
-    :class="{ 'project-filters--active': hasActiveFilters }"
-    role="search"
-    aria-label="Project filters"
-  >
+  <div class="project-filters" :class="{ 'project-filters--active': hasActiveFilters }" role="search"
+    aria-label="Project filters">
     <!-- Desktop/Tablet Layout -->
     <div class="filters-desktop">
       <SearchInput v-model="searchQuery" @clear="$emit('search-cleared')" />
@@ -15,11 +11,7 @@
 
       <div class="filters-divider" aria-hidden="true"></div>
 
-      <TagChips
-        v-model="selectedTags"
-        :available-tags="availableTags"
-        :max-visible="8"
-      />
+      <TagChips v-model="selectedTags" :available-tags="availableTags" :max-visible="8" />
 
       <transition name="fade">
         <div v-if="hasActiveFilters" class="filters-meta">
@@ -27,15 +19,8 @@
             <strong>{{ resultsCount }}</strong>
             {{ resultsCount === 1 ? 'project' : 'projects' }}
           </span>
-          <q-btn
-            flat
-            dense
-            round
-            icon="clear_all"
-            class="clear-all-btn"
-            aria-label="Clear all filters"
-            @click="handleClearAll"
-          />
+          <q-btn flat dense round icon="filter_alt_off" class="clear-all-btn" aria-label="Clear all filters"
+            @click="handleClearAll" />
         </div>
       </transition>
     </div>
@@ -52,25 +37,13 @@
             <span class="results-count-mobile" aria-live="polite">
               {{ resultsCount }}
             </span>
-            <q-btn
-              flat
-              dense
-              round
-              icon="clear_all"
-              size="sm"
-              class="clear-all-btn-mobile"
-              aria-label="Clear all filters"
-              @click="handleClearAll"
-            />
+            <q-btn flat dense round icon="filter_alt_off" size="sm" class="clear-all-btn-mobile"
+              aria-label="Clear all filters" @click="handleClearAll" />
           </div>
         </transition>
       </div>
 
-      <TagChips
-        v-model="selectedTags"
-        :available-tags="availableTags"
-        :max-visible="6"
-      />
+      <TagChips v-model="selectedTags" :available-tags="availableTags" :max-visible="6" />
     </div>
   </div>
 </template>
