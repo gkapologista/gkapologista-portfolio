@@ -1,23 +1,10 @@
 <template>
-  <router-link
-    :to="{ name: 'ProjectDetail', params: { slug: project.slug } }"
-    class="project-card-link"
-  >
+  <router-link :to="{ name: 'ProjectDetail', params: { slug: project.slug } }" class="project-card-link">
     <div class="project-card">
       <div class="project-image">
-        <q-skeleton
-          v-if="!imageLoaded"
-          class="image-skeleton brand-pulse"
-          square
-          animation="none"
-        />
-        <img
-          :src="project.images[0]"
-          :alt="project.title"
-          loading="lazy"
-          @load="onImageLoad"
-          :class="{ 'is-loaded': imageLoaded }"
-        />
+        <q-skeleton v-if="!imageLoaded" class="image-skeleton brand-pulse" square animation="none" />
+        <img :src="project.images[0]" :alt="project.title" loading="lazy" @load="onImageLoad"
+          :class="{ 'is-loaded': imageLoaded }" />
         <div class="project-title-overlay">
           <h3 class="project-title">{{ project.title }}</h3>
         </div>
@@ -25,14 +12,8 @@
       <div class="project-info">
         <p class="project-description">{{ project.description }}</p>
         <div class="project-tags">
-          <q-chip
-            v-for="tag in project.tags.slice(0, 3)"
-            :key="tag"
-            color="white"
-            text-color="secondary"
-            size="sm"
-            class="tech-chip"
-          >
+          <q-chip v-for="tag in project.tags.slice(0, 3)" :key="tag" color="white" text-color="secondary" size="sm"
+            class="tech-chip">
             {{ tag }}
           </q-chip>
         </div>
@@ -75,9 +56,11 @@ const onImageLoad = () => {
 }
 
 .project-card-container {
-  width: 100%; /* Fluid width */
+  width: 100%;
+  /* Fluid width */
   will-change: transform, opacity;
 }
+
 .project-card:hover {
   transform: translateY(-5px);
   box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
@@ -161,6 +144,9 @@ const onImageLoad = () => {
   letter-spacing: -0.02em;
   line-height: var(--lh-tight, 1.1);
   text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-info {
@@ -239,6 +225,16 @@ const onImageLoad = () => {
 
   .project-image {
     height: 140px;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .project-title {
+    font-size: 1.5rem;
   }
 }
 </style>
