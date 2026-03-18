@@ -251,4 +251,31 @@ export const projects: Project[] = [
     tags: ['Vue.js', 'Quasar'],
     category: 'Web Application',
   },
+  {
+    id: 10,
+    slug: 'book-explorer-app',
+    title: 'Book Explorer App',
+    description: 'A full-stack application that allows users to explore and discover books utilizing the Gutendex API.',
+    overview: 'The Book Explorer App is a comprehensive platform built with a React frontend and Node.js backend. It seamlessly integrates the Gutendex API to provide users with a rich library of public domain books, complete with robust search and pagination features.',
+    technologies: ['React', 'TypeScript', 'Node.js', 'Express.js', 'Vite', 'Render', 'Gutendex API'],
+    features: [
+      'Gutendex API integration for real-time book discovery',
+      'Responsive and dynamic UI powered by React and Vite',
+      'Robust backend architecture with Node.js and Express',
+      'Seamless pagination and search capabilities',
+      'Full-stack type safety utilizing TypeScript'
+    ],
+    challenges: [
+      'Integrating and managing state with external REST APIs (Gutendex)',
+      'Ensuring strict type safety across the full-stack data flow',
+      'Implementing efficient pagination for large data sets'
+    ],
+    images: [
+      `${basePath}images/book-explorer-app1.png`,
+      `${basePath}images/book-explorer-app2.png`,
+      `${basePath}images/book-explorer-app3.png`,
+    ],
+    tags: ['React', 'TypeScript', 'Node.js', 'Express.js', 'Vite', 'Gutendex API'],
+    category: 'Web Application',
+  }
 ];
