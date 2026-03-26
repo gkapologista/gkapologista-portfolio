@@ -96,28 +96,30 @@
           Get in Touch
         </a>
 
-        <div class="social-links" role="list" aria-label="Social media links">
-          <a
-            href="https://github.com/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            aria-label="Visit GitHub profile"
-            role="listitem"
-          >
-            <q-icon name="fab fa-github" size="md" />
-          </a>
-          <a
-            href="https://linkedin.com/in/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="social-link"
-            aria-label="Visit LinkedIn profile"
-            role="listitem"
-          >
-            <q-icon name="fab fa-linkedin" size="md" />
-          </a>
-        </div>
+        <ul class="social-links" aria-label="Social media links">
+          <li>
+            <a
+              href="https://github.com/gkapologista"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              aria-label="Visit GitHub profile"
+            >
+              <q-icon name="fab fa-github" size="md" />
+            </a>
+          </li>
+          <li>
+            <a
+              href="https://linkedin.com/in/gkapologista"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              aria-label="Visit LinkedIn profile"
+            >
+              <q-icon name="fab fa-linkedin" size="md" />
+            </a>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -815,6 +817,13 @@ const codeRainData = Array.from({ length: 15 }, () =>
   display: flex;
   justify-content: center;
   gap: 1.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.social-links li {
+  display: contents;
 }
 
 .social-link {
