@@ -3,7 +3,6 @@
     <div class="background-effects">
       <div class="grid-pattern"></div>
       <div class="glow-orb orb-1"></div>
-      <div class="glow-orb orb-2"></div>
       <div class="glow-orb orb-3"></div>
       <div class="code-rain">
         <div
@@ -340,7 +339,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   animation: orbFloat 15s ease-in-out infinite;
 }
 
-/* Orbs dimmed for Cyberpunk contrast */
+/* Two teal ambient orbs — raised to visible opacity; grey orb-2 removed (invisible + paint cost) */
 .orb-1 {
   width: 300px;
   height: 300px;
@@ -348,17 +347,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   top: 20%;
   left: 20%;
   animation-delay: 0s;
-  opacity: 0.15;
-}
-
-.orb-2 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, var(--bg-grey), transparent 70%);
-  top: 50%;
-  right: 20%;
-  animation-delay: -5s;
-  opacity: 0.1;
+  opacity: 0.27;
 }
 
 .orb-3 {
@@ -368,7 +357,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   bottom: 20%;
   left: 40%;
   animation-delay: -10s;
-  opacity: 0.15;
+  opacity: 0.25;
 }
 
 .code-rain {
