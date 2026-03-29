@@ -512,15 +512,78 @@ const codeRainData = Array.from({ length: 15 }, () =>
     transparent
   );
   transition: 0.5s;
+  z-index: 1;
+}
+
+/* Scanline CRT overlay — flashes on hover */
+.explore-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 0, 0, 0.14) 3px,
+    rgba(0, 0, 0, 0.14) 4px
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .explore-btn:hover::before {
   left: 100%;
 }
 
+.explore-btn:hover::after {
+  animation: scanFlash 0.4s ease forwards;
+}
+
 .explore-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  animation: btnGlitch 0.4s steps(1, end) forwards;
+}
+
+@keyframes btnGlitch {
+  0% {
+    transform: translateY(0) translateX(0);
+    box-shadow: none;
+  }
+  12% {
+    transform: translateY(-3px) translateX(-3px);
+    box-shadow:
+      3px 0 0 rgba(255, 20, 80, 0.65),
+      -3px 0 0 rgba(0, 240, 215, 0.65);
+  }
+  25% {
+    transform: translateY(-2px) translateX(3px);
+    box-shadow:
+      -4px 0 0 rgba(255, 20, 80, 0.5),
+      4px 0 0 rgba(0, 240, 215, 0.5);
+  }
+  40% {
+    transform: translateY(-3px) translateX(-1px);
+    box-shadow:
+      2px 0 0 rgba(255, 20, 80, 0.3),
+      -2px 0 0 rgba(0, 240, 215, 0.3);
+  }
+  60% {
+    transform: translateY(-2px) translateX(1px);
+    box-shadow:
+      1px 0 0 rgba(255, 20, 80, 0.15),
+      -1px 0 0 rgba(0, 240, 215, 0.15);
+  }
+  100% {
+    transform: translateY(-2px) translateX(0);
+    box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes scanFlash {
+  0%   { opacity: 0; }
+  15%  { opacity: 0.75; }
+  50%  { opacity: 0.4; }
+  100% { opacity: 0; }
 }
 
 .animate-fade-up {
