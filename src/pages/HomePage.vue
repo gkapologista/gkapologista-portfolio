@@ -27,20 +27,36 @@
     <!-- Hero Section -->
     <div class="content">
       <div class="text-center q-mb-lg">
-        <p class="hero-label animate-fade-up">&lt; GK APOLOGISTA /&gt;</p>
-        <h1 class="hero-heading animate-fade-up-stagger">
-          Crafting Digital Solutions
+        <p class="hero-label">
+          {{ displayedLabel
+          }}<span
+            v-if="cursorTarget === 'label'"
+            class="type-cursor"
+            aria-hidden="true"
+            >_</span
+          >
+        </p>
+        <h1 class="hero-heading">
+          {{ displayedHeading
+          }}<span
+            v-if="cursorTarget === 'heading'"
+            class="type-cursor"
+            aria-hidden="true"
+            >_</span
+          >
         </h1>
       </div>
 
-      <q-btn
-        color="secondary"
-        size="lg"
-        label="Explore My Work"
-        class="q-mt-lg explore-btn animate-fade-up-delayed"
-        @click="handleExplore"
-        @mouseenter="handleHover"
-      />
+      <div class="btn-wrapper q-mt-lg" :class="{ 'btn-wrapper--visible': showButton }">
+        <q-btn
+          color="secondary"
+          size="lg"
+          label="Explore My Work"
+          class="explore-btn"
+          @click="handleExplore"
+          @mouseenter="handleHover"
+        />
+      </div>
 
       <!-- Scroll affordance -->
       <div
@@ -148,6 +164,54 @@ const onScroll = () => {
 };
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }));
 onUnmounted(() => window.removeEventListener('scroll', onScroll));
+
+// ── Typewriter ────────────────────────────────────────────────────────────────
+const LABEL_TEXT = '< GK APOLOGISTA />';
+const HEADING_TEXT = 'Crafting Digital Solutions';
+
+const displayedLabel = ref('');
+const displayedHeading = ref('');
+const cursorTarget = ref<'label' | 'heading' | 'none'>('label');
+const showButton = ref(false);
+
+onMounted(() => {
+  // Respect reduced-motion: skip animation, show everything instantly
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    displayedLabel.value = LABEL_TEXT;
+    displayedHeading.value = HEADING_TEXT;
+    cursorTarget.value = 'none';
+    showButton.value = true;
+    return;
+  }
+
+  const type = (
+    text: string,
+    target: typeof displayedLabel,
+    charMs: number,
+    onDone: () => void,
+  ) => {
+    let i = 0;
+    const tick = setInterval(() => {
+      target.value = text.slice(0, ++i);
+      if (i >= text.length) { clearInterval(tick); onDone(); }
+    }, charMs);
+  };
+
+  // Wait for initial cursor blink, then start label
+  setTimeout(() => {
+    type(LABEL_TEXT, displayedLabel, 40, () => {
+      // Cursor jumps to heading after a brief pause
+      setTimeout(() => {
+        cursorTarget.value = 'heading';
+        type(HEADING_TEXT, displayedHeading, 50, () => {
+          showButton.value = true;
+          // Cursor lingers, then disappears
+          setTimeout(() => { cursorTarget.value = 'none'; }, 1400);
+        });
+      }, 220);
+    });
+  }, 300);
+});
 
 const codeSnippets = [
   'const app = createApp({})',
@@ -390,6 +454,32 @@ const codeRainData = Array.from({ length: 15 }, () =>
   opacity: 0;
   transform: translateY(20px);
   animation: fadeUp 0.8s ease forwards 0.15s;
+}
+
+.type-cursor {
+  display: inline-block;
+  color: var(--accent-teal);
+  font-weight: 300;
+  animation: cursorBlink 0.55s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.btn-wrapper {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+
+.btn-wrapper--visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
 }
 
 .explore-btn {
