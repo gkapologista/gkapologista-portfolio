@@ -26,9 +26,10 @@
 
     <!-- Hero Section -->
     <div class="content">
-      <div class="text-center q-mb-lg animate-fade-up">
-        <h1 class="text-h2 q-mb-md" style="color: var(--text-primary)">
-          Crafting Digital Solutions with GK Apologista
+      <div class="text-center q-mb-lg">
+        <p class="hero-label animate-fade-up">&lt; GK APOLOGISTA /&gt;</p>
+        <h1 class="hero-heading animate-fade-up-stagger">
+          Crafting Digital Solutions
         </h1>
       </div>
 
@@ -363,16 +364,32 @@ const codeRainData = Array.from({ length: 15 }, () =>
   opacity: 0.7;
 }
 
-.text-h2 {
+.hero-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.28em;
+  color: var(--accent-teal);
+  text-transform: uppercase;
+  margin: 0 0 0.9rem;
+  opacity: 0.75;
+}
+
+.hero-heading {
   font-family: 'JetBrains Mono', monospace;
   font-size: 3.5rem;
-  line-height: 1.3;
+  line-height: 1.15;
   font-weight: 700;
   letter-spacing: -0.02em;
   max-width: 700px;
   margin: 0 auto;
-  color: var(--accent-teal);
+  color: var(--text-white);
   text-transform: uppercase;
+}
+
+.animate-fade-up-stagger {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s ease forwards 0.15s;
 }
 
 .explore-btn {
