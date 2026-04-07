@@ -109,31 +109,9 @@
     <footer class="site-footer">
       <div class="footer-content">
         <span class="footer-copyright">© {{ currentYear }} GK Apologista</span>
-        <div class="footer-links">
-          <a href="mailto:gkapologista@gmail.com" class="footer-link"
-            >Contact</a
-          >
-          <span class="footer-divider">•</span>
-          <a
-            href="https://github.com/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-link"
-          >
-            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" />
-            GitHub
-          </a>
-          <span class="footer-divider">•</span>
-          <a
-            href="https://linkedin.com/in/gkapologista"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="footer-link"
-          >
-            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" />
-            LinkedIn
-          </a>
-        </div>
+        <a href="mailto:gkapologista@gmail.com" class="footer-link">
+          Contact
+        </a>
       </div>
     </footer>
   </div>
@@ -730,11 +708,6 @@ const codeRainData = Array.from({ length: 15 }, () =>
   color: rgba(238, 238, 238, 0.5);
 }
 
-.footer-links {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
 
 .footer-link {
   display: inline-flex;
@@ -753,10 +726,6 @@ const codeRainData = Array.from({ length: 15 }, () =>
 .footer-link:focus-visible {
   outline: 2px solid rgba(255, 255, 255, 0.8);
   outline-offset: 2px;
-}
-
-.footer-divider {
-  color: rgba(255, 255, 255, 0.3);
 }
 
 /* Responsive adjustments */
