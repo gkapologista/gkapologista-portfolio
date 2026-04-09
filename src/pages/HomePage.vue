@@ -54,6 +54,13 @@
       </div>
     </div>
 
+    <!-- Section bridge: hero → contact -->
+    <div class="section-bridge" aria-hidden="true">
+      <div class="section-bridge__line"></div>
+      <span class="section-bridge__label">[ CONTACT ]</span>
+      <div class="section-bridge__line"></div>
+    </div>
+
     <!-- Contact Section -->
     <section class="contact-section" aria-labelledby="contact-heading">
       <div class="contact-content animate-fade-up">
@@ -568,6 +575,39 @@ const codeRainData = Array.from({ length: 15 }, () =>
   15%  { opacity: 1; }
   85%  { opacity: 1; }
   100% { top: calc(100% + 6px); opacity: 0; }
+}
+
+/* Section Bridge */
+.section-bridge {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 0 3rem;
+}
+
+.section-bridge__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--accent-teal) 30%,
+    var(--accent-teal) 70%,
+    transparent
+  );
+  opacity: 0.35;
+}
+
+.section-bridge__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  color: var(--accent-teal);
+  opacity: 0.55;
+  white-space: nowrap;
+  text-transform: uppercase;
 }
 
 /* Contact Section */
