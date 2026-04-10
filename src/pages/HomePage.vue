@@ -40,6 +40,18 @@
         @click="handleExplore"
         @mouseenter="handleHover"
       />
+
+      <!-- Scroll affordance -->
+      <div
+        class="scroll-indicator"
+        :class="{ 'scroll-indicator--hidden': hasScrolled }"
+        aria-hidden="true"
+      >
+        <span class="scroll-indicator__label">// scroll</span>
+        <div class="scroll-indicator__track">
+          <div class="scroll-indicator__dot"></div>
+        </div>
+      </div>
     </div>
 
     <!-- Contact Section -->
@@ -121,7 +133,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { usePrefetch } from '../composables/usePrefetch';
 import { projects } from '../data/projects';
@@ -143,6 +155,13 @@ const handleHover = () => {
 };
 
 const currentYear = computed(() => new Date().getFullYear());
+
+const hasScrolled = ref(false);
+const onScroll = () => {
+  if (window.scrollY > 80) hasScrolled.value = true;
+};
+onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }));
+onUnmounted(() => window.removeEventListener('scroll', onScroll));
 
 const codeSnippets = [
   'const app = createApp({})',
@@ -483,6 +502,72 @@ const codeRainData = Array.from({ length: 15 }, () =>
     transform: translateY(100%);
     opacity: 0;
   }
+}
+
+/* Scroll Indicator */
+.scroll-indicator {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: scrollIndicatorFadeIn 0.6s ease forwards 1.4s;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.scroll-indicator--hidden {
+  opacity: 0 !important;
+}
+
+.scroll-indicator__label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--accent-teal);
+  opacity: 0.6;
+  text-transform: lowercase;
+}
+
+.scroll-indicator__track {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(
+    to bottom,
+    var(--accent-teal) 0%,
+    transparent 100%
+  );
+  position: relative;
+  overflow: hidden;
+}
+
+.scroll-indicator__dot {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  box-shadow: 0 0 6px var(--accent-teal);
+  animation: scrollDotFall 1.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes scrollIndicatorFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+  to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+@keyframes scrollDotFall {
+  0%   { top: -6px; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: calc(100% + 6px); opacity: 0; }
 }
 
 /* Contact Section */
