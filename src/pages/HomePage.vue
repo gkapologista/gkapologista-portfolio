@@ -320,27 +320,34 @@ const codeRainData = Array.from({ length: 15 }, () =>
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  opacity: 0;
+  /* Safe fallback: any column without an explicit rule stays visible.
+     Covers edge cases where column count changes. */
+  opacity: 0.2;
 }
 
-.code-column:nth-child(-n + 5),
-.code-column:nth-last-child(-n + 5) {
-  opacity: 0.7;
+/* Tier 1 — outer edges: brightest */
+.code-column:nth-child(-n + 3),
+.code-column:nth-last-child(-n + 3) {
+  opacity: 0.55;
 }
 
+/* Tier 2 — shoulders: mid-bright */
+.code-column:nth-child(4),
+.code-column:nth-child(5),
+.code-column:nth-last-child(4),
+.code-column:nth-last-child(5) {
+  opacity: 0.38;
+}
+
+/* Tier 3 — center columns (6–10 with 15 cols): subtle but visible.
+   Base opacity handles these; rule is explicit for clarity. */
 .code-column:nth-child(6),
-.code-column:nth-last-child(6) {
-  opacity: 0.5;
-}
-
 .code-column:nth-child(7),
-.code-column:nth-last-child(7) {
-  opacity: 0.3;
-}
-
 .code-column:nth-child(8),
+.code-column:nth-last-child(6),
+.code-column:nth-last-child(7),
 .code-column:nth-last-child(8) {
-  opacity: 0.1;
+  opacity: 0.2;
 }
 
 .code-line {
