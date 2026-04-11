@@ -16,9 +16,9 @@
             v-for="i in 15"
             :key="i"
             class="code-line"
-            :style="{ animationDelay: `${Math.random() * 5}s` }"
+            :style="{ animationDelay: codeRainData[n - 1][i - 1].delay }"
           >
-            {{ getRandomCode() }}
+            {{ codeRainData[n - 1][i - 1].snippet }}
           </div>
         </div>
       </div>
@@ -212,9 +212,13 @@ const codeSnippets = [
   'useInsertionEffect',
 ];
 
-const getRandomCode = () => {
-  return codeSnippets[Math.floor(Math.random() * codeSnippets.length)];
-};
+// Pre-computed once at setup — prevents Math.random() re-evaluation on every re-render
+const codeRainData = Array.from({ length: 15 }, () =>
+  Array.from({ length: 15 }, () => ({
+    delay: `${Math.random() * 5}s`,
+    snippet: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
+  }))
+);
 </script>
 
 <style scoped>
