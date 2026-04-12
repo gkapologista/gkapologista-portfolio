@@ -476,7 +476,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   background-color: var(--accent-teal) !important;
   color: var(--bg-charcoal) !important;
   border: 1px solid var(--accent-teal);
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   position: relative;
   overflow: hidden;
   border-radius: 0;
@@ -496,7 +496,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
     rgba(255, 255, 255, 0.4),
     transparent
   );
-  transition: 0.5s;
+  transition: left 0.5s;
   z-index: 1;
 }
 
@@ -792,7 +792,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   background: var(--accent-teal);
   border-radius: 2px;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 2rem;
   text-transform: uppercase;
 }
@@ -830,7 +830,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   background: var(--bg-grey);
   color: var(--text-white);
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, color 0.3s ease;
   border: 1px solid var(--accent-teal);
 }
 
