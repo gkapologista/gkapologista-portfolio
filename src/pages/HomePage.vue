@@ -105,7 +105,7 @@
               class="social-link"
               aria-label="Visit GitHub profile"
             >
-              <q-icon name="fab fa-github" size="md" />
+              <q-icon name="fab fa-github" size="md" aria-hidden="true" />
             </a>
           </li>
           <li>
