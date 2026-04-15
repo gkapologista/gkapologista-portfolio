@@ -1,5 +1,7 @@
 # HomePage.vue — Web Interface Guidelines Audit Checklist
 
+> Last updated: 2026-04-15 — 10 / 14 items resolved
+
 ## Animation / `prefers-reduced-motion`
 
 - [x] **Add CSS `prefers-reduced-motion` block** — `.grid-pattern`, `.glow-orb`, `.code-line`, `.type-cursor`, `.scroll-indicator`, and `.scroll-indicator__dot` animations all run for reduced-motion users; the JS guard in `onMounted` only covers the typewriter/button — add a `@media (prefers-reduced-motion: reduce)` block that disables all decorative CSS animations
@@ -16,7 +18,7 @@
 
 - [x] **Email icon in contact button (`:95`)** — `<q-icon name="email">` inside `<a>` with text label; add `aria-hidden="true"` to the icon
 - [x] **GitHub icon (`:108`)** — `<q-icon name="fab fa-github">` inside labelled `<a>`; add `aria-hidden="true"`
-- [ ] **LinkedIn icon (`:119`)** — `<q-icon name="fab fa-linkedin">` inside labelled `<a>`; add `aria-hidden="true"`
+- [x] **LinkedIn icon (`:119`)** — `<q-icon name="fab fa-linkedin">` inside labelled `<a>`; add `aria-hidden="true"`
 
 ## Accessibility — Heading & Zoom
 

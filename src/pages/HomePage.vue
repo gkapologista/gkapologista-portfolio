@@ -116,7 +116,7 @@
               class="social-link"
               aria-label="Visit LinkedIn profile"
             >
-              <q-icon name="fab fa-linkedin" size="md" />
+              <q-icon name="fab fa-linkedin" size="md" aria-hidden="true" />
             </a>
           </li>
         </ul>
