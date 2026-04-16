@@ -1,6 +1,6 @@
 # ProjectsPage.vue — UI/UX Improvement Checklist
 
-> Last updated: 2025-12-29 — 10 / 27 items resolved
+> Last updated: 2026-04-16 — 12 / 27 items resolved
 
 ## Critical / Functional Gaps
 
@@ -20,8 +20,8 @@
 ## Card UX (`ProjectCard.vue`)
 
 - [x] **No affordance that the card is clickable** — Added a `> VIEW PROJECT ↗` teal strip (`position: absolute, bottom: 0`) that slides up from below the card on hover (`translateY(100%)` → `translateY(0)`). Works with the existing `overflow: hidden`. Reduced-motion users get an opacity fade instead of a slide.
-- [ ] **Tags truncated with no overflow indicator** (`ProjectCard.vue:15`) — `.slice(0, 3)` silently drops tags. Add a `+N more` chip when the project has more than 3 tags.
-- [ ] **No category badge on card** — The `category` field (`'Web Application' | 'Game' | 'System'`) exists in data but isn't displayed on the card. Users can't tell what type a project is at a glance.
+- [x] **Tags truncated with no overflow indicator** — Added a `+N` chip after the three visible tags (`v-if="project.tags.length > 3"`), styled with dashed teal border and italic text matching the `tag-chip--more` pattern from `TagChips.vue`. Includes `aria-label` for screen readers and suppressed hover lift since the chip is non-interactive.
+- [x] **No category badge on card** — The `category` field (`'Web Application' | 'Game' | 'System'`) exists in data but isn't displayed on the card. Users can't tell what type a project is at a glance.
 - [ ] **No `year` displayed on card** — The `year` field exists on `Project` but is never rendered anywhere on the card.
 - [ ] **No quick-action links (live/repo)** — `liveUrl` and `repoUrl` are in the data model but users must navigate into the detail page to find them. Consider small icon links on card hover.
 - [ ] **Fixed card heights are brittle** (`ProjectCard.vue:50–52`) — `height: 450px / min-height / max-height` all hardcoded. If description text length varies, this creates visual imbalance. Consider `min-height` only and let the grid equalize row heights.

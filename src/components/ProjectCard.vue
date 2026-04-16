@@ -2,6 +2,14 @@
   <router-link :to="{ name: 'ProjectDetail', params: { slug: project.slug } }" class="project-card-link">
     <div class="project-card">
       <div class="project-image">
+        <div
+          class="category-badge"
+          :class="`category-badge--${categoryConfig.mod}`"
+          :aria-label="`Category: ${project.category}`"
+        >
+          <span class="category-badge__symbol" aria-hidden="true">{{ categoryConfig.symbol }}</span>
+          <span class="category-badge__label">{{ categoryConfig.label }}</span>
+        </div>
         <q-skeleton v-if="!imageLoaded" class="image-skeleton brand-pulse" square animation="none" />
         <img :src="project.images[0]" :alt="project.title" loading="lazy" @load="onImageLoad"
           :class="{ 'is-loaded': imageLoaded }" />
@@ -16,6 +24,16 @@
             class="tech-chip">
             {{ tag }}
           </q-chip>
+          <q-chip
+            v-if="project.tags.length > 3"
+            color="white"
+            text-color="secondary"
+            size="sm"
+            class="tech-chip tech-chip--overflow"
+            :aria-label="`${project.tags.length - 3} more tags`"
+          >
+            +{{ project.tags.length - 3 }}
+          </q-chip>
         </div>
       </div>
       <div class="project-cta" aria-hidden="true">
@@ -27,10 +45,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import type { Project } from '../data/projects';
 
-defineProps<{
+const props = defineProps<{
   project: Project;
 }>();
 
@@ -39,6 +57,16 @@ const imageLoaded = ref(false);
 const onImageLoad = () => {
   imageLoaded.value = true;
 };
+
+const CATEGORY_CONFIG: Record<string, { symbol: string; mod: string; label: string }> = {
+  'Web Application': { symbol: '</>', mod: 'web',    label: 'WEB APP' },
+  'Game':            { symbol: '▶',   mod: 'game',   label: 'GAME'    },
+  'System':          { symbol: '>_',  mod: 'system', label: 'SYSTEM'  },
+};
+
+const categoryConfig = computed(
+  () => CATEGORY_CONFIG[props.project.category] ?? { symbol: '◈', mod: 'web', label: props.project.category.toUpperCase() }
+);
 </script>
 
 <style scoped>
@@ -77,6 +105,52 @@ const onImageLoad = () => {
   position: relative;
   flex-shrink: 0;
   background: rgba(255, 255, 255, 0.05);
+}
+
+.category-badge {
+  position: absolute;
+  top: 0.625rem;
+  left: 0.625rem;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid currentColor;
+  box-shadow: 3px 3px 0px rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+}
+
+.category-badge--web {
+  color: var(--accent-teal);
+  background: rgba(0, 173, 181, 0.12);
+}
+
+.category-badge--game {
+  color: #A64D79;
+  background: rgba(166, 77, 121, 0.15);
+}
+
+.category-badge--system {
+  color: var(--text-white, #EEEEEE);
+  border-color: rgba(238, 238, 238, 0.45);
+  background: rgba(238, 238, 238, 0.08);
+}
+
+.category-badge__symbol {
+  font-size: 0.625rem;
+  line-height: 1;
+}
+
+.category-badge__label {
+  line-height: 1;
 }
 
 .image-skeleton {
@@ -204,6 +278,21 @@ const onImageLoad = () => {
   transform: translateY(-2px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   background: white !important;
+}
+
+.tech-chip--overflow {
+  border-style: dashed;
+  font-style: italic;
+  opacity: 0.7;
+  cursor: default;
+}
+
+.tech-chip--overflow:hover {
+  transform: none;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
+  background: var(--bg-charcoal) !important;
+  opacity: 1;
+  border-style: solid;
 }
 
 .project-cta {
