@@ -13,6 +13,11 @@ Use these files as the source of truth for code style and structure.
   - `useMeta` for SEO tags.
   - Handling route params with `useRoute` and `computed`.
 
+## Primary content landmark
+
+- **Pattern**: Use exactly one `<main id="main-content">` per route page for the primary task or reading flow. Keep decorative backgrounds, fixed controls (for example scroll-to-top), and `<footer>` **outside** `<main>` so document landmarks stay clear.
+- **Reference File**: `src/pages/ProjectsPage.vue`
+
 ## Routing
 
 - **Reference File**: `src/router/routes.ts`

@@ -7,6 +7,7 @@
       <div class="glow-orb orb-3"></div>
     </div>
 
+    <main id="main-content">
     <div class="content">
       <div class="header-section">
         <h1 class="text-h2 text-white q-mb-sm page-heading">
@@ -115,6 +116,7 @@
         </a>
       </section>
     </div>
+    </main>
 
     <!-- Scroll to top -->
     <Transition name="scroll-top-fade">
@@ -235,7 +237,7 @@ const onScroll = () => {
 
 const scrollToTop = () => {
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  window.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' });
+  window.scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
 };
 
 onMounted(() => window.addEventListener('scroll', onScroll, { passive: true }));
