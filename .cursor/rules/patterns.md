@@ -16,6 +16,7 @@ Use these files as the source of truth for code style and structure.
 ## Primary content landmark
 
 - **Pattern**: Use exactly one `<main id="main-content">` per route page for the primary task or reading flow. Keep decorative backgrounds, fixed controls (for example scroll-to-top), and `<footer>` **outside** `<main>` so document landmarks stay clear.
+- **Skip link**: Place a “skip to main” control as the **first focusable** element in tab order, linking to `#main-content`, visually hidden until `:focus-visible`; set `tabindex="-1"` on `<main>` so the destination can receive focus after activation. With **hash-based** Vue Router, use `@click.prevent` and programmatic `focus()` / `scrollIntoView()` so the fragment does not replace the route hash.
 - **Reference File**: `src/pages/ProjectsPage.vue`
 
 ## Routing

@@ -1,5 +1,12 @@
 <template>
   <div class="projects-page">
+    <a
+      href="#main-content"
+      class="skip-to-main"
+      @click.prevent="focusMainContent"
+    >
+      Skip to main content
+    </a>
     <div class="background-effects">
       <div class="grid-pattern"></div>
       <div class="glow-orb orb-1"></div>
@@ -7,7 +14,7 @@
       <div class="glow-orb orb-3"></div>
     </div>
 
-    <main id="main-content">
+    <main id="main-content" tabindex="-1">
     <div class="content">
       <div class="header-section">
         <h1 class="text-h2 text-white q-mb-sm page-heading">
@@ -179,6 +186,15 @@ const goHome = () => {
   router.push('/');
 };
 
+/** Hash-router safe: avoid replacing `#/route` with `#main-content`. */
+const focusMainContent = () => {
+  const el = document.getElementById('main-content');
+  if (!el || !(el instanceof HTMLElement)) return;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  el.focus({ preventScroll: true });
+  el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+};
+
 const currentYear = computed(() => new Date().getFullYear());
 
 const {
@@ -265,6 +281,43 @@ watch(filteredProjects, async () => {
 </script>
 
 <style scoped>
+.skip-to-main {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  z-index: 50;
+  transform: translateY(calc(-100% - 1.5rem));
+  padding: 0.625rem 1.25rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--bg-charcoal);
+  background: var(--accent-teal);
+  border: 1px solid var(--accent-teal);
+  border-radius: 2px;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.skip-to-main:focus {
+  outline: none;
+}
+
+.skip-to-main:focus-visible {
+  transform: translateY(0.75rem);
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.45);
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 3px;
+}
+
+.skip-to-main:focus-visible:hover {
+  color: var(--bg-charcoal);
+  background: #00c4cd;
+}
+
 .projects-page {
   min-height: 100vh;
   width: 100%;
@@ -637,6 +690,10 @@ watch(filteredProjects, async () => {
 
 /* prefers-reduced-motion */
 @media (prefers-reduced-motion: reduce) {
+  .skip-to-main {
+    transition: none;
+  }
+
   /* Project grid — instant filter transitions */
   .projects-grid {
     transition: none;
