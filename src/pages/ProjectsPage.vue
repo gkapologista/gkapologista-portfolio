@@ -276,6 +276,11 @@ onUnmounted(() => window.removeEventListener('scroll', onScroll));
 
 // --- Layout shift prevention ---
 
+/** Single source of truth for the card enter/leave transition duration. */
+const CARD_TRANSITION_MS = 400;
+/** CSS string consumed by v-bind() in <style scoped>. */
+const cardTransitionDuration = `${CARD_TRANSITION_MS}ms`;
+
 const projectsGrid = ref<HTMLElement | null>(null);
 
 watch(filteredProjects, async () => {
@@ -291,7 +296,7 @@ watch(filteredProjects, async () => {
     if (projectsGrid.value) {
       projectsGrid.value.style.minHeight = '';
     }
-  }, 400); // Matches transition duration
+  }, CARD_TRANSITION_MS);
 });
 </script>
 
@@ -521,8 +526,8 @@ watch(filteredProjects, async () => {
 
 /* Fade Animation Classes */
 .project-fade-enter-active {
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  transition-delay: min(calc(var(--card-index, 0) * 50ms), 400ms);
+  transition: opacity v-bind(cardTransitionDuration) ease, transform v-bind(cardTransitionDuration) ease;
+  transition-delay: min(calc(var(--card-index, 0) * 50ms), v-bind(cardTransitionDuration));
 }
 
 .project-fade-leave-active {
@@ -540,7 +545,7 @@ watch(filteredProjects, async () => {
 
 /* Empty State Transition */
 .empty-state-fade-enter-active {
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity v-bind(cardTransitionDuration) ease, transform v-bind(cardTransitionDuration) ease;
 }
 
 .empty-state-fade-leave-active {
