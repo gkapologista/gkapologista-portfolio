@@ -123,7 +123,7 @@
         <h2 id="cta-heading" class="cta-heading">Like what you see?</h2>
         <p class="cta-tagline">Let's discuss your next project.</p>
         <a
-          href="mailto:gkapologista@gmail.com?subject=Project Inquiry"
+          href="mailto:gkapologista@gmail.com?subject=Project%20Inquiry"
           class="cta-btn"
           aria-label="Send email to discuss a project"
         >
