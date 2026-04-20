@@ -24,7 +24,7 @@ function useDebounce<T>(value: Ref<T>, delay: number): Ref<T> {
 export function useFilters(projects: Ref<Project[]>) {
   // Search state
   const searchQuery = ref('');
-  const debouncedSearch = useDebounce(searchQuery, 300);
+  const debouncedSearch = useDebounce(searchQuery, 450);
 
   // Category state
   const selectedCategories = ref<Category[]>([]);
@@ -52,6 +52,9 @@ export function useFilters(projects: Ref<Project[]>) {
       })
       .map(([tag]) => tag);
   });
+
+  /** True while the typed query hasn't settled into the debounced value yet. */
+  const isSearching = computed(() => searchQuery.value !== debouncedSearch.value);
 
   /**
    * Check if any filters are currently active
@@ -161,6 +164,7 @@ export function useFilters(projects: Ref<Project[]>) {
   return {
     // Search
     searchQuery,
+    isSearching,
     clearSearch,
 
     // Categories

@@ -3,7 +3,7 @@
     aria-label="Project filters">
     <!-- Desktop/Tablet Layout -->
     <div class="filters-desktop">
-      <SearchInput v-model="searchQuery" @clear="$emit('search-cleared')" />
+      <SearchInput v-model="searchQuery" :is-searching="props.isSearching" @clear="$emit('search-cleared')" />
 
       <div class="filters-divider" aria-hidden="true"></div>
 
@@ -27,7 +27,7 @@
 
     <!-- Mobile Layout -->
     <div class="filters-mobile">
-      <SearchInput v-model="searchQuery" @clear="$emit('search-cleared')" />
+      <SearchInput v-model="searchQuery" :is-searching="props.isSearching" @clear="$emit('search-cleared')" />
 
       <div class="filters-mobile-row">
         <CategoryDropdown v-model="selectedCategories" />
@@ -61,6 +61,7 @@ interface Props {
   selectedTags: string[];
   availableTags: string[];
   resultsCount: number;
+  isSearching?: boolean;
 }
 
 const props = defineProps<Props>();

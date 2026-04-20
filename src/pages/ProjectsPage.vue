@@ -45,6 +45,7 @@
         v-model:selected-tags="selectedTags"
         :available-tags="availableTags"
         :results-count="filteredProjects.length"
+        :is-searching="isSearching"
         @clear-all="clearFilters"
         @search-cleared="clearSearch"
       />
@@ -208,6 +209,7 @@ const currentYear = computed(() => new Date().getFullYear());
 
 const {
   searchQuery,
+  isSearching,
   selectedCategories,
   selectedTags,
   availableTags,
@@ -242,18 +244,28 @@ const syncFromQuery = (query: typeof route.query) => {
 // Initialize from URL on load (supports bookmarked/shared URLs)
 syncFromQuery(route.query);
 
-// Sync filter state → URL (uses replace to avoid polluting history)
-watch(
-  [searchQuery, selectedCategories, selectedTags],
-  () => {
-    const query: Record<string, string> = {};
-    if (searchQuery.value) query.q = searchQuery.value;
-    if (selectedCategories.value.length) query.category = selectedCategories.value.join(',');
-    if (selectedTags.value.length) query.tags = selectedTags.value.join(',');
-    router.replace({ query });
-  },
-  { deep: true },
-);
+// --- URL sync helpers ---
+
+const buildUrlQuery = (): Record<string, string> => {
+  const q: Record<string, string> = {};
+  if (searchQuery.value) q.q = searchQuery.value;
+  if (selectedCategories.value.length) q.category = selectedCategories.value.join(',');
+  if (selectedTags.value.length) q.tags = selectedTags.value.join(',');
+  return q;
+};
+
+// Search query → URL: debounced so the address bar doesn't spam on every keystroke
+let urlSearchTimer: ReturnType<typeof setTimeout>;
+watch(searchQuery, () => {
+  clearTimeout(urlSearchTimer);
+  urlSearchTimer = setTimeout(() => router.replace({ query: buildUrlQuery() }), 450);
+});
+
+// Category / tag changes → URL: immediate (discrete user action, not continuous input)
+watch([selectedCategories, selectedTags], () => {
+  clearTimeout(urlSearchTimer); // absorb any pending search URL update into this one
+  router.replace({ query: buildUrlQuery() });
+}, { deep: true });
 
 // Sync URL → filter state (handles browser back/forward)
 watch(() => route.query, syncFromQuery, { deep: true });
@@ -1012,11 +1024,6 @@ watch(filteredProjects, async () => {
 
 .footer-divider {
   color: rgba(255, 255, 255, 0.5);
-}
-
-/* WCAG AA: child / Quasar surfaces under this page only (tokens unchanged) */
-.projects-page :deep(.search-input .q-field__native::placeholder) {
-  color: rgba(255, 255, 255, 0.62);
 }
 
 .projects-page :deep(.category-badge--game) {
