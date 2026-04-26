@@ -68,20 +68,54 @@ export function useFilters(projects: Ref<Project[]>) {
   });
 
   /**
-   * Filtered projects based on search, categories, and tags
-   * Uses AND logic: all active filters must match
+   * Filtered projects based on search, categories, and tags.
+   * Uses AND logic: all active filters must match.
+   *
+   * Search is token-based (space-separated) and covers title, technologies,
+   * and description. Results are sorted by relevance when a query is active:
+   * title match (3 pts) > tech/tag match (2 pts) > description match (1 pt).
    */
   const filteredProjects = computed(() => {
     let result = projects.value;
 
-    // Filter by search query (searches title and description)
     const searchTerm = debouncedSearch.value.trim().toLowerCase();
     if (searchTerm) {
-      result = result.filter(
-        (p) =>
-          p.title.toLowerCase().includes(searchTerm) ||
-          p.description.toLowerCase().includes(searchTerm)
-      );
+      // Split into tokens; every token must match somewhere in the project.
+      const tokens = searchTerm.split(/\s+/).filter(Boolean);
+
+      interface Scored { project: typeof result[number]; score: number }
+
+      const scored = result
+        .map((p): Scored | null => {
+          const titleL = p.title.toLowerCase();
+          const descL  = p.description.toLowerCase();
+          const techL  = p.technologies.map((t) => t.toLowerCase());
+          const tagsL  = p.tags.map((t) => t.toLowerCase());
+
+          const allMatch = tokens.every(
+            (tok) =>
+              titleL.includes(tok) ||
+              descL.includes(tok)  ||
+              techL.some((t) => t.includes(tok)) ||
+              tagsL.some((t) => t.includes(tok)),
+          );
+
+          if (!allMatch) return null;
+
+          let score = 0;
+          tokens.forEach((tok) => {
+            if (titleL.includes(tok))               score += 3;
+            if (techL.some((t) => t.includes(tok))) score += 2;
+            if (descL.includes(tok))                score += 1;
+          });
+
+          return { project: p, score };
+        })
+        .filter((x): x is Scored => x !== null)
+        .sort((a, b) => b.score - a.score)
+        .map((x) => x.project);
+
+      result = scored;
     }
 
     // Filter by categories (OR within categories)
