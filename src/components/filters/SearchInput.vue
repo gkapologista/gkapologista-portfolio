@@ -36,6 +36,15 @@
         </span>
         <span v-else-if="props.modelValue" class="char-count">[{{ props.modelValue.length }}]</span>
 
+        <!-- Keyboard shortcut hint: only visible when idle and empty -->
+        <Transition name="shortcut-fade">
+          <span
+            v-if="!props.modelValue && !isFocused"
+            class="shortcut-hint"
+            title="Press / to focus search"
+          >[/]</span>
+        </Transition>
+
         <button
           v-if="props.modelValue"
           type="button"
@@ -67,8 +76,8 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   isSearching: false,
-  placeholder: 'Search projects...',
-  ariaLabel: 'Search projects by title or description',
+  placeholder: 'title, tech, description...',
+  ariaLabel: 'Search projects by title, technology, or description',
 });
 
 const emit = defineEmits<{
@@ -221,6 +230,33 @@ onUnmounted(() => document.removeEventListener('keydown', handleSlashKey));
   white-space: nowrap;
 }
 
+/* Keyboard shortcut hint [/] */
+.shortcut-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(0, 173, 181, 0.5);
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+.shortcut-fade-enter-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition-delay: 0.15s; /* slight delay so it doesn't flash on quick focus */
+}
+
+.shortcut-fade-leave-active {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.shortcut-fade-enter-from,
+.shortcut-fade-leave-to {
+  opacity: 0;
+  transform: translateX(4px);
+}
+
 /* Clear button */
 .clear-btn {
   display: flex;
@@ -304,6 +340,17 @@ onUnmounted(() => document.removeEventListener('keydown', handleSlashKey));
 
   .search-input--scanning .search-prompt {
     animation: none;
+  }
+
+  .shortcut-fade-enter-active,
+  .shortcut-fade-leave-active {
+    transition: opacity 0.15s ease;
+  }
+
+  .shortcut-fade-enter-from,
+  .shortcut-fade-leave-to {
+    opacity: 0;
+    transform: none;
   }
 }
 </style>
