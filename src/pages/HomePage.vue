@@ -294,9 +294,10 @@ const codeRainData = Array.from({ length: 15 }, () =>
 <style scoped>
 .landing-page {
   min-height: 100vh;
+  min-height: 100svh;
   width: 100%;
   position: relative;
-  overflow: hidden;
+  overflow-x: clip;
   background-color: var(--bg-charcoal);
 }
 
@@ -308,7 +309,10 @@ const codeRainData = Array.from({ length: 15 }, () =>
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  padding: 1.5rem;
+  min-height: 100svh;
+  padding: clamp(1rem, 0.65rem + 1.5vw, 1.5rem);
+  min-width: 0;
+  text-align: center;
 }
 
 .background-effects {
@@ -318,6 +322,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   right: 0;
   bottom: 0;
   z-index: 1;
+  pointer-events: none;
 }
 
 .grid-pattern {
@@ -343,8 +348,8 @@ const codeRainData = Array.from({ length: 15 }, () =>
 
 /* Two teal ambient orbs — raised to visible opacity; grey orb-2 removed (invisible + paint cost) */
 .orb-1 {
-  width: 300px;
-  height: 300px;
+  width: clamp(180px, 28vw, 300px);
+  height: clamp(180px, 28vw, 300px);
   background: radial-gradient(circle, var(--accent-teal), transparent 70%);
   top: 20%;
   left: 20%;
@@ -353,8 +358,8 @@ const codeRainData = Array.from({ length: 15 }, () =>
 }
 
 .orb-3 {
-  width: 250px;
-  height: 250px;
+  width: clamp(160px, 24vw, 250px);
+  height: clamp(160px, 24vw, 250px);
   background: radial-gradient(circle, var(--accent-teal), transparent 70%);
   bottom: 20%;
   left: 40%;
@@ -412,7 +417,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
 
 .code-line {
   color: var(--accent-teal);
-  font-size: 0.9rem;
+  font-size: clamp(0.72rem, 0.58rem + 0.55vw, 0.9rem);
   animation: codeFall 4s linear infinite;
   text-shadow: 0 0 5px var(--accent-teal);
   white-space: nowrap;
@@ -421,8 +426,8 @@ const codeRainData = Array.from({ length: 15 }, () =>
 
 .hero-label {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
-  letter-spacing: 0.28em;
+  font-size: clamp(0.72rem, 0.62rem + 0.42vw, 0.8rem);
+  letter-spacing: clamp(0.12em, 0.08em + 0.18vw, 0.28em);
   color: var(--accent-teal);
   text-transform: uppercase;
   margin: 0 0 0.9rem;
@@ -431,14 +436,14 @@ const codeRainData = Array.from({ length: 15 }, () =>
 
 .hero-heading {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 1.15rem + 3.6vw, 3.5rem);
   line-height: 1.15;
   font-weight: 700;
-  letter-spacing: -0.02em;
-  max-width: 700px;
+  width: min(100%, 700px);
   margin: 0 auto;
   color: var(--text-white);
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .type-cursor {
@@ -472,13 +477,14 @@ const codeRainData = Array.from({ length: 15 }, () =>
   font-weight: 700;
   letter-spacing: 0.05em;
   padding: 0.75rem 2rem;
+  min-height: 44px;
   font-size: 1rem;
   background-color: var(--accent-teal) !important;
   color: var(--bg-charcoal) !important;
   border: 1px solid var(--accent-teal);
   transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   position: relative;
-  overflow: hidden;
+  overflow: clip;
   border-radius: 0;
   text-transform: uppercase;
 }
@@ -647,7 +653,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
 /* Scroll Indicator */
 .scroll-indicator {
   position: absolute;
-  bottom: 2.5rem;
+  bottom: calc(clamp(1.25rem, 0.75rem + 2vw, 2.5rem) + env(safe-area-inset-bottom, 0px));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -682,7 +688,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
     transparent 100%
   );
   position: relative;
-  overflow: hidden;
+  overflow: clip;
 }
 
 .scroll-indicator__dot {
@@ -716,8 +722,9 @@ const codeRainData = Array.from({ length: 15 }, () =>
   z-index: 3;
   display: flex;
   align-items: center;
-  gap: 1.25rem;
-  padding: 0 3rem;
+  gap: clamp(0.75rem, 0.45rem + 1.2vw, 1.25rem);
+  padding: 0 clamp(1rem, 0.15rem + 3.6vw, 3rem);
+  min-width: 0;
 }
 
 .section-bridge__line {
@@ -736,7 +743,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
 .section-bridge__label {
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.65rem;
-  letter-spacing: 0.22em;
+  letter-spacing: clamp(0.12em, 0.08em + 0.18vw, 0.22em);
   color: var(--accent-teal);
   opacity: 0.55;
   white-space: nowrap;
@@ -747,7 +754,8 @@ const codeRainData = Array.from({ length: 15 }, () =>
 .contact-section {
   position: relative;
   z-index: 3;
-  padding: 4rem 2rem;
+  padding: clamp(3rem, 1.65rem + 5.8vw, 4rem)
+    clamp(1rem, 0.3rem + 3vw, 2rem);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -755,21 +763,23 @@ const codeRainData = Array.from({ length: 15 }, () =>
 
 .contact-content {
   text-align: center;
-  max-width: 500px;
+  width: min(100%, 500px);
   background: var(--bg-grey);
   border-radius: 4px;
-  padding: 3rem;
+  padding: clamp(2rem, 1rem + 4vw, 3rem);
   border: 1px solid var(--accent-teal);
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
+  min-width: 0;
 }
 
 .contact-heading {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 1.2rem + 3.2vw, 2.5rem);
   font-weight: 700;
   color: var(--accent-teal);
   margin-bottom: 1rem;
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .contact-tagline {
@@ -778,6 +788,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
   color: var(--text-white);
   margin-bottom: 2rem;
   line-height: 1.6;
+  overflow-wrap: break-word;
 }
 
 .contact-btn {
@@ -785,6 +796,8 @@ const codeRainData = Array.from({ length: 15 }, () =>
   align-items: center;
   justify-content: center;
   padding: 1rem 2rem;
+  min-height: 44px;
+  width: 100%;
   font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
   font-weight: 600;
@@ -850,18 +863,21 @@ const codeRainData = Array.from({ length: 15 }, () =>
 .site-footer {
   position: relative;
   z-index: 3;
-  padding: 2rem;
+  padding: clamp(1.5rem, 0.85rem + 2.8vw, 2rem);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-content {
-  max-width: 1200px;
+  width: min(100%, 1200px);
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  min-width: 0;
+  text-align: center;
 }
 
 .footer-copyright {
@@ -874,6 +890,7 @@ const codeRainData = Array.from({ length: 15 }, () =>
 .footer-link {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   font-family: 'JetBrains Mono', sans-serif;
   font-size: 0.875rem;
   color: var(--accent-teal);
@@ -891,26 +908,14 @@ const codeRainData = Array.from({ length: 15 }, () =>
 }
 
 /* Responsive adjustments */
-@media (max-width: 768px) {
-  .contact-section {
-    padding: 3rem 1rem;
-  }
-
-  .contact-content {
-    padding: 2rem;
-  }
-
-  .contact-heading {
-    font-size: 2rem;
-  }
-
-  .contact-tagline {
-    font-size: 1rem;
+@media (min-width: 640px) {
+  .contact-btn {
+    width: auto;
   }
 
   .footer-content {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: row;
+    text-align: left;
   }
 }
 
