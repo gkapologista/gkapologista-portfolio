@@ -352,18 +352,20 @@ watch(filteredProjects, async () => {
 
 .projects-page {
   min-height: 100vh;
+  min-height: 100svh;
   width: 100%;
   position: relative;
   overflow-x: clip;
   background-color: var(--bg-charcoal);
-  padding: 2rem;
+  padding: clamp(1rem, 0.35rem + 2.8vw, 2rem);
 }
 
 .content {
   position: relative;
   z-index: 3;
-  max-width: var(--content-max-width, 1280px);
+  width: min(100%, var(--content-max-width, 1280px));
   margin: 0 auto;
+  min-width: 0;
 }
 
 /* Visually hidden; kept in a11y tree for aria-live (page-level result count). */
@@ -381,8 +383,11 @@ watch(filteredProjects, async () => {
 
 .page-heading {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   gap: 0.625rem;
+  min-width: 0;
+  margin-bottom: 0 !important;
 }
 
 .page-heading__title {
@@ -412,20 +417,25 @@ watch(filteredProjects, async () => {
   /* Full-strength teal on charcoal meets WCAG AA (opacity was ~3.67:1). */
   color: var(--accent-teal);
   white-space: nowrap;
+  flex: 0 0 auto;
 }
 
 .header-section {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 0.75rem;
   width: 100%;
-  margin-bottom: 2rem;
+  min-width: 0;
+  margin-bottom: clamp(1rem, 0.35rem + 2.6vw, 2rem);
 }
 
 .nav-btn {
   color: var(--text-secondary, rgba(255, 255, 255, 0.8)) !important;
   font-weight: 500;
+  min-height: 44px;
+  margin-bottom: 0 !important;
   transition: all 0.3s ease;
   border-radius: 0.5rem;
   padding: var(--space-sm, 0.5rem) var(--space-md, 1rem);
@@ -445,6 +455,7 @@ watch(filteredProjects, async () => {
   bottom: 0;
   z-index: 1;
   transform: translateZ(0); /* promote to compositor layer — prevents iOS Safari scroll jank */
+  pointer-events: none;
 }
 
 .grid-pattern {
@@ -470,8 +481,8 @@ watch(filteredProjects, async () => {
 }
 
 .orb-1 {
-  width: 300px;
-  height: 300px;
+  width: clamp(180px, 26vw, 300px);
+  height: clamp(180px, 26vw, 300px);
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 0.4),
@@ -482,8 +493,8 @@ watch(filteredProjects, async () => {
 }
 
 .orb-2 {
-  width: 400px;
-  height: 400px;
+  width: clamp(220px, 34vw, 400px);
+  height: clamp(220px, 34vw, 400px);
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 0.3),
@@ -494,8 +505,8 @@ watch(filteredProjects, async () => {
 }
 
 .orb-3 {
-  width: 250px;
-  height: 250px;
+  width: clamp(160px, 22vw, 250px);
+  height: clamp(160px, 22vw, 250px);
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 0.2),
@@ -507,33 +518,28 @@ watch(filteredProjects, async () => {
 
 .text-h2 {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 3.5rem;
+  font-size: clamp(2rem, 1.2rem + 3.4vw, 3.5rem);
   line-height: var(--lh-snug, 1.3);
   font-weight: 700;
-  letter-spacing: -0.02em;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
   color: var(--accent-teal);
   text-transform: uppercase;
+  overflow-wrap: anywhere;
 }
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: clamp(1.25rem, 0.7rem + 2.4vw, 2rem);
+  margin-top: clamp(1rem, 0.35rem + 2.6vw, 2rem);
   align-items: stretch;
   justify-content: center;
   position: relative;
   transition: opacity 0.3s ease;
 }
 
-/* Mid-range breakpoint: force 2 columns between mobile and the point where
-   auto-fill naturally produces 2 columns (~816px viewport). Without this,
-   minmax(360px, 1fr) falls back to 1 very wide column at 769–815px. */
-@media (min-width: 769px) and (max-width: 899px) {
-  .projects-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.project-card-container {
+  min-width: 0;
 }
 
 /* Fade Animation Classes */
@@ -572,8 +578,9 @@ watch(filteredProjects, async () => {
 
 /* Container — matches .contact-cta card style */
 .empty-state {
-  margin-top: 2rem;
-  padding: 3rem 2rem;
+  margin-top: clamp(1.5rem, 0.9rem + 2.4vw, 2rem);
+  padding: clamp(2rem, 1.15rem + 3.6vw, 3rem)
+    clamp(1.25rem, 0.6rem + 2.8vw, 2rem);
   text-align: center;
   background: var(--bg-grey);
   border-radius: 4px;
@@ -582,13 +589,14 @@ watch(filteredProjects, async () => {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1.25rem;
+  gap: 1rem;
+  min-width: 0;
 }
 
 /* [_] symbol */
 .empty-state__symbol {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 3rem;
+  font-size: clamp(2.25rem, 1.45rem + 3vw, 3rem);
   font-weight: 700;
   line-height: 1;
   letter-spacing: 0.25em;
@@ -625,24 +633,25 @@ watch(filteredProjects, async () => {
 /* Heading */
 .empty-state__heading {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.75rem;
+  font-size: clamp(1.375rem, 0.95rem + 1.8vw, 1.75rem);
   font-weight: 700;
   color: var(--accent-teal);
   text-transform: uppercase;
-  letter-spacing: -0.02em;
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 /* Terminal filter summary */
 .empty-state__terminal {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
+  font-size: 0.8125rem;
   color: var(--text-white);
   background: var(--bg-charcoal);
   border: 1px solid rgba(0, 173, 181, 0.55);
   border-radius: 2px;
-  padding: 0.625rem 1rem;
+  padding: 0.5rem 0.75rem;
   max-width: 100%;
+  min-width: 0;
   word-break: break-word;
   text-align: left;
   line-height: 1.6;
@@ -673,6 +682,8 @@ watch(filteredProjects, async () => {
   align-items: center;
   justify-content: center;
   padding: 0.75rem 1.75rem;
+  min-height: 44px;
+  width: 100%;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.9375rem;
   font-weight: 700;
@@ -710,8 +721,8 @@ watch(filteredProjects, async () => {
 /* Scroll to top button — min 44×44px touch target; safe area clears iOS home indicator */
 .scroll-top-btn {
   position: fixed;
-  bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
-  right: calc(2rem + env(safe-area-inset-right, 0px));
+  bottom: calc(clamp(1rem, 0.4rem + 2.5vw, 2rem) + env(safe-area-inset-bottom, 0px));
+  right: calc(clamp(1rem, 0.4rem + 2.5vw, 2rem) + env(safe-area-inset-right, 0px));
   z-index: 10;
   box-sizing: border-box;
   min-width: 44px;
@@ -828,101 +839,11 @@ watch(filteredProjects, async () => {
   }
 }
 
-/* Empty State Mobile */
-@media (max-width: 768px) {
-  .empty-state {
-    margin-top: 1.5rem;
-    padding: 2rem 1.25rem;
-    gap: 1rem;
-  }
-
-  .empty-state__symbol {
-    font-size: 2.25rem;
-  }
-
-  .empty-state__heading {
-    font-size: 1.375rem;
-  }
-
-  .empty-state__terminal {
-    font-size: 0.8125rem;
-    padding: 0.5rem 0.75rem;
-  }
-
-  .empty-state__clear-btn {
-    width: 100%;
-    font-size: 0.875rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .text-h2 {
-    font-size: 3rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .projects-page {
-    padding: var(--space-md, 1rem);
-    display: flex;
-    flex-direction: column;
-    overflow-y: auto;
-  }
-
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    min-height: calc(100dvh - 2rem);
-    width: 100%;
-    gap: 1rem;
-  }
-
-  .header-section {
-    margin-bottom: 0.5rem;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .nav-btn {
-    margin-bottom: 0 !important;
-    padding: 0.25rem 0.5rem;
-  }
-
-  .text-h2 {
-    font-size: 2rem;
-    margin-bottom: 0 !important;
-  }
-
-  .projects-grid {
-    grid-template-columns: 1fr;
-    max-width: 360px;
-    margin-left: auto;
-    margin-right: auto;
-    gap: 1.5rem;
-    margin-top: 1rem;
-  }
-
-  .project-card-container {
-    width: 100%;
-  }
-
-  .contact-cta {
-    margin-top: 2rem;
-    padding: 1.5rem 1rem;
-  }
-
-  .site-footer {
-    margin-top: 2rem;
-    padding: 1rem;
-  }
-}
-
 /* Contextual CTA */
 .contact-cta {
-  margin-top: 4rem;
-  padding: 3rem 2rem;
+  margin-top: clamp(2rem, 1rem + 4vw, 4rem);
+  padding: clamp(2rem, 1.15rem + 3.6vw, 3rem)
+    clamp(1rem, 0.3rem + 3vw, 2rem);
   text-align: center;
   background: var(--bg-grey);
   border-radius: 4px;
@@ -932,7 +853,7 @@ watch(filteredProjects, async () => {
 
 .cta-heading {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 2rem;
+  font-size: clamp(1.5rem, 1rem + 2vw, 2rem);
   font-weight: 700;
   color: var(--accent-teal);
   margin-bottom: 0.5rem;
@@ -944,6 +865,7 @@ watch(filteredProjects, async () => {
   font-size: 1rem;
   color: var(--text-white);
   margin-bottom: 1.5rem;
+  overflow-wrap: break-word;
 }
 
 .cta-btn {
@@ -951,6 +873,8 @@ watch(filteredProjects, async () => {
   align-items: center;
   justify-content: center;
   padding: 0.875rem 1.75rem;
+  min-height: 44px;
+  width: 100%;
   font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
   font-weight: 600;
@@ -976,19 +900,22 @@ watch(filteredProjects, async () => {
 .site-footer {
   position: relative;
   z-index: 3;
-  padding: 2rem;
-  margin-top: 3rem;
+  padding: clamp(1rem, 0.35rem + 2.8vw, 2rem);
+  margin-top: clamp(2rem, 1.35rem + 2.8vw, 3rem);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-content {
-  max-width: 1200px;
+  width: min(100%, 1200px);
   margin: 0 auto;
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
   gap: 1rem;
+  min-width: 0;
+  text-align: center;
 }
 
 .footer-copyright {
@@ -1000,12 +927,15 @@ watch(filteredProjects, async () => {
 .footer-links {
   display: flex;
   align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
   gap: 0.75rem;
 }
 
 .footer-link {
   display: inline-flex;
   align-items: center;
+  min-height: 44px;
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.875rem;
   color: var(--accent-teal);
@@ -1040,19 +970,30 @@ watch(filteredProjects, async () => {
   opacity: 1;
 }
 
-@media (max-width: 768px) {
-  .contact-cta {
-    margin-top: 2rem;
-    padding: 2rem 1.5rem;
+@media (min-width: 640px) {
+  .header-section {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 
-  .cta-heading {
-    font-size: 1.5rem;
+  .empty-state {
+    gap: 1.25rem;
+  }
+
+  .empty-state__terminal {
+    font-size: 0.9rem;
+    padding: 0.625rem 1rem;
+  }
+
+  .empty-state__clear-btn,
+  .cta-btn {
+    width: auto;
   }
 
   .footer-content {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: row;
+    text-align: left;
   }
 }
 </style>
