@@ -1,13 +1,19 @@
 <template>
   <GlitchTransition :show="isTransitioning" />
   <router-view />
+  <ThemeToggle />
 </template>
 
 <script setup lang="ts">
-import { ref, provide } from 'vue';
+import { ref, provide, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import GlitchTransition from './components/GlitchTransition.vue';
+import ThemeToggle from './components/ThemeToggle.vue';
+import { useTheme } from './composables/useTheme';
 import { projects } from './data/projects';
+
+const { init: initTheme } = useTheme();
+onMounted(() => initTheme());
 
 const isTransitioning = ref(false);
 const currentTransitionText = ref('FETCHING_DATA...');
@@ -62,7 +68,7 @@ body {
   padding: 0;
   width: 100%;
   height: 100%;
-  background-color: #1a1a1d;
+  background-color: var(--bg-body, #1a1a1d);
 }
 
 #app {

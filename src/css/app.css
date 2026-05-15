@@ -3,32 +3,84 @@
 /* Import JetBrains Mono */
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
 
-:root {
-  /* Cyberpunk / Terminal Palette */
+/* ─── Theme Variables ─────────────────────────────────────────────────────── */
+
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Backgrounds */
   --bg-charcoal: #222831;
   --bg-grey: #393E46;
-  --accent-teal: #00ADB5;
-  --text-white: #EEEEEE;
+  --bg-body: #1a1a1d;
 
-  /* Re-mapping Quasar/Brand variables if needed,
-     but specialized variables above are safer for specific overrides */
+  /* Accent */
+  --accent-teal: #00ADB5;
+
+  /* Text */
+  --text-white: #EEEEEE;
+  --text-secondary: rgba(238, 238, 238, 0.8);
+  --text-muted: rgba(238, 238, 238, 0.65);
+  --text-faint: rgba(238, 238, 238, 0.45);
+  --text-dim: rgba(238, 238, 238, 0.3);
+
+  /* Borders & surfaces */
+  --border-subtle: rgba(255, 255, 255, 0.07);
+  --border-mid: rgba(255, 255, 255, 0.1);
+  --bg-card-overlay: rgba(0, 0, 0, 0.18);
+  --bg-image-fallback: rgba(255, 255, 255, 0.05);
+  --shadow-hard: rgba(0, 0, 0, 0.5);
+  --shadow-soft: rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  /* Backgrounds */
+  --bg-charcoal: #F0ECE2;
+  --bg-grey: #E2DDD3;
+  --bg-body: #E8E3D9;
+
+  /* Accent: darker teal meets WCAG AA on warm white */
+  --accent-teal: #006B72;
+
+  /* Text */
+  --text-white: #1A1A1D;
+  --text-secondary: rgba(26, 26, 29, 0.82);
+  --text-muted: rgba(26, 26, 29, 0.65);
+  --text-faint: rgba(26, 26, 29, 0.45);
+  --text-dim: rgba(26, 26, 29, 0.32);
+
+  /* Borders & surfaces */
+  --border-subtle: rgba(0, 0, 0, 0.07);
+  --border-mid: rgba(0, 0, 0, 0.1);
+  --bg-card-overlay: rgba(0, 0, 0, 0.04);
+  --bg-image-fallback: rgba(0, 0, 0, 0.04);
+  --shadow-hard: rgba(0, 0, 0, 0.22);
+  --shadow-soft: rgba(0, 0, 0, 0.14);
+}
+
+/* ─── Smooth theme transitions ─────────────────────────────────────────────── */
+html {
+  transition: background-color 0.3s ease;
 }
 
 body {
   font-family: 'JetBrains Mono', monospace;
   background-color: var(--bg-charcoal);
   color: var(--text-white);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Global Reset for Glassmorphism removal */
+/* ─── Global Reset for Glassmorphism removal ───────────────────────────────── */
 .glass {
   backdrop-filter: none !important;
   background: var(--bg-grey) !important;
   border: 1px solid var(--accent-teal);
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5); /* Hard shadow */
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.5);
 }
 
-/* Typography Overrides */
+/* ─── Typography Overrides ─────────────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'JetBrains Mono', monospace;
   color: var(--accent-teal);
@@ -36,16 +88,16 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -1px;
 }
 
-/* Button Overrides */
+/* ─── Button Overrides ─────────────────────────────────────────────────────── */
 .q-btn {
-  border-radius: 2px !important; /* Blocky */
+  border-radius: 2px !important;
   font-family: 'JetBrains Mono', monospace;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 700;
 }
 
-/* Scrollbar */
+/* ─── Scrollbar ────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -57,5 +109,221 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 0;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #008c93;
+  background: color-mix(in srgb, var(--accent-teal) 80%, black);
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   LIGHT MODE — global overrides for hardcoded rgba(255,255,255,x) values
+   in scoped component styles.
+
+   Strategy: prefix with `html[data-theme="light"]` to win specificity over
+   Vue's scoped [data-v-xxxxxx] attribute selectors.
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ── Quasar utility classes ─────────────────────────────────────────────────── */
+html[data-theme="light"] .text-white {
+  color: var(--text-white) !important;
+}
+
+/* ── ProjectDetailPage ──────────────────────────────────────────────────────── */
+
+/* nav breadcrumb */
+html[data-theme="light"] .bc-seg {
+  color: var(--text-faint);
+}
+html[data-theme="light"] .bc-active {
+  color: var(--text-muted);
+}
+
+/* hero info */
+html[data-theme="light"] .project-desc {
+  color: var(--text-muted);
+}
+html[data-theme="light"] .year-tag {
+  color: var(--text-faint);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+html[data-theme="light"] .tech-pill {
+  color: var(--text-muted);
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+html[data-theme="light"] .tech-pill:hover {
+  color: var(--accent-teal);
+  border-color: rgba(0, 107, 114, 0.5);
+  background: rgba(0, 107, 114, 0.07);
+}
+html[data-theme="light"] .img-badge {
+  color: var(--text-faint);
+}
+
+/* detail sections */
+html[data-theme="light"] .sec-head {
+  background: var(--bg-card-overlay);
+  border-bottom-color: rgba(0, 107, 114, 0.12);
+}
+html[data-theme="light"] .sec-title {
+  color: var(--text-secondary) !important;
+}
+html[data-theme="light"] .sec-divider {
+  color: rgba(0, 107, 114, 0.35);
+}
+html[data-theme="light"] .sec-body p {
+  color: var(--text-muted);
+}
+html[data-theme="light"] .item-list li {
+  color: var(--text-muted);
+  border-bottom-color: rgba(0, 0, 0, 0.06);
+}
+html[data-theme="light"] .item-list li:hover {
+  color: var(--text-white);
+}
+
+/* gallery & lightbox */
+html[data-theme="light"] .g-thumb {
+  border-color: rgba(0, 107, 114, 0.18);
+  background: var(--bg-charcoal);
+}
+html[data-theme="light"] .g-thumb:hover {
+  border-color: var(--accent-teal);
+}
+html[data-theme="light"] .lightbox {
+  background: var(--bg-charcoal);
+  border-color: rgba(0, 107, 114, 0.3);
+}
+html[data-theme="light"] .lb-caption {
+  color: var(--text-faint);
+}
+html[data-theme="light"] .lb-close,
+html[data-theme="light"] .lb-nav {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.14);
+  color: var(--text-white);
+}
+html[data-theme="light"] .lb-close:hover,
+html[data-theme="light"] .lb-nav:hover {
+  background: rgba(0, 107, 114, 0.1);
+  border-color: var(--accent-teal);
+  color: var(--accent-teal);
+}
+html[data-theme="light"] .lb-img {
+  background: var(--bg-grey);
+}
+
+/* loading / not-found states */
+html[data-theme="light"] .loader-label {
+  color: var(--text-muted);
+}
+html[data-theme="light"] .not-found {
+  color: var(--text-muted);
+}
+html[data-theme="light"] .not-found h2 {
+  color: var(--text-secondary) !important;
+}
+html[data-theme="light"] .not-found p {
+  color: var(--text-faint);
+}
+
+/* footer (detail page) */
+html[data-theme="light"] .footer-copy {
+  color: var(--text-dim);
+}
+html[data-theme="light"] .footer-sep {
+  color: rgba(0, 0, 0, 0.18);
+}
+
+/* background effects (detail page) */
+html[data-theme="light"] .scan-lines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.03) 2px,
+    rgba(0, 0, 0, 0.03) 4px
+  );
+}
+
+/* ── ProjectsPage ───────────────────────────────────────────────────────────── */
+html[data-theme="light"] .nav-btn {
+  color: var(--text-secondary) !important;
+}
+html[data-theme="light"] .nav-btn:hover {
+  color: var(--text-white) !important;
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* footer (projects page) */
+html[data-theme="light"] .footer-copyright {
+  color: var(--text-dim);
+}
+html[data-theme="light"] .footer-divider {
+  color: rgba(0, 0, 0, 0.22);
+}
+
+/* empty state */
+html[data-theme="light"] .empty-state__bracket {
+  color: var(--text-muted);
+}
+html[data-theme="light"] .empty-state__code {
+  color: var(--text-muted);
+}
+html[data-theme="light"] .empty-state__filter-item {
+  color: var(--text-muted);
+}
+html[data-theme="light"] .empty-state__filter-sep {
+  color: var(--text-faint);
+}
+
+/* ── ProjectCard ────────────────────────────────────────────────────────────── */
+html[data-theme="light"] .project-description {
+  color: var(--text-secondary);
+}
+html[data-theme="light"] .project-image {
+  background: var(--bg-image-fallback);
+}
+html[data-theme="light"] .image-skeleton {
+  background: rgba(0, 0, 0, 0.05);
+}
+html[data-theme="light"] .tech-chip:hover {
+  background: var(--bg-charcoal) !important;
+  color: var(--accent-teal) !important;
+}
+
+/* ── HomePage ───────────────────────────────────────────────────────────────── */
+html[data-theme="light"] .footer-copyright {
+  color: var(--text-dim);
+}
+html[data-theme="light"] .footer-link:hover {
+  color: var(--text-white);
+}
+
+/* ── SearchInput ────────────────────────────────────────────────────────────── */
+html[data-theme="light"] .search-input__field::placeholder {
+  color: var(--text-faint);
+}
+html[data-theme="light"] .clear-btn {
+  color: var(--text-faint);
+}
+html[data-theme="light"] .clear-btn:hover {
+  color: var(--text-white);
+  background: rgba(0, 0, 0, 0.08);
+}
+
+/* ── Background grid patterns (light mode: darker lines on light bg) ────────── */
+html[data-theme="light"] .grid-pattern {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.07) 1px, transparent 1px);
+}
+
+/* ── Glow orbs (light mode: teal tint instead of white) ────────────────────── */
+html[data-theme="light"] .orb-1 {
+  background: radial-gradient(circle, rgba(0, 107, 114, 0.12), transparent 70%);
+}
+html[data-theme="light"] .orb-2 {
+  background: radial-gradient(circle, rgba(0, 107, 114, 0.08), transparent 70%);
+}
+html[data-theme="light"] .orb-3 {
+  background: radial-gradient(circle, rgba(0, 107, 114, 0.07), transparent 70%);
 }
