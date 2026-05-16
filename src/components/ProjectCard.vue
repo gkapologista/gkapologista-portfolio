@@ -73,15 +73,16 @@ const categoryConfig = computed(
 .project-card {
   background: var(--bg-grey);
   border-radius: 4px;
-  overflow: hidden;
+  overflow: clip; /* clip = no scroll container; same visual result as hidden */
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid var(--accent-teal);
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
-  min-height: 450px;
+  /* min-height removed — grid row stretching handles alignment */
   height: 100%;
   width: 100%;
+  min-width: 0; /* prevent flex overflow on long content */
   box-sizing: border-box;
   position: relative;
   will-change: transform, opacity;
@@ -98,11 +99,12 @@ const categoryConfig = computed(
 
 .project-image {
   width: 100%;
-  height: 200px;
+  /* fluid height: scales with container width, bounded by sensible min/max */
+  height: clamp(140px, 38cqi, 210px);
   overflow: hidden;
   position: relative;
   flex-shrink: 0;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--bg-image-fallback, rgba(255, 255, 255, 0.05));
 }
 
 .category-badge {
@@ -212,7 +214,8 @@ const categoryConfig = computed(
 
 .project-title {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 1.875rem;
+  /* fluid: scales with container width via cqi; no viewport breakpoints needed */
+  font-size: clamp(1.125rem, 2.5cqi + 0.5rem, 1.875rem);
   font-weight: 700;
   color: #ffffff;
   margin: 0;
@@ -226,8 +229,9 @@ const categoryConfig = computed(
 }
 
 .project-info {
-  padding: 1.5rem;
+  padding: clamp(0.875rem, 3cqi, 1.5rem); /* fluid padding — less cramped on narrow cards */
   flex: 1 1 auto;
+  min-width: 0; /* prevent flex-child overflow on long descriptions */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -330,6 +334,9 @@ const categoryConfig = computed(
 }
 
 .project-card-link {
+  /* register as a container so children can use cqi units and @container */
+  container-type: inline-size;
+  container-name: card;
   text-decoration: none;
   color: inherit;
   display: block;
@@ -343,25 +350,17 @@ const categoryConfig = computed(
   outline-offset: 4px;
 }
 
-@media (max-width: 768px) {
-  .project-card {
-    width: 100%;
-    min-height: 380px;
-    height: 100%;
-  }
-
-  .project-image {
-    height: 140px;
-  }
-
-  .project-title {
-    font-size: 1.25rem;
-  }
-}
-
-@media (max-width: 1024px) {
-  .project-title {
-    font-size: 1.5rem;
+/* ── Container query: small card (≤480px wide) ──────────────────────────────
+   clamp() handles font-size and image-height continuously above.
+   This query only handles the structural CTA change for touch UX:
+   at narrow widths the hover-only CTA becomes a permanent footer bar.
+   Placed BEFORE prefers-reduced-motion so it wins the cascade for opacity.
+   ──────────────────────────────────────────────────────────────────────── */
+@container card (max-width: 480px) {
+  .project-cta {
+    position: relative; /* pull into normal flex flow */
+    transform: translateY(0);
+    opacity: 1; /* wins over reduced-motion opacity:0 — comes later in cascade */
   }
 }
 
