@@ -25,8 +25,8 @@ const { isDark, toggle } = useTheme();
 <style scoped>
 .theme-toggle {
   position: fixed;
-  top: clamp(0.75rem, 2vw, 1.125rem);
-  right: clamp(0.75rem, 2vw, 1.125rem);
+  bottom: calc(clamp(0.75rem, 2vw, 1.125rem) + env(safe-area-inset-bottom, 0px));
+  left: clamp(0.75rem, 2vw, 1.125rem);
   z-index: 200;
 
   display: inline-flex;
