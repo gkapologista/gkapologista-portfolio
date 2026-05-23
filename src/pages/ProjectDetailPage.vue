@@ -37,11 +37,18 @@
           <!-- Image pane -->
           <div class="hero-img-pane">
             <div class="img-frame">
-              <img
-                :src="project.images[0]"
-                :alt="project.title"
-                class="hero-img"
-              />
+              <picture>
+                <source :srcset="webpFrom(project.images[0])" type="image/webp" />
+                <img
+                  :src="project.images[0]"
+                  :alt="project.title"
+                  class="hero-img"
+                  width="1280"
+                  height="800"
+                  decoding="async"
+                  fetchpriority="high"
+                />
+              </picture>
               <div class="scanline-anim"></div>
               <span class="corner c-tl"></span>
               <span class="corner c-tr"></span>
@@ -88,7 +95,7 @@
                 rel="noopener noreferrer"
                 class="cta-btn cta-outline"
               >
-                <q-icon name="fab fa-github" size="xs" />
+                <IconGithub size="1.1rem" />
                 Source Code
               </a>
             </div>
@@ -173,11 +180,17 @@
                   @click="openLightbox(Number(idx))"
                   :aria-label="`View ${project.title} screenshot ${Number(idx) + 1}`"
                 >
-                  <img
-                    :src="img"
-                    :alt="`${project.title} screenshot ${Number(idx) + 1}`"
-                    loading="lazy"
-                  />
+                  <picture>
+                    <source :srcset="webpFrom(img)" type="image/webp" />
+                    <img
+                      :src="img"
+                      :alt="`${project.title} screenshot ${Number(idx) + 1}`"
+                      width="1280"
+                      height="800"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
                   <div class="g-hover">
                     <q-icon name="zoom_in" size="md" />
                   </div>
@@ -221,12 +234,15 @@
           >
             <q-icon name="chevron_left" />
           </button>
-          <img
-            v-if="project"
-            :src="project.images[carouselIndex]"
-            :alt="`${project.title} screenshot ${carouselIndex + 1}`"
-            class="lb-img"
-          />
+          <picture v-if="project">
+            <source :srcset="webpFrom(project.images[carouselIndex])" type="image/webp" />
+            <img
+              :src="project.images[carouselIndex]"
+              :alt="`${project.title} screenshot ${carouselIndex + 1}`"
+              class="lb-img"
+              decoding="async"
+            />
+          </picture>
           <button
             v-if="project && carouselIndex < project.images.length - 1"
             class="lb-nav lb-next"
@@ -258,7 +274,7 @@
             rel="noopener noreferrer"
             class="footer-link"
           >
-            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" />GitHub
+            <IconGithub size="1.1rem" class="q-mr-xs" />GitHub
           </a>
           <span class="footer-sep">•</span>
           <a
@@ -267,7 +283,7 @@
             rel="noopener noreferrer"
             class="footer-link"
           >
-            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" />LinkedIn
+            <IconLinkedin size="1.1rem" class="q-mr-xs" />LinkedIn
           </a>
         </div>
       </div>
@@ -280,6 +296,9 @@ import { ref, computed, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { projects } from '../data/projects';
 import { useMeta } from 'quasar';
+import { webpFrom } from '../utils/images';
+import IconGithub from '../components/icons/IconGithub.vue';
+import IconLinkedin from '../components/icons/IconLinkedin.vue';
 
 const route = useRoute();
 const router = useRouter();

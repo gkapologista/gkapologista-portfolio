@@ -11,8 +11,12 @@
           <span class="category-badge__label">{{ categoryConfig.label }}</span>
         </div>
         <q-skeleton v-if="!imageLoaded" class="image-skeleton brand-pulse" square animation="none" />
-        <img :src="project.images[0]" :alt="project.title" loading="lazy" @load="onImageLoad"
-          :class="{ 'is-loaded': imageLoaded }" />
+        <picture>
+          <source :srcset="webpFrom(project.images[0])" type="image/webp" />
+          <img :src="project.images[0]" :alt="project.title" width="1400" height="875"
+            loading="lazy" decoding="async" @load="onImageLoad"
+            :class="{ 'is-loaded': imageLoaded }" />
+        </picture>
         <div class="project-title-overlay">
           <h3 class="project-title" :title="project.title">{{ project.title }}</h3>
         </div>
@@ -47,6 +51,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import type { Project } from '../data/projects';
+import { webpFrom } from '../utils/images';
 
 const props = defineProps<{
   project: Project;

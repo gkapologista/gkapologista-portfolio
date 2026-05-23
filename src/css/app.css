@@ -1,7 +1,7 @@
 /* app.css */
 
-/* Import JetBrains Mono */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100..800&display=swap');
+/* JetBrains Mono is loaded via <link> in index.html <head> (parallel, early-discovered)
+   rather than @import here, which would create a render-blocking request chain. */
 
 /* ─── Theme Variables ─────────────────────────────────────────────────────── */
 
@@ -70,6 +70,12 @@ body {
   background-color: var(--bg-charcoal);
   color: var(--text-white);
   transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* <picture> is only a wrapper for <source>/<img> — emit no box so existing
+   image layout rules (e.g. .hero-img, .g-thumb img) keep applying to the <img>. */
+picture {
+  display: contents;
 }
 
 /* ─── Global Reset for Glassmorphism removal ───────────────────────────────── */
