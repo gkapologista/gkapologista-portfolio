@@ -162,7 +162,7 @@
             rel="noopener noreferrer"
             class="footer-link"
           >
-            <q-icon name="fab fa-github" size="xs" class="q-mr-xs" aria-hidden="true" />
+            <IconGithub size="1.1rem" class="q-mr-xs" />
             GitHub
           </a>
           <span class="footer-divider">•</span>
@@ -172,7 +172,7 @@
             rel="noopener noreferrer"
             class="footer-link"
           >
-            <q-icon name="fab fa-linkedin" size="xs" class="q-mr-xs" aria-hidden="true" />
+            <IconLinkedin size="1.1rem" class="q-mr-xs" />
             LinkedIn
           </a>
         </div>
@@ -188,6 +188,8 @@ import { useRouter, useRoute } from 'vue-router';
 import { useFilters, categories, type Category } from '../composables/useFilters';
 import { ProjectFilters } from '../components/filters';
 import ProjectCard from '../components/ProjectCard.vue';
+import IconGithub from '../components/icons/IconGithub.vue';
+import IconLinkedin from '../components/icons/IconLinkedin.vue';
 
 const router = useRouter();
 const route = useRoute();

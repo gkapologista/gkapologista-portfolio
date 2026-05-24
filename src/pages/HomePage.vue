@@ -6,13 +6,13 @@
       <div class="glow-orb orb-3"></div>
       <div class="code-rain">
         <div
-          v-for="n in 15"
+          v-for="n in 10"
           :key="n"
           class="code-column"
-          :style="{ left: `${(n - 1) * 6.5}%` }"
+          :style="{ left: `${(n - 1) * 10}%` }"
         >
           <div
-            v-for="i in 15"
+            v-for="i in 12"
             :key="i"
             class="code-line"
             :style="{ animationDelay: codeRainData[n - 1][i - 1].delay }"
@@ -105,7 +105,7 @@
               class="social-link"
               aria-label="Visit GitHub profile"
             >
-              <q-icon name="fab fa-github" size="md" aria-hidden="true" />
+              <IconGithub size="1.5rem" />
             </a>
           </li>
           <li>
@@ -116,7 +116,7 @@
               class="social-link"
               aria-label="Visit LinkedIn profile"
             >
-              <q-icon name="fab fa-linkedin" size="md" aria-hidden="true" />
+              <IconLinkedin size="1.5rem" />
             </a>
           </li>
         </ul>
@@ -140,6 +140,8 @@ import { computed, ref, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { usePrefetch } from '../composables/usePrefetch';
 import { projects } from '../data/projects';
+import IconGithub from '../components/icons/IconGithub.vue';
+import IconLinkedin from '../components/icons/IconLinkedin.vue';
 
 const router = useRouter();
 const { prefetchComponent, prefetchImages } = usePrefetch();
@@ -282,9 +284,10 @@ const codeSnippets = [
   'useInsertionEffect',
 ];
 
-// Pre-computed once at setup — prevents Math.random() re-evaluation on every re-render
-const codeRainData = Array.from({ length: 15 }, () =>
-  Array.from({ length: 15 }, () => ({
+// Pre-computed once at setup — prevents Math.random() re-evaluation on every re-render.
+// Grid kept intentionally small (10 columns × 12 lines) to limit sustained paint cost.
+const codeRainData = Array.from({ length: 10 }, () =>
+  Array.from({ length: 12 }, () => ({
     delay: `${Math.random() * 5}s`,
     snippet: codeSnippets[Math.floor(Math.random() * codeSnippets.length)],
   }))
@@ -419,7 +422,6 @@ const codeRainData = Array.from({ length: 15 }, () =>
   color: var(--accent-teal);
   font-size: clamp(0.72rem, 0.58rem + 0.55vw, 0.9rem);
   animation: codeFall 4s linear infinite;
-  text-shadow: 0 0 5px var(--accent-teal);
   white-space: nowrap;
   opacity: 0.7;
 }

@@ -39,13 +39,13 @@ router.beforeEach(async (to) => {
 
   isTransitioning.value = true;
 
-  // Hold the navigation for 300ms to allow the glitch to "hit"
-  await new Promise((resolve) => setTimeout(resolve, 300));
+  // Briefly hold the navigation so the glitch "hits" without adding noticeable latency
+  await new Promise((resolve) => setTimeout(resolve, 120));
 
   // Proceed with navigation and schedule the hide
   setTimeout(() => {
     isTransitioning.value = false;
-  }, 400);
+  }, 250);
 
   return true;
 });
