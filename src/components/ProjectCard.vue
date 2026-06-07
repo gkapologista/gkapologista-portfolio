@@ -272,7 +272,6 @@ const categoryConfig = computed(
   font-weight: 600;
   letter-spacing: 0.02em;
   padding: 0.4rem 0.8rem;
-  transition: all 0.3s ease;
   background: var(--bg-charcoal) !important;
   color: var(--accent-teal) !important;
   border: 1px solid var(--accent-teal);
@@ -282,25 +281,12 @@ const categoryConfig = computed(
   border-radius: 2px;
 }
 
-.tech-chip:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  background: white !important;
-}
-
+/* Chips are decorative labels — no independent hover (the card handles it). */
 .tech-chip--overflow {
   border-style: dashed;
   font-style: italic;
   opacity: 0.7;
   cursor: default;
-}
-
-.tech-chip--overflow:hover {
-  transform: none;
-  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
-  background: var(--bg-charcoal) !important;
-  opacity: 1;
-  border-style: solid;
 }
 
 /* CTA: persistent footer by default — the baseline for touch / no-hover pointers. */
@@ -378,14 +364,6 @@ const categoryConfig = computed(
   }
 
   .project-card:hover .project-image img {
-    transform: none;
-  }
-
-  .tech-chip {
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .tech-chip:hover {
     transform: none;
   }
 
