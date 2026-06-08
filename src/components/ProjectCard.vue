@@ -90,7 +90,6 @@ const categoryConfig = computed(
   min-width: 0; /* prevent flex overflow on long content */
   box-sizing: border-box;
   position: relative;
-  will-change: transform, opacity;
 }
 
 .project-card-container {
@@ -100,6 +99,8 @@ const categoryConfig = computed(
 .project-card:hover {
   transform: translateY(-5px);
   box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
+  /* Promote to a compositor layer only while hovered, not for every card. */
+  will-change: transform;
 }
 
 .project-image {
