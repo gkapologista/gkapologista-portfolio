@@ -302,24 +302,32 @@ const categoryConfig = computed(
   border-style: solid;
 }
 
+/* CTA: persistent footer by default — the baseline for touch / no-hover pointers. */
 .project-cta {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   height: 2.75rem;
   background: var(--accent-teal);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 1.5rem;
-  transform: translateY(100%);
-  transition: transform 0.3s ease;
   z-index: 2;
 }
 
-.project-card:hover .project-cta {
-  transform: translateY(0);
+/* Hover-capable pointers: collapse the CTA and slide it up on card hover. */
+@media (hover: hover) {
+  .project-cta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+
+  .project-card:hover .project-cta {
+    transform: translateY(0);
+  }
 }
 
 .project-cta__label {
@@ -339,7 +347,7 @@ const categoryConfig = computed(
 }
 
 .project-card-link {
-  /* register as a container so children can use cqi units and @container */
+  /* register as a container so children can size with cqi units */
   container-type: inline-size;
   container-name: card;
   text-decoration: none;
@@ -353,20 +361,6 @@ const categoryConfig = computed(
 .project-card-link:focus-visible {
   outline: 3px solid rgba(255, 255, 255, 0.8);
   outline-offset: 4px;
-}
-
-/* ── Container query: small card (≤480px wide) ──────────────────────────────
-   clamp() handles font-size and image-height continuously above.
-   This query only handles the structural CTA change for touch UX:
-   at narrow widths the hover-only CTA becomes a permanent footer bar.
-   Placed BEFORE prefers-reduced-motion so it wins the cascade for opacity.
-   ──────────────────────────────────────────────────────────────────────── */
-@container card (max-width: 480px) {
-  .project-cta {
-    position: relative; /* pull into normal flex flow */
-    transform: translateY(0);
-    opacity: 1; /* wins over reduced-motion opacity:0 — comes later in cascade */
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -398,7 +392,11 @@ const categoryConfig = computed(
     animation: none;
     opacity: 0.45;
   }
+}
 
+/* Reduced motion on hover pointers: fade the CTA in instead of sliding it.
+   Scoped to hover pointers so the persistent touch footer is never hidden. */
+@media (hover: hover) and (prefers-reduced-motion: reduce) {
   .project-cta {
     transform: translateY(0);
     opacity: 0;
