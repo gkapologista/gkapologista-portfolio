@@ -112,7 +112,7 @@ const handleClearAll = () => {
   border: 1px solid var(--accent-teal);
   border-radius: 4px;
   padding: var(--filter-padding, 0.75rem 1rem);
-  transition: var(--filter-transition, all 0.3s ease);
+  transition: var(--filter-transition, border-color 0.3s ease, box-shadow 0.3s ease);
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
@@ -168,7 +168,7 @@ const handleClearAll = () => {
 
 .clear-all-btn {
   color: var(--accent-teal) !important;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   background: var(--bg-charcoal) !important;
   border-radius: 2px !important;
   border: 1px solid var(--accent-teal);
@@ -241,7 +241,7 @@ const handleClearAll = () => {
 
   .clear-all-btn-mobile {
     color: var(--accent-teal) !important;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
   }
 
   .clear-all-btn-mobile:hover {

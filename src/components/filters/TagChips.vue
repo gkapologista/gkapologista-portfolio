@@ -169,7 +169,8 @@ const toggleTag = (tag: string) => {
   background: var(--bg-charcoal) !important;
   border: 1px solid var(--accent-teal);
   color: var(--accent-teal) !important;
-  transition: all 0.25s ease;
+  transition: background-color 0.25s ease, border-color 0.25s ease,
+    box-shadow 0.25s ease, color 0.25s ease;
   cursor: pointer;
   height: var(--tag-chip-height, 32px);
   flex-shrink: 0;

@@ -91,7 +91,7 @@ const selectedCount = computed(() => props.modelValue.length);
   border: 1px solid var(--accent-teal);
   border-radius: 2px;
   padding: 0.25rem 0.5rem;
-  transition: var(--filter-transition, all 0.3s ease);
+  transition: var(--filter-transition, border-color 0.3s ease, box-shadow 0.3s ease);
   min-height: var(--search-height, 44px);
 }
 
