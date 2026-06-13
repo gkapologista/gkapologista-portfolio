@@ -116,10 +116,10 @@ const handleClearAll = () => {
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
 }
 
+/* Engaged state — brighter border + teal glow make active filters obvious. */
 .project-filters--active {
-  background: var(--bg-grey);
-  border-color: var(--accent-teal);
-  box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3);
+  border-color: #00c4cd;
+  box-shadow: 12px 12px 0px rgba(0, 0, 0, 0.3), 0 0 16px rgba(0, 173, 181, 0.4);
 }
 
 /* Desktop Layout */
