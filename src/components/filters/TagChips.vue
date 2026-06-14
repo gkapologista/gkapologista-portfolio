@@ -198,4 +198,12 @@ const toggleTag = (tag: string) => {
     padding: 0.375rem 0.75rem;
   }
 }
+
+/* Reduced motion — drop the hover lift, keep the border/shadow feedback */
+@media (prefers-reduced-motion: reduce) {
+  .tag-chip:hover,
+  .tag-chip--active:hover {
+    transform: none;
+  }
+}
 </style>

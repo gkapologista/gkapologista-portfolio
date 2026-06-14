@@ -269,4 +269,16 @@ const handleClearAll = () => {
   opacity: 0;
   transform: scale(0.95);
 }
+
+/* Reduced motion — drop hover/enter transforms, keep color & opacity cues */
+@media (prefers-reduced-motion: reduce) {
+  .clear-all-btn:hover {
+    transform: none;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    transform: none;
+  }
+}
 </style>
