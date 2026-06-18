@@ -4,7 +4,6 @@
       class="search-input"
       :class="{
         'search-input--focused': isFocused,
-        'search-input--active': props.modelValue || isFocused,
         'search-input--scanning': props.isSearching,
       }"
     >
@@ -124,7 +123,8 @@ onUnmounted(() => document.removeEventListener('keydown', handleSlashKey));
   align-items: center;
   gap: 0.375rem;
   background: var(--bg-charcoal);
-  border: 1px solid rgba(0, 173, 181, 0.45);
+  /* Full-teal at rest to match the category dropdown and tag chips. */
+  border: 1px solid var(--accent-teal);
   border-radius: 2px;
   padding: 0 0.625rem 0 0.75rem;
   height: var(--search-height, 44px);
@@ -133,17 +133,9 @@ onUnmounted(() => document.removeEventListener('keydown', handleSlashKey));
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.search-input--focused,
-.search-input--active {
-  border-color: var(--accent-teal);
-}
-
+/* Focus is distinguished by the glow (rest border is already full teal). */
 .search-input--focused {
   box-shadow: 0 0 0 1px rgba(0, 173, 181, 0.25), 4px 4px 0 rgba(0, 0, 0, 0.4);
-}
-
-.search-input--scanning {
-  border-color: var(--accent-teal);
 }
 
 /* ── Prompt ─────────────────────────────────────────────────── */
