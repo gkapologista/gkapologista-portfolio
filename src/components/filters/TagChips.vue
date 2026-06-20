@@ -1,5 +1,13 @@
 <template>
-  <div class="tag-chips-wrapper" role="group" :aria-label="ariaLabel">
+  <div
+    class="tag-chips-wrapper"
+    :class="{
+      'tag-chips-wrapper--expanded': showAll,
+      'tag-chips-wrapper--scrollable': hasMoreTags && !showAll,
+    }"
+    role="group"
+    :aria-label="ariaLabel"
+  >
     <div class="tag-chips-scroll" ref="scrollContainer">
       <q-chip
         v-for="tag in displayedTags"
@@ -98,9 +106,28 @@ const toggleTag = (tag: string) => {
 
 <style scoped>
 .tag-chips-wrapper {
+  position: relative;
   flex: 1;
   min-width: 0;
   overflow: hidden;
+}
+
+/* Expanded: lay all tags out in rows instead of one long horizontal scroll. */
+.tag-chips-wrapper--expanded .tag-chips-scroll {
+  flex-wrap: wrap;
+  overflow: visible;
+}
+
+/* Right-edge fade signals the collapsed strip scrolls horizontally. */
+.tag-chips-wrapper--scrollable::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1.5rem;
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--bg-grey));
 }
 
 .tag-chips-scroll {
