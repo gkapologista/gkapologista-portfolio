@@ -137,7 +137,7 @@ const toggleTag = (tag: string) => {
   font-weight: 500;
   font-size: 0.8125rem;
   padding: 0.375rem 0.625rem;
-  border-radius: 10px;
+  border-radius: 2px;
   background: var(--bg-charcoal) !important;
   border: 1px solid var(--accent-teal);
   color: var(--accent-teal) !important;

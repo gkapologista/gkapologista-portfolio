@@ -110,7 +110,7 @@ const handleClearAll = () => {
 .project-filters {
   background: var(--bg-grey);
   border: 1px solid var(--accent-teal);
-  border-radius: 10px;
+  border-radius: 4px;
   padding: var(--filter-padding, 0.75rem 1rem);
   transition: var(--filter-transition, all 0.3s ease);
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
@@ -156,7 +156,7 @@ const handleClearAll = () => {
   white-space: nowrap;
   padding: 0.25rem 0.625rem;
   background: var(--bg-charcoal);
-  border-radius: 10px;
+  border-radius: 2px;
   border: 1px solid var(--accent-teal);
 }
 
@@ -170,7 +170,7 @@ const handleClearAll = () => {
   color: var(--accent-teal) !important;
   transition: all 0.2s ease;
   background: var(--bg-charcoal) !important;
-  border-radius: 10px !important;
+  border-radius: 2px !important;
   border: 1px solid var(--accent-teal);
 }
 
@@ -233,7 +233,7 @@ const handleClearAll = () => {
     color: var(--accent-teal);
     background: var(--bg-charcoal);
     padding: 0.25rem 0.5rem;
-    border-radius: 10px;
+    border-radius: 2px;
     min-width: 24px;
     text-align: center;
     border: 1px solid var(--accent-teal);

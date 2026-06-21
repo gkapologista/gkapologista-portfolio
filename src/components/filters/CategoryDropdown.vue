@@ -89,7 +89,7 @@ const selectedCount = computed(() => props.modelValue.length);
 .category-dropdown {
   background: var(--bg-charcoal);
   border: 1px solid var(--accent-teal);
-  border-radius: 10px;
+  border-radius: 2px;
   padding: 0.25rem 0.5rem;
   transition: var(--filter-transition, all 0.3s ease);
   min-height: var(--search-height, 44px);
@@ -137,7 +137,7 @@ const selectedCount = computed(() => props.modelValue.length);
   margin: 2px;
   background: var(--accent-teal) !important;
   color: var(--bg-charcoal) !important;
-  border-radius: 10px;
+  border-radius: 2px;
 }
 
 .selected-chip :deep(.q-chip__icon--remove) {
@@ -166,7 +166,7 @@ const selectedCount = computed(() => props.modelValue.length);
 .category-dropdown-popup {
   background: var(--bg-charcoal) !important;
   border: 1px solid var(--accent-teal);
-  border-radius: 10px;
+  border-radius: 4px;
   box-shadow: 8px 8px 0px rgba(0, 0, 0, 0.3);
 }
 

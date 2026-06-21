@@ -125,7 +125,7 @@ onUnmounted(() => document.removeEventListener('keydown', handleSlashKey));
   gap: 0.375rem;
   background: var(--bg-charcoal);
   border: 1px solid rgba(0, 173, 181, 0.45);
-  border-radius: 10px;
+  border-radius: 2px;
   padding: 0 0.625rem 0 0.75rem;
   height: var(--search-height, 44px);
   box-sizing: border-box;
