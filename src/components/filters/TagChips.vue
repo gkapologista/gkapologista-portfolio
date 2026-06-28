@@ -192,8 +192,10 @@ const toggleTag = (tag: string) => {
 @media (max-width: 768px) {
   .tag-chip {
     font-size: 0.75rem;
-    height: 28px;
-    padding: 0.25rem 0.5rem;
+    /* 44px min touch target (WCAG 2.5.8 / AAA 2.5.5) — tags are the primary
+       filter interaction, so they must be comfortably tappable on mobile. */
+    height: 44px;
+    padding: 0.375rem 0.75rem;
   }
 }
 </style>
