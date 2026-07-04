@@ -18,13 +18,17 @@ Type checking and linting also run inline during `dev`/`build` via `vite-plugin-
 A Vue 3 + Quasar 2 + TypeScript single-page portfolio. Quasar CLI with the Vite bundler drives the build (`quasar.config.js` is the source of truth, not Vite config directly). Routing is **hash-based** and deployed under the base path `/gkapologista-portfolio/` — both are set in `quasar.config.js` (`build.vueRouterMode`, `build.publicPath`), not in router code.
 
 ### Data layer
-There is no backend or store library. All content lives in `src/data/projects.ts` as a typed `Project[]` array; the `Project` interface there is the canonical schema. Project images are referenced through `import.meta.env.BASE_URL` so paths resolve correctly under the production base path. The `boot/axios.ts` instance points at a placeholder URL and is unused scaffolding.
+There is no backend or store library. All content lives in `src/data/projects.ts` as a typed `Project[]` array; the `Project` interface there is the canonical schema. Project images are referenced through `import.meta.env.BASE_URL` so paths resolve correctly under the production base path. There is no `boot/` code — `src/boot/` holds only `.gitkeep` (the axios boot file was removed).
+
+### Image delivery and prefetch
+Raster assets are compressed offline by `sharp` (dev dependency) and shipped as WebP with a PNG/JPG fallback via `<picture>` elements. `src/utils/images.ts` exposes `webpFrom(src)`, which derives the `.webp` sibling of a source path so templates can build the `<source srcset>` while keeping the original as the `<img>` fallback. `src/composables/usePrefetch.ts` warms lazy-route chunks (`prefetchComponent`) and images (`prefetchImages`) ahead of navigation.
 
 ### Global transition orchestration (the central, non-obvious system)
 Route changes trigger a "Cyberpunk" glitch transition coordinated globally, not per-page:
 - `App.vue` holds the `isTransitioning` ref, registers a `router.beforeEach` guard, and renders `<GlitchTransition>` over the `<router-view>`. The guard holds navigation ~300ms for the glitch to "hit", then hides it ~400ms after.
 - Transition text comes from each route's `meta.transitionText` (defined in `src/router/routes.ts`). The `ProjectDetail` route resolves its text dynamically in `App.vue` by looking up the project by `slug` (e.g. `DECRYPTING: <TITLE> ARCHIVES...`).
 - When adding a route, set its `meta.transitionText`, or it falls back to `FETCHING_DATA...`.
+- `GlitchTransition.vue` drives the glitch animation with GSAP (the only runtime use of the `gsap` dependency).
 
 ### Filtering (`src/composables/useFilters.ts`)
 The projects page filtering is fully encapsulated here. Key behaviors to preserve: search is debounced (450ms) and token-based (every space-separated token must match title/description/tech/tags), results are relevance-scored (title 3 / tech 2 / description 1) while a query is active, categories filter with OR, and tags filter with AND. `availableTags` is derived from project `technologies`, ranked by frequency.
