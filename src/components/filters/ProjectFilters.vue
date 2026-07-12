@@ -177,7 +177,7 @@ const handleClearAll = () => {
 .clear-all-btn:hover {
   color: white !important;
   background: rgba(255, 255, 255, 0.15) !important;
-  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(0, 173, 181, 0.4);
 }
 
 .clear-all-btn:focus-visible {
@@ -270,12 +270,8 @@ const handleClearAll = () => {
   transform: scale(0.95);
 }
 
-/* Reduced motion — drop hover/enter transforms, keep color & opacity cues */
+/* Reduced motion — drop the enter/leave scale, keep the opacity fade */
 @media (prefers-reduced-motion: reduce) {
-  .clear-all-btn:hover {
-    transform: none;
-  }
-
   .fade-enter-from,
   .fade-leave-to {
     transform: none;

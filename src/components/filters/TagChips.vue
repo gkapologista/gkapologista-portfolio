@@ -109,7 +109,8 @@ const toggleTag = (tag: string) => {
   gap: var(--tag-chip-gap, 0.5rem);
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 0.25rem 0;
+  /* Vertical room so the hover glow isn't clipped by overflow-y: hidden. */
+  padding: 0.5rem 0;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
@@ -149,10 +150,10 @@ const toggleTag = (tag: string) => {
 }
 
 .tag-chip:hover {
-  background: var(--bg-charcoal) !important;
-  border-color: var(--accent-teal);
-  transform: translateY(-2px);
-  box-shadow: 4px 4px 0px rgba(0, 173, 181, 0.4);
+  /* Stable hover: teal tint + glow, no layout-shifting transform. */
+  background: rgba(0, 173, 181, 0.12) !important;
+  border-color: #00c4cd;
+  box-shadow: 0 0 8px rgba(0, 173, 181, 0.45);
 }
 
 .tag-chip--active {
@@ -164,9 +165,9 @@ const toggleTag = (tag: string) => {
 }
 
 .tag-chip--active:hover {
-  background: var(--accent-teal) !important;
-  transform: translateY(-2px);
-  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.4);
+  /* Brighten to the app's hover-teal; keep the offset shadow, no lift. */
+  background: #00c4cd !important;
+  box-shadow: 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
 .tag-chip--more {
@@ -196,14 +197,6 @@ const toggleTag = (tag: string) => {
        filter interaction, so they must be comfortably tappable on mobile. */
     height: 44px;
     padding: 0.375rem 0.75rem;
-  }
-}
-
-/* Reduced motion — drop the hover lift, keep the border/shadow feedback */
-@media (prefers-reduced-motion: reduce) {
-  .tag-chip:hover,
-  .tag-chip--active:hover {
-    transform: none;
   }
 }
 </style>
